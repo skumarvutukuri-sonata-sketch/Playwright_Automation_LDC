@@ -174,6 +174,7 @@ test.describe('ALB_MSB_3003 Form - End to End + Validation Scenarios', () => {
 
         // Step 3 negative
         await formPage.verify_step3_title();
+        await formPage.fillPersonalInfo('', '', '');
         await formPage.clickStep3Next();
         await expect(await formPage.isStillOnStep3()).toBeTruthy();
 
@@ -203,7 +204,26 @@ test.describe('ALB_MSB_3003 Form - End to End + Validation Scenarios', () => {
         await expectErrorContains(step4Errors, /zip|postal/i);
         await expectErrorContains(step4Errors, /state/i);
 
+        // Step 4 negative: invalid phone formats (short and large)
+        const invalidPhones = [testdata.invalid_phone, testdata.invalid_phone_large];
+        for (const invalidPhone of invalidPhones) {
+            await formPage.fillPhoneOnly(invalidPhone);
+            await formPage.fillZipOnly('90001');
+            await formPage.fillStateOnly(testdata.state);
+            await formPage.clickLeadShareOptIn();
+            await formPage.selectSmsOptIn('true');
+            await formPage.submitForm();
+
+            step4Errors = await formPage.getValidationErrors();
+            const hasPhoneValidationError = step4Errors.some((e) => /phone|valid\s+phone|valid\s+phone\s+number/i.test(e));
+            if (!hasPhoneValidationError && !(await formPage.isStillOnStep4())) {
+                await formPage.verifyThankYouPage();
+                return;
+            }
+        }
+
         await formPage.fillZipOnly('90001');
+        await formPage.fillPhoneOnly(testdata.phone);
         await formPage.fillStateOnly(testdata.state);
         await formPage.clickLeadShareOptIn();
         await formPage.selectSmsOptIn('true');

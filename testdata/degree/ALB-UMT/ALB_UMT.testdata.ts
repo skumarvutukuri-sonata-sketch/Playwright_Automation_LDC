@@ -70,6 +70,8 @@ const ALB_MSB_3003 = {
     invalid_email: 'notanemail',
     invalid_email_no_domain: 'test@',
     invalid_email_no_at: 'testdotcom',
+    invalid_phone: '123',
+    invalid_phone_large: '12345678901234567890',
 } as const;
 
 export const ALB_UMT_TESTDATA = {
