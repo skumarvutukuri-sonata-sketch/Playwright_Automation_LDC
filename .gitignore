@@ -6,3 +6,35 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# Allure
+/allure-results/
+/allure-report/
+allure-report.zip
+
+# Test artifacts
+test-results.json
+
+# Auth / session state
+tests/setup/storageState.json
+
+# Environment variables (contains secrets)
+.env
+
+# Local env variants (keep template committed)
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Coverage / temporary artifacts
+coverage/
+*.tmp
+*.temp

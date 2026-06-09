@@ -1,6 +1,6 @@
 import {Page, Locator, expect } from '@playwright/test';
-import { CommonUtils_UI } from '../utils/common_utils';
-export class ALB_UMT_BIO_Page{
+import { CommonUtils_UI } from '../../../utils/common_utils';
+export class ALB_BIO_2581_Page{
 
     readonly page : Page;
     readonly step1_title: Locator 
@@ -75,7 +75,7 @@ export class ALB_UMT_BIO_Page{
 //to get all Dropdown values
 async getDurationDropdownOptions() : Promise<string[]> {
     //const Dropdownoptions = await this.DurationDropdown.();
-    //const durationOptionsLocator = ALB_UMT_BIO_Page.getDurationDropdownOptions();
+    //const durationOptionsLocator = ALB_BIO_2581_Page.getDurationDropdownOptions();
     await CommonUtils_UI.hoverAndClickOnElement(this.DurationDropdown);
     const options = this.DurationDropdown;
     const optionsTexts = await options.allInnerTexts();

@@ -17,11 +17,12 @@ async function globalTeardown() {
   if (failedCount === 0) {
     console.log("✅ Tests passed. Generating Allure report...");
     try {
+      execSync('java -version', { stdio: 'ignore' });
       execSync('npx allure generate ./allure-results --clean -o ./allure-report', { stdio: 'inherit' });
       console.log('✅ Allure report generated successfully');
     } catch (err: unknown) {
       const errMsg = err instanceof Error ? err.message : String(err);
-      console.error('❌ Failed to generate Allure report:', errMsg);
+      console.warn('⚠ Skipping Allure report generation:', errMsg);
       return;
     }
 

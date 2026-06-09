@@ -4,8 +4,8 @@ import * as fs from 'fs'
 import dotenv from 'dotenv';
 
  dotenv.config({ path: path.resolve(__dirname, '.env') });
- if (!process.env.Node_ENV) {
-   process.env.Node_ENV = 'development';
+ if (!process.env.NODE_ENV) {
+   process.env.NODE_ENV = 'development';
  }
 
 const storageStatePath = path.resolve(__dirname, 'tests/setup/storageState.json');
@@ -53,21 +53,22 @@ reporter: [
     //screenshot: 'only-on-failure',
     screenshot: 'on',
     video: 'on',
+    headless: false,   // always run in headed mode (browser visible)
     
   },
 
   /* Configure projects for major browsers */
   projects: [
-    /*{
+    {
       name: 'setup',
-      testMatch: /.*\.setup\.ts/  
-    },*/
+      testMatch: /.*\.setup\.ts/
+    },
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'],
-        //storageState: storageStatePath,
+        storageState: storageStatePath,
       },
-      //dependencies: ['setup'],
+      dependencies: ['setup'],
     }
 
     /*{
