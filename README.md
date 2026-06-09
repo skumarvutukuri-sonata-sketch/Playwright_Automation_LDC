@@ -94,19 +94,6 @@ EMAIL_TO=receiver1@domain.com,receiver2@domain.com
 
 ## Terminal Commands
 
-In VS Code Markdown Preview, you can Ctrl+Click these links to run commands in terminal:
-
-- [Run All Tests](command:workbench.action.tasks.runTask?Run%20All%20Tests)
-- [Run All Tests Headed](command:workbench.action.tasks.runTask?Run%20All%20Tests%20Headed)
-- [Run 3003 Full](command:workbench.action.tasks.runTask?Run%203003%20Full)
-- [Run Degree Full](command:workbench.action.tasks.runTask?Run%20Degree%20Full)
-- [Run 3003 Scenario 1](command:workbench.action.tasks.runTask?Run%203003%20Scenario%201)
-- [Open Playwright Report](command:workbench.action.tasks.runTask?Open%20Playwright%20Report)
-- [Generate Allure Report](command:workbench.action.tasks.runTask?Generate%20Allure%20Report)
-- [Open Allure Report](command:workbench.action.tasks.runTask?Open%20Allure%20Report)
-
-If links do not run, open Command Palette and run: Tasks: Run Task.
-
 Run all tests:
 
 ```powershell
