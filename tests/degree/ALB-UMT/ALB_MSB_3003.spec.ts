@@ -5,7 +5,7 @@ dotenv.config();
 
 import { ALB_MSB_3003_Page } from '../../../pages/degree/ALB-UMT/ALB_MSB_3003.page';
 import { getFormUrl } from '../../../config/forms';
-import { ALB_UMT_TESTDATA } from '../../../testdata/degree/ALB-UMT/ALB_UMT.testdata';
+import ALB_UMT_TESTDATA from '../../../testdata/degree/ALB-UMT/ALB_UMT.testdata.json';
 
 const testdata = ALB_UMT_TESTDATA['3003'];
 

@@ -4,7 +4,7 @@ dotenv.config();
 import { LoginPage } from '../../../pages/login.page';
 import { ALB_BIO_2581_Page } from '../../../pages/degree/ALB-UMT/ELF_ALB-BIO_2581.page';
 import { getFormUrl } from '../../../config/forms';
-import { ALB_UMT_TESTDATA } from '../../../testdata/degree/ALB-UMT/ALB_UMT.testdata';
+import ALB_UMT_TESTDATA from '../../../testdata/degree/ALB-UMT/ALB_UMT.testdata.json';
 
 const testdata = ALB_UMT_TESTDATA['2581'];
 

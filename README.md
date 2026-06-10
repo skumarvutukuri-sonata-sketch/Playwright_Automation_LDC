@@ -25,8 +25,7 @@ End-to-end automation framework for Taxi staging forms using Playwright + TypeSc
 |-- testdata/
 |   |-- degree/
 |   |   `-- ALB-UMT/
-|   |       `-- ALB_UMT.testdata.ts
-|   `-- ALB_UMT_BIO_testdata.json
+|   |       `-- ALB_UMT.testdata.json
 |-- tests/
 |   |-- degree/
 |   |   `-- ALB-UMT/
