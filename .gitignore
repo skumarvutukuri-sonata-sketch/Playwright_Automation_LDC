@@ -1,4 +1,3 @@
-
 # Playwright
 node_modules/
 /test-results/
@@ -11,12 +10,9 @@ node_modules/
 /allure-results/
 /allure-report/
 allure-report.zip
-
+/reports/
 # Test artifacts
 test-results.json
-
-# Auth / session state
-tests/setup/storageState.json
 
 # Environment variables (contains secrets)
 .env
@@ -38,3 +34,4 @@ pnpm-debug.log*
 coverage/
 *.tmp
 *.temp
+.vscode/

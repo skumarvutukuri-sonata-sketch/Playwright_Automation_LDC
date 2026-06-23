@@ -1,0 +1,145 @@
+{
+  "cookies": [
+    {
+      "name": "ol_custom_domain",
+      "value": "%7B%22tenant%22%3A%222u%22%2C%22custom_domain%22%3A%22%22%7D",
+      "domain": ".onelogin.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "ol_web_login_proxy_15",
+      "value": "true",
+      "domain": ".2u.onelogin.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "ol_web_login_canary_0",
+      "value": "false",
+      "domain": ".2u.onelogin.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "ol_access_service_canary_14",
+      "value": "true",
+      "domain": ".2u.onelogin.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "ol_branding_service_canary_0",
+      "value": "false",
+      "domain": ".onelogin.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__tdli_fp",
+      "value": "0c100be330a062fb216035aff8dc2074",
+      "domain": "2u.onelogin.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "__tdli",
+      "value": "86c4bc77c90728a462493e75ddb0cd2f697a4a01c474941dd82e1cdd2ac9336a",
+      "domain": "2u.onelogin.com",
+      "path": "/",
+      "expires": 1816771317.842052,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "ol_mfa_service_canary_43",
+      "value": "false",
+      "domain": ".onelogin.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "onelogin.com_user",
+      "value": "cfb5159b610b36118943287979575393fbb218c9",
+      "domain": ".onelogin.com",
+      "path": "/",
+      "expires": 1784803332.631554,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_dd_s",
+      "value": "logs=1&id=2666c3ae-dd7d-4cbc-b2f5-6317a6d0939e&created=1782211317100&expire=1782212219377",
+      "domain": "2u.onelogin.com",
+      "path": "/",
+      "expires": 1782212233,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Strict"
+    },
+    {
+      "name": "sub_session_onelogin.com",
+      "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjcmVhdGVkX2F0IjoxNzgyMjExMzMyLCJzZXNzaW9uX2lkIjoiZjkzNTE3ODctYjA3Zi00OWViLWExZWUtN2EwYTM1NjgzNTdjIiwidXNlcl9pZCI6MjU2OTI4NDc4LCJhY2NvdW50X2lkIjoyMjM0OCwibGFzdF9yZXF1ZXN0IjoxNzgyMjExMzMyLCJ2ZXJzaW9uIjoxfQ.MhpSOfYVZIc2vQ62vxiXl9IyDK95XKdRRuL7ZQX5I_Q%7C%7CBAh7DDoPYXV0aF9zdGVwc1sIIg11c2VybmFtZSINcGFzc3dvcmQiDm1mYV9sb2dpbiIfYnJvd3Nlcl92ZXJpZmljYXRpb25fdG9rZW4iRTk4ODQ4OTY1ODBiYmQ5Mjg1YjhhMDc4MmVhN2FlNjNkZTAxZWQ1ZjQ3MWQxYmFiNjIwMmRlMDYzMGMwMzk5YTM6FXNhbWxfc2VydmljZV9pZHNbBmwrB5qJ45I6FHNhbWxfc2Vzc2lvbl9pZCIpMWY5N2U4MDEtMmMzYi00NTgwLTkwZTItNWViODIyNGE1OGFlOhthcHBfb3RwX2F1dGhfdGltZXN0YW1wbCsHBGM6ajoPYW1yX2NsYWltc1s6Ighwd2QiCG1mYSIIb3RwIghtZmEiCG90cCIJdGlkcEAUQBUiCG1mYSIIb3RwIgplbWFpbCIIb3RwIghzbXMiCG1mYSIIcGtpQBdAGEAZQBxAHSIJZmlkbyIIaHdrIghtZmEiCG90cEAcQB1AFEAVQBpAG0AcQB1AIEAhIgl0aWRwQBdAGEAZQBRAFUAcQB0iCXRpZHBAHEAdQBRAFUAUQBVAHEAdQBRAFToOZmFjdG9yX2lkaQL1Qg%3D%3D--f74097ed7b93d7afa0ec4f475dfff18848b0714a",
+      "domain": "2u.onelogin.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "Authorization",
+      "value": "Bearer%20eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJPZiI6IlRheGktU3RhZ2luZyIsImVtYWlsIjoiaHNhZ2lyYWp1LXNvbmF0YUAydS5jb20iLCJpYXQiOjE3ODIyMTEzMzMsImV4cCI6MTc4MjI1NDUzM30.K4_SUAHp9PFrfDNQbQkVfufX68m3ZIi9FZkd0chDHth4mKgKgQXNDoEPMKHyC-EqiN3rthtJGVdFs36--4FMRw",
+      "domain": "taxi.stg.mktg.2u.com",
+      "path": "/",
+      "expires": 1782254534.027283,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_dd_s",
+      "value": "logs=1&id=ad97047f-ddf2-42ed-9296-32940a040195&created=1782211335923&expire=1782212235928&rum=1",
+      "domain": "taxi.stg.mktg.2u.com",
+      "path": "/",
+      "expires": 1782212240,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Strict"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://taxi.stg.mktg.2u.com",
+      "localStorage": [
+        {
+          "name": "pathname",
+          "value": "/credential-type/6/groupings/"
+        }
+      ]
+    }
+  ]
+}

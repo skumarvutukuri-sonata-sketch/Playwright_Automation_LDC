@@ -1,47 +1,55 @@
+import { ReportManager } from './utils/reporting/ReportManager';
+import { EnvironmentHelper } from './utils/reporting/EnvironmentHelper';
+import { AllureReportGenerator } from './utils/reporting/AllureReportGenerator';
+import { EmailReporter } from './utils/reporting/EmailReporter';
+import * as fs from 'fs';
 
-import { execSync } from 'child_process';
-import { sendEmailWithReport } from './utils/sendEmail';
-import fs from 'fs';
 
+async function globalTeardown(): Promise<void> {
 
-async function globalTeardown() {
-  console.log("✅ Teardown started");
+  console.log('\n========================================');
+  console.log('Generating Automation Reports...');
+  console.log('========================================\n');
 
-  const results = JSON.parse(
-    require('fs').readFileSync('test-results.json', 'utf-8')
-  );
-
-  console.log("📊 Results:", results.stats);
-
-  const failedCount = Number(results.stats.failed || 0);
-  if (failedCount === 0) {
-    console.log("✅ Tests passed. Generating Allure report...");
-    try {
-      execSync('java -version', { stdio: 'ignore' });
-      execSync('npx allure generate ./allure-results --clean -o ./allure-report', { stdio: 'inherit' });
-      console.log('✅ Allure report generated successfully');
-    } catch (err: unknown) {
-      const errMsg = err instanceof Error ? err.message : String(err);
-      console.warn('⚠ Skipping Allure report generation:', errMsg);
-      return;
-    }
-
-    console.log("✅ Sending email...");
-    try {
-      const sent = await sendEmailWithReport();
-      if (sent) console.log('✅ Report email sent');
-      else console.warn('⚠ Report email not sent (check SMTP/config)');
-    } catch (err: unknown) {
-      const errMsg = err instanceof Error ? err.message : String(err);
-      console.error('❌ Error while sending report email:', errMsg);
-    }
-  } else {
-    console.log(`❌ Email skipped because ${failedCount} test(s) failed.`);
-    console.log('   Re-run after fixing failures to trigger the email alert.');
+  // Generate environment.properties
+  try {
+    EnvironmentHelper.generate();
+    console.log('✓ Environment generated');
+  } catch (error) {
+    console.error('Environment generation failed:', error);
   }
+
+  // Generate CSV
+  try {
+    ReportManager.finish();
+    console.log('✓ Result Matrix generated');
+  } catch (error) {
+    console.error('Result Matrix generation failed:', error);
+  }
+
+  // Generate Allure HTML Report
+  try {
+    await AllureReportGenerator.generate();
+    console.log('✓ Allure Report generated');
+  } catch (error) {
+    console.error('Allure Report generation failed:', error);
+  }
+
+  // Send Email
+  try {
+    fs.writeFileSync(
+    'reports/end-time.txt',
+      new Date().toISOString()
+    );
+    await EmailReporter.send();
+    console.log('✓ Email sent');
+  } catch (error) {
+    console.error('Email sending failed:', error);
+  }
+
+  console.log('\n========================================');
+  console.log('Automation Execution Completed');
+  console.log('========================================\n');
 }
-
-
-
 
 export default globalTeardown;

@@ -93,5 +93,10 @@ static async getDropdownOptions(dropdownLocator: Locator): Promise<string[]> {
 }
 
 
+
+static pickRandomOption(options: readonly string[]): string {
+      return options[Math.floor(Math.random() * options.length)]!;
+  }
+
 }
  
