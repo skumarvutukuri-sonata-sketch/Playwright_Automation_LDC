@@ -15,6 +15,7 @@ import {
   Status
 } from 'allure-js-commons';
 
+
 export class AllureHelper {
 
   /**

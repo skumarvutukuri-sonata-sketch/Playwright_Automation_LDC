@@ -3,10 +3,10 @@ import { FormLoader } from '../../../utils/FormLoader';
 import { FormRunner } from '../../../utils/FormRunner';
 
 
-const formsData = FormLoader.load('degree/AU-LAW');
+const formsData = FormLoader.load('degree/ALB-UMT');
 
 
-const FORM_NAME = 'FORM_1638';
+const FORM_NAME = 'FORM_3004';
 
 /**
  * ==================================================
