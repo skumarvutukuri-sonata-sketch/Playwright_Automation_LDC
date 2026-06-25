@@ -31,7 +31,7 @@ test.describe('Happy Path', () => {
 
       await page.waitForTimeout(1500);
 
-      const runner = new FormRunner(frame);
+      const runner = new FormRunner(page, frame);
 
       await runner.run(formName, form, 'happy');
 
@@ -64,7 +64,7 @@ test.describe('Validation', () => {
 
       await page.waitForTimeout(1500);
 
-      const runner = new FormRunner(frame);
+      const runner = new FormRunner(page, frame);
 
       await runner.run(formName, form, 'validation');
 

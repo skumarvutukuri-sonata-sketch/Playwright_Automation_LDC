@@ -19,7 +19,7 @@ export class DefaultData {
       return this.getEmail();
     }
 
-    if (key.includes('phone') || key.includes('mobile')) {
+    if (key.includes('phone') || key.includes('mobile') || key.includes('contact')) {
       return this.getPhone();
     }
 
