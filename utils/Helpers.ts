@@ -1,8 +1,8 @@
-import { FrameLocator, Locator } from '@playwright/test';
+import { Page, FrameLocator, Locator } from '@playwright/test';
 
 export class Helpers {
 
-  constructor(private frame: FrameLocator) {}
+  constructor(private page: Page, private frame: FrameLocator) {}
 
   /**
    * Retry wrapper
@@ -214,5 +214,22 @@ export class Helpers {
   async waitForTimeout(ms: number) {
     return new Promise(res => setTimeout(res, ms));
     }
+
+  
+  /**
+ * Wait for backend API and return request payload
+ */
+  async captureInterestCreatePayload(): Promise<any> {
+
+    const request = await this.page.waitForRequest(req =>
+        req.url().includes('/v2/interest-create') &&
+        req.method() === 'POST'
+    );
+
+    return request.postDataJSON();
+  }
+
+
+
 
 }

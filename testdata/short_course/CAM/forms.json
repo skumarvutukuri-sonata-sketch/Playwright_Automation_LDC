@@ -15,6 +15,53 @@
           ]
         }
       ]
+    },
+    "FORM_2777": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/590/forms/2777/preview/",
+      "group": "CAM",
+      "steps": [
+        {
+          "fields": [
+            { "label": "First Name", "required": true },
+            { "label": "Last Name", "required": true },
+            { "label": "Email", "required": true },
+
+            { "label": "Email", "type": "radio" },
+            { "label": "edX, and its parent company,", "type": "radio" }
+          ]
+        }
+      ]
+    },
+
+    "FORM_3386": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/590/forms/3386/preview/",
+      "group": "CAM",
+      "steps": [
+        {
+          "fields": [
+            { "label": "First Name", "required": true },
+            { "label": "Last Name", "required": true },
+            { "label": "Email", "required": true }
+          ]
+        },
+        {
+          "fields": [
+            { "label": "Email", "type": "radio" },
+            { "label": "Phone", "type": "radio" },
+            { "label": "Contact Number", "required": true },
+            { "label": "Highest Level of Education" },
+            { "label": "Years of Work Experience" }
+          ]
+        },
+        {
+          "fields": [
+            { "label": "edX, and its parent company,", "type": "radio" }
+          ]
+        }
+      ]
     }
+
   }
+    
+
 }
