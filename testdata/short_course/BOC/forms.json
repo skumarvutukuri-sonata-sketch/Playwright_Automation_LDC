@@ -1,0 +1,20 @@
+{
+  "forms": {
+    "FORM_2704": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/590/forms/2704/preview/",
+      "group": "BOC",
+      "steps": [
+        {
+          "fields": [
+            { "label": "First Name", "required": true },
+            { "label": "Last Name", "required": true },
+            { "label": "Email", "required": true },
+
+            { "label": "Email", "type": "radio" },
+            { "label": "edX, and its parent company,", "type": "radio" }
+          ]
+        }
+      ]
+    }
+  }
+}
