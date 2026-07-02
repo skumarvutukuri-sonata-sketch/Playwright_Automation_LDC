@@ -174,6 +174,19 @@ export class Helpers {
     await error.waitFor({ state: 'hidden', timeout: 5000 }).catch(() => {});
   }
 
+  async isThankYouPageVisible(): Promise<boolean> {
+    const patterns = [/thank you/i, /success/i, /submitted/i, /received/i];
+
+    for (const pattern of patterns) {
+      const matches = await this.frame.getByText(pattern).count();
+      if (matches > 0) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   /**
    * Verify success page
    */

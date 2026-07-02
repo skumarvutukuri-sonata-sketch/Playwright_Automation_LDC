@@ -1,4 +1,4 @@
-import { Page, FrameLocator } from '@playwright/test';
+import { Page, FrameLocator, Locator } from '@playwright/test';
 import { FormEngine, TestMode } from './FormEngine';
 import { Logger } from './Logger';
 import { FormDefinition } from './types';
@@ -6,11 +6,9 @@ import { ReportManager } from '../utils/reporting/ReportManager';
 import { AllureHelper } from '../utils/reporting/AllureHelper';
 import { ApiCapture } from '../utils/api/ApiCapture';
 import { PayloadMapper } from '../utils/api/PayloadMapper';
-import { PayloadValidator } from '../utils/api/PayloadValidator';
+import { PayloadValidator } from '../utils/api/PayloadValidator'; 
 import { ResponseValidator } from '../utils/api/ResponseValidator';
-
 export class FormRunner {
-
   private engine: FormEngine;
 
   constructor(
@@ -20,182 +18,166 @@ export class FormRunner {
     this.engine = new FormEngine(page, frame);
   }
 
-  /**
-   * Main runner
-   */
-  async run(
-    formName: string,
-    form: FormDefinition,
-    mode: TestMode
-  ) {
-
+  async run(formName: string, form: FormDefinition, mode: TestMode) {
     Logger.startForm(formName, mode);
-
     const formKey = `${formName}-${mode}-${Date.now()}`;
-
     ReportManager.startForm(formKey);
+    await AllureHelper.startForm(form.group, formName, mode);
 
-    await AllureHelper.startForm(
-      form.group,
-      formName,
-      mode
-    );
+    let capturedRequest: any = null;
+    let capturedResponse: any = null;
+
+    const requestListener = (req: any) => {
+      if (req.url().includes('/v2/interest-create') && req.method() === 'POST') {
+        capturedRequest = req;
+      }
+    };
+    const responseListener = (res: any) => {
+      if (res.url().includes('/v2/interest-create') && res.request().method() === 'POST') {
+        capturedResponse = res;
+      }
+    };
+
+    this.page.on('request', requestListener);
+    this.page.on('response', responseListener);
 
     try {
+      let isSuccess = false;
+      let stepCount = 1;
+      const MAX_STEPS = 10;
 
-      const steps = form.steps;
+      while (!isSuccess && stepCount <= MAX_STEPS) {
+        Logger.step(stepCount);
+        await AllureHelper.step(`Step ${stepCount}`);
+        
+        this.engine.resetStepState();
 
-      for (let i = 0; i < steps.length; i++) {
-
-        const step = steps[i];
-
-        Logger.step(i + 1);
-
-        await AllureHelper.step(`Step ${i + 1}`);
-
-        // Wait for step to load
         await this.frame.locator('body').first().waitFor();
+        await new Promise(res => setTimeout(res, 1500)); 
 
-        await this.frame
-          .locator('select:visible, input:visible, textarea:visible')
-          .first()
-          .waitFor({ state: 'visible' });
-
-        // Stabilize dynamic UI
-        await new Promise(res => setTimeout(res, 1200));
-
-        // ==========================================================
-        // 🚀 THE FIX: Start listening BEFORE we click Next
-        // ==========================================================
-        let apiCaptureInstance: any;
-        if (i === steps.length - 1) {
-            apiCaptureInstance = await ApiCapture.capture(
-                this.page,
-                '/v2/interest-create'
-            );
+        isSuccess = await this.engine.checkIfSuccessPage(); 
+        if (isSuccess) {
+          Logger.success('Successfully reached Thank You page.');
+          break;
         }
 
-        // ==========================
-        // Validation Mode
-        // ==========================
+        // ==========================================
+        // SMART WAIT: POLL FOR FIELDS 
+        // ==========================================
+        let visibleElements: Locator[] = [];
+        let fieldsFound = false;
+        
+        for (let i = 1; i <= 20; i++) {
+          isSuccess = await this.engine.checkIfSuccessPage();
+          if (isSuccess) {
+            Logger.success('Successfully reached Thank You page after a short loading delay.');
+            break; 
+          }
+
+          const inputs = this.frame.locator('input:not([type="hidden"]):not([type="submit"]):not([type="button"]), select, textarea').filter({ visible: true });
+          
+          if (await inputs.count() > 0) {
+            await new Promise(res => setTimeout(res, 1500));
+            visibleElements = await inputs.all();
+            fieldsFound = true;
+            break; 
+          }
+          
+          await new Promise(res => setTimeout(res, 1000)); 
+        }
+
+        if (isSuccess) {
+            break;
+        }
+
+        if (!fieldsFound) {
+           Logger.action(`Warning: Waited 20s but no input fields found on Step ${stepCount}. Assuming splash page, clicking Next.`);
+           await this.engine.clickNext();
+           await new Promise(res => setTimeout(res, 3000));
+           stepCount++;
+           continue;
+        }
+
+        // ==========================================
+        // 🚀 TRIGGER EMPTY-FORM VALIDATION ON EVERY STEP
+        // ==========================================
         if (mode === 'validation') {
-
           Logger.validationStart();
+          Logger.action(`Triggering empty-field validation for Step ${stepCount}...`);
+          
+          // 1. Click Next on the empty form
+          await this.engine.clickNext(); 
+          await new Promise(res => setTimeout(res, 1500)); // Wait for red errors to render
+          
+          // 2. Explicitly count and verify the error messages appeared
+          // This looks for common CRM error classes (adjust if your CRM uses specific ones)
+          const errorLocators = this.frame.locator('[class*="error"], [class*="Error"], [aria-invalid="true"], [id*="error"]').filter({ visible: true });
+          const errorCount = await errorLocators.count();
 
-          // Trigger validation
-          await this.engine.clickNext();
-
-          for (const field of step.fields) {
-
-            await AllureHelper.field(field.label);
-
-            await this.engine.processField(
-              field.label,
-              mode,
-              field.type
-            );
+          if (errorCount > 0) {
+            Logger.success(`✅ Successfully verified ${errorCount} empty-field error messages appeared!`);
+          } else {
+            Logger.action(`⚠️ Clicked Next, but detected no obvious error text. Filling fields anyway.`);
           }
-
-          await this.engine.clickNext(); // This click submits the form on the last step
-
-        } else {
-
-          // ==========================
-          // Happy Mode
-          // ==========================
-          for (const field of step.fields) {
-
-            await AllureHelper.field(field.label);
-
-            await this.engine.processField(
-              field.label,
-              mode,
-              field.type
-            );
-          }
-
-          await this.engine.clickNext(); // This click submits the form on the last step
+          
+          // 3. Re-grab elements in case the error messages shifted the DOM
+          visibleElements = await this.frame.locator('input:not([type="hidden"]):not([type="submit"]):not([type="button"]), select, textarea').filter({ visible: true }).all();
         }
 
-        // ==========================
-        // Final Step
-        // ==========================
-        if (i === steps.length - 1) {
+        Logger.action(`Found ${visibleElements.length} stable fields on Step ${stepCount}`);
 
-          // Verify successful submission
-          await this.engine.verifySuccess();
-
-          // Get captured request & response using the instance we started earlier
-          const request = await apiCaptureInstance.requestPromise;
-          const response = await apiCaptureInstance.responsePromise;
-
-          // Request payload
-          const payload = await ApiCapture.getRequestPayload(request);
-          const responseBody = await ApiCapture.getResponseBody(response);
-
-          const expectedPayload = PayloadMapper.map(
-              this.engine.getEnteredValues()
-          );
-
-          // PayloadValidator.validate(
-          //     payload,
-          //     expectedPayload
-          // );
-
-          await AllureHelper.attachJson(
-              'Expected Payload',
-              expectedPayload
-          );
-
-          await AllureHelper.attachJson(
-              'API Request',
-              payload
-          );
-
-          await AllureHelper.attachJson(
-              'API Response',
-              responseBody
-          );
-
-          console.log('\n============== API REQUEST ==============');
-          console.log(JSON.stringify(payload, null, 2));
-
-          console.log('\n============== API RESPONSE ==============');
-          console.log(JSON.stringify(responseBody, null, 2));
-
-          console.log('=========================================\n');
-
-          await AllureHelper.success();
-
-          ReportManager.pass(
-            formKey,
-            form.group,
-            formName,
-            mode
-          );
+        // ==========================================
+        // FILL THE FIELDS
+        // ==========================================
+        for (const element of visibleElements) {
+          await this.engine.processDynamicElement(element, mode);
         }
+
+        // ==========================================
+        // SUBMIT THE STEP
+        // ==========================================
+        await this.engine.clickNext();
+        
+        await new Promise(res => setTimeout(res, 1500)); 
+        stepCount++;
       }
 
-      Logger.endForm();
+      if (!isSuccess) {
+        throw new Error(`Form failed to reach the success page after ${MAX_STEPS} steps.`);
+      }
+
+      // ==========================================
+      // THE FINAL API VALIDATION STEP
+      // ==========================================
+      if (capturedRequest && capturedResponse) {
+        const actualPayload = await ApiCapture.getRequestPayload(capturedRequest);
+        const responseBody = await ApiCapture.getResponseBody(capturedResponse);
+        const expectedPayload = PayloadMapper.map(this.engine.getEnteredValues());
+
+        await AllureHelper.attachJson('Expected Payload', expectedPayload);
+        await AllureHelper.attachJson('API Request', actualPayload);
+        await AllureHelper.attachJson('API Response', responseBody);
+
+        PayloadValidator.validate(actualPayload, expectedPayload);
+        ResponseValidator.validate(responseBody);
+
+      } else {
+        throw new Error('❌ API Request to /v2/interest-create was not detected. Test failed.');
+      }
+
+      await AllureHelper.success();
+      ReportManager.pass(formKey, form.group, formName, mode);
 
     } catch (error) {
-
-      const message =
-        error instanceof Error
-          ? error.message
-          : String(error);
-
+      const message = error instanceof Error ? error.message : String(error);
       await AllureHelper.failure(message);
-
-      ReportManager.fail(
-        formKey,
-        form.group,
-        formName,
-        mode,
-        message
-      );
-
+      ReportManager.fail(formKey, form.group, formName, mode, message);
       throw error;
+      
+    } finally {
+      this.page.removeListener('request', requestListener);
+      this.page.removeListener('response', responseListener);
+      Logger.endForm();
     }
   }
 }

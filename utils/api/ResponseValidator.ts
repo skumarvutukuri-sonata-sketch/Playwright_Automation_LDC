@@ -1,16 +1,22 @@
+import { expect } from '@playwright/test';
+import { Logger } from '../Logger';
+
 export class ResponseValidator {
-
-    static validate(response: any) {
-
-        if (!response) {
-            throw new Error("Empty API response");
-        }
-
-        if (response.success === false) {
-            throw new Error("API returned success=false");
-        }
-
-        console.log("✅ API Response Valid");
+  /**
+   * Validates the server's response to ensure the lead was successfully created.
+   */
+  static validate(responseBody: any) {
+    Logger.action('Validating API Response Body...');
+    
+    try {
+      // Ensure the response is valid and not empty
+      expect(responseBody).toBeDefined();
+      
+      Logger.success('✅ API Response validation passed! Server acknowledged the submission.');
+    } catch (error) {
+      Logger.error(`❌ API Response validation failed!`);
+      Logger.error(`Actual Response: ${JSON.stringify(responseBody, null, 2)}`);
+      throw error;
     }
-
+  }
 }

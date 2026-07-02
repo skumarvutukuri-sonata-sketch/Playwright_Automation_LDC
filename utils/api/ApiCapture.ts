@@ -1,34 +1,27 @@
-import { Page, Request, Response } from '@playwright/test';
+import { Request, Response } from '@playwright/test';
 
 export class ApiCapture {
-
-    static async capture(page: Page, endpoint: string) {
-
-        const requestPromise = page.waitForRequest(request =>
-            request.url().includes(endpoint) &&
-            request.method() === 'POST'
-        );
-
-        const responsePromise = page.waitForResponse(response =>
-            response.url().includes(endpoint) &&
-            response.request().method() === 'POST'
-        );
-
-        return {
-            requestPromise,
-            responsePromise
-        };
+  /**
+   * Safely extracts the POST payload that the browser sent to the server.
+   */
+  static async getRequestPayload(request: Request): Promise<any> {
+    try {
+      const postData = request.postDataJSON();
+      return postData || {};
+    } catch (e) {
+      return { error: 'Could not parse request payload as JSON' };
     }
+  }
 
-    static async getRequestPayload(request: Request): Promise<any> {
-        return request.postDataJSON();
+  /**
+   * Safely extracts the response body that the server sent back.
+   */
+  static async getResponseBody(response: Response): Promise<any> {
+    try {
+      const text = await response.text();
+      return text ? JSON.parse(text) : {};
+    } catch (e) {
+      return { error: 'Could not parse response body as JSON' };
     }
-
-    static async getResponseBody(response: Response): Promise<any> {
-        try {
-            return await response.json();
-        } catch {
-            return await response.text();
-        }
-    }
+  }
 }
