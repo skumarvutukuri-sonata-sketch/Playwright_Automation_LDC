@@ -48,14 +48,14 @@ export default defineConfig({
     timeout: 20_000
   },
 
-  // 🚀 UPGRADE 1: Allows your dynamic loop tests to be split across multiple browsers
-  fullyParallel: true,
+  // SSO-protected flows are more reliable in CI when executed sequentially.
+  fullyParallel: process.env.CI ? false : true,
   
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 1,
 
-  // 🚀 UPGRADE 2: Unlocks maximum speed based on your hardware!
-  workers: process.env.CI ? 4 : '50%',
+  // SSO tokens can be invalidated across parallel workers in CI.
+  workers: process.env.CI ? 1 : '50%',
 
   reporter: [
     ['list'],
