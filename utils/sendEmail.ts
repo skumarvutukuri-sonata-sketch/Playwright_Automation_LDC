@@ -7,7 +7,33 @@ import { generateFormattedReport } from './generateReport';
 
 dotenv.config();
 
+function hasRequiredEmailConfig() {
+  const requiredEnvVars = ['SMTP_HOST', 'EMAIL_USER', 'EMAIL_PASS', 'EMAIL_TO'];
+  return requiredEnvVars.every((name) => {
+    const value = process.env[name];
+    return typeof value === 'string' && value.trim().length > 0;
+  });
+}
+
+function shouldSkipEmail() {
+  if (process.env.CI || process.env.GITHUB_ACTIONS) {
+    console.warn('⚠ Skipping email delivery in CI.');
+    return true;
+  }
+
+  if (!hasRequiredEmailConfig()) {
+    console.warn('⚠ Skipping email delivery because SMTP settings are incomplete.');
+    return true;
+  }
+
+  return false;
+}
+
 export async function sendEmailWithReport() {
+  if (shouldSkipEmail()) {
+    return false;
+  }
+
   const smtpPort = Number(process.env.SMTP_PORT) || 587;
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
@@ -64,6 +90,10 @@ export async function sendEmailWithReport() {
 // single exported runAutomation is defined below
 
 export async function sendSuccessEmail() {
+  if (shouldSkipEmail()) {
+    return false;
+  }
+
   const smtpPort = Number(process.env.SMTP_PORT) || 587;
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
