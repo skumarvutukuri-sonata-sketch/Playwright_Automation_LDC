@@ -68,8 +68,13 @@ jobs:
         working-directory: ./main-repo
         run: allure generate allure-results --clean -o reports/allure
 
-      - name: 🌍 Publish Dashboards to GitHub Pages
-        uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ce4a480 # v3.9.3 SHA
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./main-repo/reports
+      - name: 🌍 Publish Dashboards (Native Git Bypass)
+        working-directory: ./main-repo/reports
+        run: |
+          git init
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b gh-pages
+          git add .
+          git commit -m "Automated deployment to GitHub Pages"
+          git push --force "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" gh-pages
