@@ -11,9 +11,10 @@ async function globalTeardown() {
     require('fs').readFileSync('test-results.json', 'utf-8')
   );
 
-  console.log("📊 Results:", results.stats);
+  const stats = results?.stats ?? {};
+  console.log("📊 Results:", stats);
 
-  const failedCount = Number(results.stats.failed || 0);
+  const failedCount = Number(stats.failed ?? stats.unexpected ?? 0);
   if (failedCount === 0) {
     console.log("✅ Tests passed. Generating Allure report...");
     try {
