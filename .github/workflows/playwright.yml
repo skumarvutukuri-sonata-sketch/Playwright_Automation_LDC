@@ -2,10 +2,15 @@ name: Playwright Tests
 on:
   push:
     branches:
-      - '**'
+      - main
+      - master
+      - auto_heal_framework
+      - copilot/auto-heal
   pull_request:
     branches:
-      - '**'
+      - main
+      - master
+      - auto_heal_framework
   workflow_dispatch:
 jobs:
   test:
