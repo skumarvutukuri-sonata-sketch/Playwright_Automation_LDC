@@ -2,13 +2,13 @@ import { test as setup } from '@playwright/test';
 import { LoginPage } from '../../pages/login.page';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
-const { authenticator } = require('otplib');
+// Notice: No otplib import here at the top anymore!
+
 dotenv.config();
 
 const storageStatePath = path.resolve(__dirname, 'storageState.json');
 
 setup('login and save session', async ({ page }) => {
-  // Reduced timeout since we no longer need to wait for a human
   setup.setTimeout(60000); 
   console.log('=== SETUP: Automating Login and MFA ===');
 
@@ -18,16 +18,18 @@ setup('login and save session', async ({ page }) => {
   // 1. Perform standard login (Email, Username, Password)
   await loginPage.valid_login(process.env.EMAIL!, process.env.USERNAME!, process.env.PASSWORD!);
 
-  // ==========================================
-  // 2. AUTOMATED MFA LOGIC
-  // ==========================================
   console.log('⏳ Waiting for MFA screen...');
   
-  // IMPORTANT: You may need to inspect the OneLogin screen and update this selector
-  // to perfectly match the 6-digit input box.
   const mfaInput = page.locator('input[name="otp_code"]'); 
   await mfaInput.waitFor({ state: 'visible', timeout: 15000 });
 
+  // ==========================================
+  // 2. AUTOMATED MFA LOGIC (DYNAMIC IMPORT FIX)
+  // ==========================================
+  // This dynamic import bypasses both the TypeScript and ES Module errors!
+  const otplib = (await import('otplib')) as any;
+  const authenticator = otplib.authenticator || otplib.default.authenticator;
+  
   // Generate the 6-digit token using the secret from your .env file
   const secret = process.env.MFA_SECRET!;
   const token = authenticator.generate(secret);
@@ -36,8 +38,6 @@ setup('login and save session', async ({ page }) => {
   // Type the token into the input box
   await mfaInput.fill(token);
 
-  // IMPORTANT: You may need to inspect the OneLogin screen and update this selector
-  // to match the "Continue" or "Log in" button on the MFA screen.
   const mfaSubmitButton = page.locator('button[type="submit"]'); 
   await mfaSubmitButton.click();
   // ==========================================
