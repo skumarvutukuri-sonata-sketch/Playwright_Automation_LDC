@@ -117,9 +117,95 @@
 //   }
 // }
 
-import { faker } from '@faker-js/faker';
-
 export class DefaultData {
+  private static pick(values: string[]): string {
+    return values[Math.floor(Math.random() * values.length)];
+  }
+
+  private static randomDigits(length: number): string {
+    let value = '';
+    for (let i = 0; i < length; i++) {
+      value += Math.floor(Math.random() * 10).toString();
+    }
+    return value;
+  }
+
+  private static randomAlnum(length: number): string {
+    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    let value = '';
+    for (let i = 0; i < length; i++) {
+      value += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return value;
+  }
+
+  private static readonly firstNames = [
+    'Liam',
+    'Noah',
+    'Olivia',
+    'Emma',
+    'Ava',
+    'Mia',
+    'Arjun',
+    'Priya',
+    'Aarav',
+    'Ananya'
+  ];
+
+  private static readonly lastNames = [
+    'Sharma',
+    'Patel',
+    'Sagiraju',
+    'Reddy',
+    'Smith',
+    'Johnson',
+    'Brown',
+    'Khan',
+    'Mehta',
+    'Singh'
+  ];
+
+  private static readonly streetNames = [
+    'Maple Street',
+    'Cedar Avenue',
+    'Lake View Road',
+    'Hillcrest Lane',
+    'Park Boulevard'
+  ];
+
+  private static readonly cities = [
+    'Hyderabad',
+    'Bengaluru',
+    'Chennai',
+    'Pune',
+    'Mumbai',
+    'Delhi'
+  ];
+
+  private static readonly states = [
+    'Telangana',
+    'Karnataka',
+    'Tamil Nadu',
+    'Maharashtra',
+    'Delhi'
+  ];
+
+  private static readonly adjectives = [
+    'rapid',
+    'bright',
+    'calm',
+    'smart',
+    'swift',
+    'agile'
+  ];
+
+  private static readonly products = [
+    'Automation Plan',
+    'QA Bundle',
+    'Cloud Toolkit',
+    'Dashboard Suite',
+    'Testing Kit'
+  ];
 
   /**
    * Main entry: label-based mapping
@@ -140,53 +226,46 @@ export class DefaultData {
     return this.getRandomText();
   }
 
-  // ==========================================
-  // 🎲 100% DYNAMIC FAKER DATA
-  // ==========================================
-
   static getFirstName(): string {
-    return faker.person.firstName(); // e.g., 'John', 'Priya'
+    return this.pick(this.firstNames);
   }
 
   static getLastName(): string {
-    return faker.person.lastName(); // e.g., 'Doe', 'Patel'
+    return this.pick(this.lastNames);
   }
 
   static getEmail(): string {
-    // Generates completely random emails but keeps them in your mailinator inbox!
-    // e.g., 'swift.john171@mailinator.com'
-    const randomWord = faker.word.adjective();
-    const randomName = faker.person.firstName();
+    const randomWord = this.pick(this.adjectives);
+    const randomName = this.getFirstName();
     return `${randomWord}.${randomName}${Date.now().toString().slice(-4)}@mailinator.com`.toLowerCase();
   }
 
   static getPhone(): string {
-    // Keeps your +91 prefix, but generates 10 completely random digits after it
-    return `+91${faker.string.numeric(10)}`; 
+    return `+91${this.randomDigits(10)}`;
   }
 
   static getZip(): string {
-    return faker.location.zipCode('######'); // Generates a random 6-digit zip code
+    return this.randomDigits(6);
   }
 
   static getAddress(): string {
-    return faker.location.streetAddress(); // e.g., '1234 Elm Street'
+    return `${Math.floor(1 + Math.random() * 9999)} ${this.pick(this.streetNames)}`;
   }
 
   static getCity(): string {
-    return faker.location.city(); 
+    return this.pick(this.cities);
   }
 
   static getState(): string {
-    return faker.location.state(); 
+    return this.pick(this.states);
   }
 
   static getParagraph(): string {
-    return faker.lorem.sentence(); // Generates a random realistic sentence
+    return `Automation input ${this.randomAlnum(12)} generated for validation flow.`;
   }
 
   static getRandomText(): string {
-    return faker.commerce.productName(); // e.g., 'Incredible Steel Hat'
+    return `${this.pick(this.products)} ${this.randomAlnum(6)}`;
   }
 
   // ==========================================
