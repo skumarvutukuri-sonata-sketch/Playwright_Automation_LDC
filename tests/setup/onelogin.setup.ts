@@ -7,22 +7,15 @@ import * as path from 'path';
 const storageStatePath = path.resolve(__dirname, 'storageState.json');
 
 setup('login and save session', async ({ page }) => {
-  setup.setTimeout(360000);
+  setup.setTimeout(180000);
   console.log('=== SETUP: Please accept the MFA push notification on your phone ===');
 
   const loginPage = new LoginPage(page);
   await page.goto(process.env.Taxi_Staging_URL!);
   await loginPage.valid_login(process.env.EMAIL!, process.env.USERNAME!, process.env.PASSWORD!);
 
-  // MFA handoff can be slow; wait for either Taxi landing or OneLogin portal completion state.
-  await page.waitForURL(/taxi\.stg\.mktg\.2u\.com|2u\.onelogin\.com/i, { timeout: 240000 });
-
-  // If OneLogin keeps you on portal after MFA approval, force navigation back to Taxi.
-  if (/onelogin\.com/i.test(page.url())) {
-    await page.goto(process.env.Taxi_Staging_URL!);
-  }
-
-  await page.waitForURL(/taxi\.stg\.mktg\.2u\.com/i, { timeout: 120000 });
+  // Wait until MFA is accepted and browser lands on Taxi staging.
+  await page.waitForURL('**/taxi.stg.mktg.2u.com/**', { timeout: 120000 });
   await page.waitForLoadState('networkidle');
   await page.waitForTimeout(3000);
 

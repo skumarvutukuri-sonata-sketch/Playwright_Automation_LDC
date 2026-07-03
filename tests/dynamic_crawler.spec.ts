@@ -3,21 +3,6 @@ import { FormRunner } from '../utils/FormRunner';
 import { CSVManager } from '../utils/CSVManager'; 
 import { ReportManager } from '../utils/reporting/ReportManager'; 
 
-const waitForAuthenticatedFormPage = async (page: any, targetUrl: string): Promise<void> => {
-    if (!/onelogin\.com/i.test(page.url())) {
-        return;
-    }
-
-    console.log(`=== Redirected to OneLogin for ${targetUrl}. Please approve MFA if prompted. ===`);
-
-    try {
-        await page.waitForURL((url: URL) => !/onelogin\.com/i.test(url.href), { timeout: 240000 });
-    } catch {
-        // If auto-redirect does not happen, retry target URL after MFA approval.
-        await page.goto(targetUrl, { waitUntil: 'domcontentloaded' });
-    }
-};
-
 // 🚀 HELPER: Safely find columns ignoring Excel trailing spaces or casing changes
 const getCleanValue = (row: any, keyword: 'group' | 'form' | 'run' | 'url'): string => {
     const keys = Object.keys(row);
@@ -73,7 +58,6 @@ for (const sheetName of SHEETS) {
                 ReportManager.startForm(formKey);
 
                 await page.goto(formConfig.url, { waitUntil: 'domcontentloaded' });
-                await waitForAuthenticatedFormPage(page, formConfig.url);
                 const frame = page.frameLocator('iframe');
                 await page.waitForTimeout(1500);
                 const runner = new FormRunner(page, frame);
@@ -97,7 +81,6 @@ for (const sheetName of SHEETS) {
                 ReportManager.startForm(formKey);
 
                 await page.goto(formConfig.url, { waitUntil: 'domcontentloaded' });
-                await waitForAuthenticatedFormPage(page, formConfig.url);
                 const frame = page.frameLocator('iframe');
                 await page.waitForTimeout(1500);
                 const runner = new FormRunner(page, frame);
