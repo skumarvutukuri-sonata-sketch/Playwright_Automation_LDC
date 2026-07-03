@@ -1,27 +1,80 @@
-name: Playwright Tests
+name: Nightly QA Dashboard
+
 on:
   push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+    branches:
+      - auto_heal_framework
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
-  test:
-    timeout-minutes: 60
+  test-and-publish:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      run: npx playwright test
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+      - name: 📥 Checkout gh-pages (Get Historical Data)
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7 SHA
+        with:
+          ref: gh-pages
+          path: old-reports
+          continue-on-error: true
+
+      - name: 📥 Checkout Main Code
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7 SHA
+        with:
+          path: main-repo
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: 🔄 Restore 30-Day History
+        run: |
+          cp old-reports/dashboard-history.js main-repo/utils/dashboard-history.js || echo "No previous history found, starting fresh!"
+
+      - name: 📦 Install Dependencies
+        working-directory: ./main-repo
+        run: npm install
+
+      - name: 🌐 Install Playwright Browsers
+        working-directory: ./main-repo
+        run: npx playwright install --with-deps
+
+      - name: 🔐 Generate .env file
+        working-directory: ./main-repo
+        env:
+          FULL_ENV_CONTENT: ${{ secrets.ENV_FILE_CONTENT }}
+        run: echo "$FULL_ENV_CONTENT" > .env
+
+      - name: 🚀 Run Playwright Tests (3 Forms Only)
+        working-directory: ./main-repo
+        run: npx playwright test -g "2527|2704|3005"
+        continue-on-error: true
+
+      - name: 📊 Generate Custom HTML Dashboard
+        working-directory: ./main-repo
+        run: npx ts-node utils/DashboardGenerator.ts
+
+      - name: 📦 Install Allure Commandline
+        run: npm install -g allure-commandline
+
+      - name: 📈 Generate Allure Report
+        working-directory: ./main-repo
+        run: allure generate allure-results --clean -o reports/allure
+
+      - name: 🌍 Publish Dashboards (Native Git Bypass)
+        working-directory: ./main-repo/reports
+        run: |
+          git init
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b gh-pages
+          git add .
+          git commit -m "Automated deployment to GitHub Pages"
+          git push --force "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" gh-pages

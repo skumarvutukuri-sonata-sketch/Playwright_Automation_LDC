@@ -1,30 +1,26 @@
 {
   "config": {
-    "configFile": "D:\\Users\\skumarvutukuri\\Documents\\Automation_LDC\\playwright.config.ts",
-    "rootDir": "D:/Users/skumarvutukuri/Documents/Automation_LDC/tests",
-    "forbidOnly": false,
+    "configFile": "/home/runner/work/Playwright_Automation_LDC/Playwright_Automation_LDC/playwright.config.ts",
+    "rootDir": "/home/runner/work/Playwright_Automation_LDC/Playwright_Automation_LDC/tests",
+    "forbidOnly": true,
     "fullyParallel": false,
     "globalSetup": null,
-    "globalTeardown": "D:\\Users\\skumarvutukuri\\Documents\\Automation_LDC\\global-teardown.ts",
+    "globalTeardown": "/home/runner/work/Playwright_Automation_LDC/Playwright_Automation_LDC/global-teardown.ts",
     "globalTimeout": 0,
     "grep": {},
     "grepInvert": null,
     "maxFailures": 0,
-    "metadata": {
-      "actualWorkers": 1
-    },
+    "metadata": {},
     "preserveOutput": "always",
     "projects": [
       {
-        "outputDir": "D:/Users/skumarvutukuri/Documents/Automation_LDC/test-results",
+        "outputDir": "/home/runner/work/Playwright_Automation_LDC/Playwright_Automation_LDC/test-results",
         "repeatEach": 1,
-        "retries": 0,
-        "metadata": {
-          "actualWorkers": 1
-        },
+        "retries": 2,
+        "metadata": {},
         "id": "chromium",
         "name": "chromium",
-        "testDir": "D:/Users/skumarvutukuri/Documents/Automation_LDC/tests",
+        "testDir": "/home/runner/work/Playwright_Automation_LDC/Playwright_Automation_LDC/tests",
         "testIgnore": [],
         "testMatch": [
           "**/*.@(spec|test).?(c|m)[jt]s?(x)"
@@ -80,126 +76,13 @@
               "tags": [],
               "tests": [
                 {
-                  "timeout": 360000,
+                  "timeout": 60000,
                   "annotations": [],
                   "expectedStatus": "passed",
                   "projectId": "chromium",
                   "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 74487,
-                      "errors": [],
-                      "stdout": [
-                        {
-                          "text": "-------------Form Landing page ---------\n"
-                        },
-                        {
-                          "text": "Step 1 title text is : Step 1 of 4\n"
-                        },
-                        {
-                          "text": "Actual Step 1 text is : Step 1 of 4\n"
-                        },
-                        {
-                          "text": "[\n  \u001b[32m'— Select —\\nNext available cohort\\n3 to 6 months\\n6 to 12 months\\nUnsure'\u001b[39m\n]\n"
-                        },
-                        {
-                          "text": "Selected value: Next available cohort\n"
-                        },
-                        {
-                          "text": "Step 2 title text is : Step 2 of 4\n"
-                        },
-                        {
-                          "text": "Actual Step 2 text is : Step 2 of 4\n"
-                        },
-                        {
-                          "text": "Extracted Dropdown Options: [\n  \u001b[32m'— Select —'\u001b[39m,\n  \u001b[32m'Behavioral Science'\u001b[39m,\n  \u001b[32m'Biology/Chemistry'\u001b[39m,\n  \u001b[32m'Mathematics/Statistics'\u001b[39m,\n  \u001b[32m'Other'\u001b[39m,\n  \u001b[32m'Physics'\u001b[39m\n]\n"
-                        },
-                        {
-                          "text": "Extracted Dropdown Options: [\n  \u001b[32m'— Select —'\u001b[39m,\n  \u001b[32m'High School'\u001b[39m,\n  \u001b[32m\"Associate's\"\u001b[39m,\n  \u001b[32m\"Bachelor's In Progress\"\u001b[39m,\n  \u001b[32m\"Bachelor's\"\u001b[39m,\n  \u001b[32m\"Master's\"\u001b[39m,\n  \u001b[32m\"Master's In Progress\"\u001b[39m,\n  \u001b[32m'Doctorate'\u001b[39m\n]\n"
-                        },
-                        {
-                          "text": "Selected value: Behavioral Science\n"
-                        },
-                        {
-                          "text": "Selecting the Level of education dropdown option : Bachelors\n"
-                        },
-                        {
-                          "text": "Selected value: Bachelors\n"
-                        },
-                        {
-                          "text": "Selected the Level of education dropdown option : Bachelors\n"
-                        },
-                        {
-                          "text": "Selected value: 4.00 And Above\n"
-                        },
-                        {
-                          "text": "Extracted Dropdown Options: [\n  \u001b[32m'— Select —'\u001b[39m,\n  \u001b[32m'4.00 and Above'\u001b[39m,\n  \u001b[32m'3.99 - 3.50'\u001b[39m,\n  \u001b[32m'3.49 - 3.00'\u001b[39m,\n  \u001b[32m'2.99 - 2.50'\u001b[39m,\n  \u001b[32m'2.49 and Below'\u001b[39m\n]\n"
-                        },
-                        {
-                          "text": "Selected value: Yes\n"
-                        },
-                        {
-                          "text": "Extracted Dropdown Options: [ \u001b[32m'— Select —'\u001b[39m, \u001b[32m'Yes'\u001b[39m, \u001b[32m'No'\u001b[39m, \u001b[32m'Undecided'\u001b[39m ]\n"
-                        },
-                        {
-                          "text": "Step 3 title text is : Step 3 of 4\n"
-                        },
-                        {
-                          "text": "Actual Step 3 text is : Step 3 of 4\n"
-                        },
-                        {
-                          "text": "Is error message visible : true\n"
-                        },
-                        {
-                          "text": "Entered input value : Test\n"
-                        },
-                        {
-                          "text": "Entered input value : User\n"
-                        },
-                        {
-                          "text": "Entered input value : example-sonatatest@2u.com\n"
-                        },
-                        {
-                          "text": "Step 4 title text is : Step 4 of 4\n"
-                        },
-                        {
-                          "text": "Actual Step 4 text is : Step 4 of 4\n"
-                        },
-                        {
-                          "text": "Selected value: California\n"
-                        },
-                        {
-                          "text": "Entered input value : 90001\n"
-                        },
-                        {
-                          "text": "Entered input value : +919848022338\n"
-                        },
-                        {
-                          "text": "ALB_UMT_BIO Form is submitted successfully\n"
-                        }
-                      ],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-06-01T16:26:56.023Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "screenshot",
-                          "contentType": "image/png",
-                          "path": "D:\\Users\\skumarvutukuri\\Documents\\Automation_LDC\\test-results\\ALB_UMT_BIO-ALB-UMT-BIO-Fo-98796-Verify-the-ALB-UMT-BIO-form-chromium\\test-finished-1.png"
-                        },
-                        {
-                          "name": "video",
-                          "contentType": "video/webm",
-                          "path": "D:\\Users\\skumarvutukuri\\Documents\\Automation_LDC\\test-results\\ALB_UMT_BIO-ALB-UMT-BIO-Fo-98796-Verify-the-ALB-UMT-BIO-form-chromium\\video.webm"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
+                  "results": [],
+                  "status": "skipped"
                 }
               ],
               "id": "b6305cf3a52fdd35cf5c-b17fb7e084c47e461a61",
@@ -210,14 +93,119 @@
           ]
         }
       ]
+    },
+    {
+      "title": "DemoForm.spec.ts",
+      "file": "DemoForm.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Demo Form Tests",
+          "file": "DemoForm.spec.ts",
+          "line": 7,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Verify the demo form",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3ea1b76728481085e278-e629a59c3a54800d3785",
+              "file": "DemoForm.spec.ts",
+              "line": 17,
+              "column": 5
+            },
+            {
+              "title": "Verify the demo form2",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3ea1b76728481085e278-99384154115b49175b11",
+              "file": "DemoForm.spec.ts",
+              "line": 24,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "example.spec.ts",
+      "file": "example.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "has title",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "a30a6eba6312f6b87ea5-b06063a3e613764d08f8",
+          "file": "example.spec.ts",
+          "line": 3,
+          "column": 5
+        },
+        {
+          "title": "get started link",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "a30a6eba6312f6b87ea5-274e97907a6e3638a22f",
+          "file": "example.spec.ts",
+          "line": 10,
+          "column": 5
+        }
+      ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-06-01T16:26:55.119Z",
-    "duration": 89914.931,
-    "expected": 1,
-    "skipped": 0,
+    "startTime": "2026-07-03T13:07:35.357Z",
+    "duration": 24.83699999999999,
+    "expected": 0,
+    "skipped": 5,
     "unexpected": 0,
     "flaky": 0
   }
