@@ -2,7 +2,6 @@ import { test as setup } from '@playwright/test';
 import { LoginPage } from '../../pages/login.page';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
-// Notice: No otplib import here at the top anymore!
 
 dotenv.config();
 
@@ -18,28 +17,47 @@ setup('login and save session', async ({ page }) => {
   // 1. Perform standard login (Email, Username, Password)
   await loginPage.valid_login(process.env.EMAIL!, process.env.USERNAME!, process.env.PASSWORD!);
 
-  console.log('⏳ Waiting for MFA screen...');
+  console.log('⏳ Checking current MFA screen state...');
   
-  const mfaInput = page.locator('input[name="otp_code"]'); 
+  // ==========================================
+  // 2. SMART MFA LOGIC
+  // ==========================================
+  
+  // A. Check if OneLogin defaulted to a Push Notification screen
+  const changeFactorBtn = page.getByText(/Change Authentication Factor/i).first();
+  
+  try {
+    // We wait just 5 seconds to see if the Change Factor button exists
+    if (await changeFactorBtn.waitFor({ state: 'visible', timeout: 5000 }).then(() => true).catch(() => false)) {
+        console.log('🔄 Push screen detected. Switching to Authenticator App...');
+        await changeFactorBtn.click();
+        
+        // Click the Authenticator App option
+        const authenticatorOption = page.getByText(/Authenticator/i).first();
+        await authenticatorOption.waitFor({ state: 'visible', timeout: 5000 });
+        await authenticatorOption.click();
+    }
+  } catch (e) {
+     // If the button isn't there, it means we are already on the correct screen
+     console.log('➡️ No "Change Factor" needed, proceeding directly to input...');
+  }
+
+  console.log('⏳ Waiting for the 6-digit input box...');
+  
+  // B. Target the exact React data-testid from the OneLogin HTML you found
+  const mfaInput = page.getByTestId('security-code'); 
   await mfaInput.waitFor({ state: 'visible', timeout: 15000 });
 
-  // ==========================================
-  // 2. AUTOMATED MFA LOGIC (DYNAMIC IMPORT FIX)
-  // ==========================================
-  // This dynamic import bypasses both the TypeScript and ES Module errors!
+  // C. Generate the 6-digit token (Dynamic Import Fix for TypeScript)
   const otplib = (await import('otplib')) as any;
   const authenticator = otplib.authenticator || otplib.default.authenticator;
-  
-  // Generate the 6-digit token using the secret from your .env file
   const secret = process.env.MFA_SECRET!;
   const token = authenticator.generate(secret);
   console.log(`🔐 Generated MFA Token successfully.`);
 
-  // Type the token into the input box
+  // D. Type the token and press Enter to submit
   await mfaInput.fill(token);
-
-  const mfaSubmitButton = page.locator('button[type="submit"]'); 
-  await mfaSubmitButton.click();
+  await mfaInput.press('Enter'); 
   // ==========================================
 
   // 3. Wait until the browser successfully lands on Taxi staging
