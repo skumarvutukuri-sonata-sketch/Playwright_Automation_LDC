@@ -6,7 +6,6 @@ import {
   parameter,
   parentSuite,
   severity,
-  step,
   subSuite,
   suite,
   tag,
@@ -22,26 +21,31 @@ export class AllureHelper {
    * Initialize Form
    */
   static async startForm(
+    category: string,
     group: string,
     formName: string,
     mode: string
   ): Promise<void> {
 
-    await parentSuite('Degree Forms');
+    await parentSuite(category);
 
     await suite(group);
 
-    await subSuite(mode.toUpperCase());
+    await subSuite(formName);
 
-    await feature(formName);
+    await feature(mode.toUpperCase());
 
     await owner('QA Automation');
 
     await severity(Severity.NORMAL);
 
+    await tag(category);
+
     await tag(group);
 
     await tag(mode);
+
+    await parameter('Category', category);
 
     await parameter('Group', group);
 

@@ -22,7 +22,7 @@ export class FormRunner {
     Logger.startForm(formName, mode);
     const formKey = `${formName}-${mode}-${Date.now()}`;
     ReportManager.startForm(formKey);
-    await AllureHelper.startForm(form.group, formName, mode);
+    await AllureHelper.startForm(form.category ?? 'Uncategorized', form.group, formName, mode);
 
     let capturedRequest: any = null;
     let capturedResponse: any = null;

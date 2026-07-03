@@ -27,6 +27,7 @@ const SHEETS: Array<'Short_Courses' | 'Degree'> = ['Short_Courses', 'Degree'];
 
 for (const sheetName of SHEETS) {
     const allData = CSVManager.getTestData(sheetName);
+    const categoryLabel = sheetName === 'Short_Courses' ? 'Short Courses' : 'Degree';
 
     // Filter data smartly based on how you ran the command
     const testData = allData.filter(row => {
@@ -44,7 +45,7 @@ for (const sheetName of SHEETS) {
             const formId = getCleanValue(row, 'form');
             const groupName = getCleanValue(row, 'group') || 'Unknown';
             const url = getCleanValue(row, 'url');
-            const formConfig = { url, group: groupName };
+            const formConfig = { url, group: groupName, category: categoryLabel };
 
             // Embedding metadata in brackets creates instant search tags for the CLI
             const testIdentifier = `[Sheet:${sheetName}] [Group:${groupName}] [Form:${formId}]`;

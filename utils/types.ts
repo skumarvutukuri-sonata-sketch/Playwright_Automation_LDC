@@ -11,6 +11,9 @@ export interface FormDefinition {
   
   /** The group or university name (e.g., 'vu-edu', 'alb-umt') */
   group: string;
+
+  /** High-level category for reporting (e.g., 'Degree', 'Short Courses') */
+  category?: string;
   
   /** * 🚀 OPTIONAL: The framework now dynamically crawls the DOM to find fields.
    * You no longer need to hardcode step arrays! 
