@@ -3,7 +3,7 @@ name: Nightly QA Dashboard
 on:
   push:
     branches:
-      - auto_heal_framework # This makes the workflow run immediately when you push to this branch
+      - auto_heal_framework 
   schedule:
     - cron: '0 2 * * *' 
   workflow_dispatch: 
@@ -18,19 +18,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 📥 Checkout gh-pages (Get Historical Data)
-        uses: actions/checkout@v4
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7 SHA
         with:
           ref: gh-pages
           path: old-reports
           continue-on-error: true 
 
       - name: 📥 Checkout Main Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7 SHA
         with:
           path: main-repo
 
       - name: ⚙️ Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@60edb5dd545a775178f525247833159c03af0b59 # v4.0.2 SHA
         with:
           node-version: 18
 
@@ -52,7 +52,6 @@ jobs:
           FULL_ENV_CONTENT: ${{ secrets.ENV_FILE_CONTENT }}
         run: echo "$FULL_ENV_CONTENT" > .env
 
-      # UPDATED STEP: Only runs the 3 forms you specified
       - name: 🚀 Run Playwright Tests (3 Forms Only)
         working-directory: ./main-repo
         run: npx playwright test -g "2527|2704|3005"
@@ -70,7 +69,7 @@ jobs:
         run: allure generate allure-results --clean -o reports/allure
 
       - name: 🌍 Publish Dashboards to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ce4a480 # v3.9.3 SHA
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./main-repo/reports
