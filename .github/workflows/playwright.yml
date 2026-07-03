@@ -1,9 +1,12 @@
 name: Nightly QA Dashboard
 
 on:
+  push:
+    branches:
+      - auto_heal_framework # This makes the workflow run immediately when you push to this branch
   schedule:
-    - cron: '0 2 * * *' # Runs automatically every day at 2:00 AM UTC
-  workflow_dispatch: # Creates a button in GitHub so you can run it manually anytime
+    - cron: '0 2 * * *' 
+  workflow_dispatch: 
 
 permissions:
   contents: write
@@ -19,7 +22,7 @@ jobs:
         with:
           ref: gh-pages
           path: old-reports
-          continue-on-error: true # It's okay if this fails on the very first run!
+          continue-on-error: true 
 
       - name: 📥 Checkout Main Code
         uses: actions/checkout@v4
@@ -33,7 +36,6 @@ jobs:
 
       - name: 🔄 Restore 30-Day History
         run: |
-          # Copy previous history into the utils folder (our Safe Zone) so the generator can find it
           cp old-reports/dashboard-history.js main-repo/utils/dashboard-history.js || echo "No previous history found, starting fresh!"
 
       - name: 📦 Install Dependencies
@@ -44,10 +46,17 @@ jobs:
         working-directory: ./main-repo
         run: npx playwright install --with-deps
 
-      - name: 🚀 Run Playwright Tests
+      - name: 🔐 Generate .env file
         working-directory: ./main-repo
-        run: npx playwright test
-        continue-on-error: true # Ensures the pipeline keeps going even if tests fail!
+        env:
+          FULL_ENV_CONTENT: ${{ secrets.ENV_FILE_CONTENT }}
+        run: echo "$FULL_ENV_CONTENT" > .env
+
+      # UPDATED STEP: Only runs the 3 forms you specified
+      - name: 🚀 Run Playwright Tests (3 Forms Only)
+        working-directory: ./main-repo
+        run: npx playwright test -g "2527|2704|3005"
+        continue-on-error: true 
 
       - name: 📊 Generate Custom HTML Dashboard
         working-directory: ./main-repo
