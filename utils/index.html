@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA Automation Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="dashboard-history.js"></script>
+</head>
+<body class="bg-gray-50 p-8 font-sans text-gray-800">
+
+    <div class="max-w-7xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-indigo-700">Test Execution Dashboard</h1>
+                <p class="text-gray-500 mt-1">High-level metrics and historical trends</p>
+            </div>
+            <a href="allure/index.html" target="_blank" class="bg-gray-800 text-white px-5 py-2 rounded shadow hover:bg-gray-700 font-bold transition">
+                🛠️ View Developer Allure Report
+            </a>
+        </div>
+
+        <div class="flex items-end gap-4 bg-white p-5 rounded-lg shadow mb-8 border-t-4 border-indigo-500">
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Start Date</label>
+                <input type="date" id="startDate" class="block w-full px-4 py-2 border rounded-md border-gray-300 focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">End Date</label>
+                <input type="date" id="endDate" class="block w-full px-4 py-2 border rounded-md border-gray-300 focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+            <button onclick="applyFilter()" class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 font-bold shadow transition">
+                Apply Filter
+            </button>
+        </div>
+
+        <div class="grid grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-blue-500">
+                <h3 class="font-bold text-gray-500 text-sm uppercase tracking-wide">Total Executed</h3>
+                <p id="totalForms" class="text-4xl font-bold text-gray-800 mt-2">0</p>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-green-500">
+                <h3 class="font-bold text-gray-500 text-sm uppercase tracking-wide">Passed</h3>
+                <p id="totalPassed" class="text-4xl font-bold text-green-600 mt-2">0</p>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-red-500">
+                <h3 class="font-bold text-gray-500 text-sm uppercase tracking-wide">Failed</h3>
+                <p id="totalFailed" class="text-4xl font-bold text-red-600 mt-2">0</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow p-6 h-80 flex flex-col">
+                <h2 class="text-lg font-bold mb-4 text-center text-gray-700">Pass / Fail Ratio</h2>
+                <div class="relative flex-grow w-full">
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6 h-80 flex flex-col">
+                <h2 class="text-lg font-bold mb-4 text-center text-gray-700">Results by Mode</h2>
+                <div class="relative flex-grow w-full">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+            <table class="min-w-full">
+                <thead class="bg-gray-100 border-b">
+                    <tr class="text-left text-gray-600 uppercase text-sm tracking-wider">
+                        <th class="p-4">Run Date</th>
+                        <th class="p-4">Form ID / Name</th>
+                        <th class="p-4">Mode</th>
+                        <th class="p-4">Status</th>
+                        <th class="p-4">Logs / Trace</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody" class="divide-y divide-gray-200">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="logModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
+        <div class="relative mx-auto p-6 border w-11/12 md:w-3/4 shadow-2xl rounded-lg bg-white">
+            <div class="flex justify-between items-center pb-4 border-b">
+                <h3 class="text-2xl font-bold text-red-600">Failure Details</h3>
+                <button onclick="document.getElementById('logModal').classList.add('hidden')" class="text-3xl font-bold text-gray-400 hover:text-gray-800 transition">&times;</button>
+            </div>
+            <div class="mt-4">
+                <h4 class="font-bold text-gray-800 mb-2">API Payload:</h4>
+                <pre id="modalPayload" class="bg-gray-100 p-4 rounded text-sm mb-6 overflow-x-auto border border-gray-200 shadow-inner"></pre>
+                
+                <h4 class="font-bold text-gray-800 mb-2">Error Log:</h4>
+                <pre id="modalError" class="bg-red-50 text-red-700 p-4 rounded text-sm overflow-x-auto border border-red-100 shadow-inner"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let pieChartInstance = null;
+        let barChartInstance = null;
+
+        function applyFilter() {
+            let start = document.getElementById('startDate').value;
+            let end = document.getElementById('endDate').value;
+            
+            // Smart Single Day feature: if only start is selected, assume it's a single day search
+            if (start && !end) { end = start; document.getElementById('endDate').value = start; }
+            
+            const startDt = start ? new Date(start) : new Date(0);
+            const endDt = end ? new Date(end) : new Date();
+            startDt.setHours(0,0,0,0); 
+            endDt.setHours(23,59,59,999);
+
+            let passed = 0, failed = 0;
+            let happyPass = 0, happyFail = 0;
+            let valPass = 0, valFail = 0;
+            let tableHTML = '';
+            
+            if(typeof dashboardData !== 'undefined' && dashboardData.length > 0) {
+                dashboardData.forEach(run => {
+                    const runDt = new Date(run.date);
+                    // Check if run falls within selected date range
+                    if(runDt >= startDt && runDt <= endDt) {
+                        run.results.forEach(row => {
+                            const status = row.Status ? row.Status.toLowerCase() : '';
+                            const mode = row.Mode ? row.Mode.toLowerCase() : 'happy';
+                            const isPass = status === 'pass';
+                            
+                            // Tally metrics
+                            isPass ? passed++ : failed++;
+                            if (mode === 'happy' && isPass) happyPass++;
+                            if (mode === 'happy' && !isPass) happyFail++;
+                            if (mode === 'validation' && isPass) valPass++;
+                            if (mode === 'validation' && !isPass) valFail++;
+                            
+                            // Build Button for failures
+                            let btn = '';
+                            if(!isPass) {
+                                btn = `<button onclick="openModal(\`${row.Payload || 'No Payload'}\`, \`${row.ErrorLog || 'No Error Log'}\`)" class="bg-red-100 text-red-700 px-3 py-1.5 rounded font-bold text-xs hover:bg-red-200 transition shadow-sm border border-red-200">🔍 View Details</button>`;
+                            }
+                            
+                            // Build Table Row
+                            tableHTML += `
+                                <tr class="hover:bg-gray-50 transition">
+                                    <td class="p-4 text-sm text-gray-600 whitespace-nowrap">${run.date}</td>
+                                    <td class="p-4 font-medium text-gray-800">${row.FormName || 'N/A'}</td>
+                                    <td class="p-4 text-sm text-gray-600 capitalize">${mode}</td>
+                                    <td class="p-4 font-bold ${isPass ? 'text-green-600' : 'text-red-600'} uppercase">${status || 'FAIL'}</td>
+                                    <td class="p-4">${btn}</td>
+                                </tr>`;
+                        });
+                    }
+                });
+            } else {
+                tableHTML = '<tr><td colspan="5" class="p-6 text-center text-gray-500">No test data available for the selected dates.</td></tr>';
+            }
+
+            // Update UI Metrics
+            document.getElementById('totalForms').innerText = passed + failed;
+            document.getElementById('totalPassed').innerText = passed;
+            document.getElementById('totalFailed').innerText = failed;
+            document.getElementById('tableBody').innerHTML = tableHTML;
+
+            // Destroy existing charts to prevent hover glitches
+            if(pieChartInstance) pieChartInstance.destroy();
+            if(barChartInstance) barChartInstance.destroy();
+
+            // Draw Pie Chart
+            pieChartInstance = new Chart(document.getElementById('pieChart').getContext('2d'), { 
+                type: 'doughnut', 
+                data: { 
+                    labels: ['Passed', 'Failed'], 
+                    datasets: [{ 
+                        data: [passed, failed], 
+                        backgroundColor: ['#22c55e', '#ef4444'], // Tailwind green-500, red-500
+                        borderWidth: 0
+                    }] 
+                }, 
+                options: { responsive: true, maintainAspectRatio: false } 
+            });
+
+            // Draw Bar Chart
+            barChartInstance = new Chart(document.getElementById('barChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Happy Path', 'Validation Path'],
+                    datasets: [
+                        { label: 'Passed', data: [happyPass, valPass], backgroundColor: '#22c55e' },
+                        { label: 'Failed', data: [happyFail, valFail], backgroundColor: '#ef4444' }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        function openModal(payload, error) {
+            document.getElementById('modalPayload').innerHTML = payload || 'No Payload recorded';
+            document.getElementById('modalError').innerHTML = error || 'No Error recorded';
+            document.getElementById('logModal').classList.remove('hidden');
+        }
+
+        // Initialize dashboard when the page loads
+        window.onload = () => {
+            // Set default date range to today to avoid showing 30 days of data immediately
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('startDate').value = today;
+            document.getElementById('endDate').value = today;
+            applyFilter();
+        };
+    </script>
+</body>
+</html>

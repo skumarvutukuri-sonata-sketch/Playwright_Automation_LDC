@@ -76,6 +76,27 @@ EMAIL_PASS=app-password
 EMAIL_TO=receiver1@domain.com,receiver2@domain.com
 ```
 
+## Repository Configuration
+
+Before running the CI/CD pipeline, configure these repository settings in GitHub:
+
+1. Enable Workflows in Actions
+    - Open your repository on GitHub.
+    - Go to the **Actions** tab.
+    - If workflows are not yet enabled, click **I understand my workflows, go ahead and enable them**.
+
+2. Set Workflow Permissions to Read and write
+    - Go to **Settings** > **Actions** > **General**.
+    - Scroll to **Workflow permissions**.
+    - Select **Read and write permissions**.
+    - Click **Save**.
+
+3. Configure GitHub Pages to use `gh-pages`
+    - Go to **Settings** > **Pages**.
+    - Under **Build and deployment** > **Source**, choose **Deploy from a branch**.
+    - Set **Branch** to `gh-pages` (folder: `/ (root)` unless your project requires a different folder).
+    - Click **Save**.
+
 ## Login and Session Reuse
 
 - `tests/setup/onelogin.setup.ts` runs first (Playwright setup project).
