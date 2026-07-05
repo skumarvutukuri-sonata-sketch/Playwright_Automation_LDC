@@ -105,6 +105,9 @@ setup('login and save session', async ({ page }) => {
   const continueButton = page.getByRole('button', { name: /continue/i }).first();
   const tokenOffsets = [0, -1, 1];
   let mfaAccepted = false;
+  const taxiUrlPattern = /taxi\.stg\.mktg\.2u\.com/i;
+  const samlHandoffPattern = /2u\.onelogin\.com\/trust\/saml2\/http-post\/sso/i;
+  const loginRestartPattern = /2u\.onelogin\.com\/login2\/?/i;
 
   for (const offset of tokenOffsets) {
     const token = generateTotp(secret, 6, 30, offset);
@@ -118,18 +121,25 @@ setup('login and save session', async ({ page }) => {
     }
 
     try {
-      await page.waitForURL(
-        /taxi\.stg\.mktg\.2u\.com|2u\.onelogin\.com\/trust\/saml2\/http-post\/sso/i,
-        { timeout: 25000, waitUntil: 'domcontentloaded' }
-      );
+      // Do not mark success at intermediate SAML URL. Only Taxi URL means auth is complete.
+      await page.waitForURL(taxiUrlPattern, { timeout: 30000, waitUntil: 'domcontentloaded' });
       mfaAccepted = true;
       break;
     } catch {
+      if (loginRestartPattern.test(page.url())) {
+        console.log(`⚠️ OneLogin returned to login page after offset ${offset}. Trying next token window...`);
+      } else if (samlHandoffPattern.test(page.url())) {
+        console.log(`⚠️ Still on SAML handoff after offset ${offset}. Trying next token window...`);
+      }
+
       const invalidCode = page.getByText(/invalid|incorrect|expired|try again/i).first();
       if (await invalidCode.isVisible().catch(() => false)) {
         console.log(`⚠️ MFA token rejected for offset ${offset}. Retrying...`);
       }
-      await mfaInput.fill('');
+
+      if (await mfaInput.isVisible().catch(() => false)) {
+        await mfaInput.fill('');
+      }
       await page.waitForTimeout(1200);
     }
   }
@@ -143,8 +153,8 @@ setup('login and save session', async ({ page }) => {
   console.log('⏳ Waiting to land on Taxi Staging dashboard...');
   await page.waitForTimeout(1500);
 
-  const isTaxiUrl = () => /taxi\.stg\.mktg\.2u\.com/i.test(page.url());
-  const samlHandoffUrl = /2u\.onelogin\.com\/trust\/saml2\/http-post\/sso/i;
+  const isTaxiUrl = () => taxiUrlPattern.test(page.url());
+  const samlHandoffUrl = samlHandoffPattern;
 
   for (let attempt = 1; attempt <= 3 && !isTaxiUrl(); attempt++) {
     console.log(`⏳ SAML handoff attempt ${attempt}... current URL: ${page.url()}`);
