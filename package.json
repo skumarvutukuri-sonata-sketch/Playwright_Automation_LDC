@@ -38,7 +38,7 @@
     "archiver": "^7.0.1",
     "fs-extra": "^11.3.5",
     "nodemailer": "^9.0.3",
-    "otplib": "^13.4.1",
+    "otpauth": "^9.5.1",
     "papaparse": "^5.5.4"
   }
 }

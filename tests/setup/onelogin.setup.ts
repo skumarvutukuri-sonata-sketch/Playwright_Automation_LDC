@@ -2,6 +2,7 @@ import { test as setup } from '@playwright/test';
 import { LoginPage } from '../../pages/login.page';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
+import * as OTPAuth from 'otpauth'; // 🚀 Bulletproof standard import
 
 dotenv.config();
 
@@ -40,20 +41,27 @@ setup('login and save session', async ({ page }) => {
         await authenticatorOption.click();
     }
   } catch (e: any) {
-     console.log('⚠️ Error during factor switch (safe to ignore if it proceeds):', e.message);
+     console.log('➡️ Proceeding directly to code input...');
   }
 
   console.log('⏳ Waiting for the 6-digit input box...');
   
-  // B. STRICT MODE FIX: Added .first() to prevent crashes if OneLogin has hidden mobile inputs
+  // B. Target the exact React data-testid from the OneLogin HTML
   const mfaInput = page.getByTestId('security-code').first(); 
   await mfaInput.waitFor({ state: 'visible', timeout: 15000 });
 
-  // C. Generate the 6-digit token (Safely checking for default to avoid CI/CD crashes)
-  const otplib = (await import('otplib')) as any;
-  const authenticator = otplib.authenticator || (otplib.default && otplib.default.authenticator);
+  // C. Generate the 6-digit token using OTPAuth
   const secret = process.env.MFA_SECRET!;
-  const token = authenticator.generate(secret);
+  const totp = new OTPAuth.TOTP({
+      issuer: "OneLogin",
+      label: "Playwright",
+      algorithm: "SHA1",
+      digits: 6,
+      period: 30,
+      secret: OTPAuth.Secret.fromBase32(secret) // Natively handles the text string!
+  });
+  
+  const token = totp.generate();
   console.log(`🔐 Generated MFA Token successfully.`);
 
   // D. Type the token and press Enter to submit
