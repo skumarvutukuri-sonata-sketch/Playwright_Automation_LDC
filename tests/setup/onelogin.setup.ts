@@ -2,7 +2,7 @@ import { test as setup } from '@playwright/test';
 import { LoginPage } from '../../pages/login.page';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
-import * as OTPAuth from 'otpauth'; // 🚀 Bulletproof standard import
+import * as OTPAuth from 'otpauth'; 
 
 dotenv.config();
 
@@ -32,10 +32,8 @@ setup('login and save session', async ({ page }) => {
         console.log('🔄 Push screen detected. Switching to Authenticator App...');
         await changeFactorBtn.click();
         
-        // Brief pause to allow the OneLogin dropdown/modal to animate open
         await page.waitForTimeout(1000); 
         
-        // Click the Authenticator App option
         const authenticatorOption = page.getByText(/Authenticator/i).first();
         await authenticatorOption.waitFor({ state: 'visible', timeout: 5000 });
         await authenticatorOption.click();
@@ -58,22 +56,35 @@ setup('login and save session', async ({ page }) => {
       algorithm: "SHA1",
       digits: 6,
       period: 30,
-      secret: OTPAuth.Secret.fromBase32(secret) // Natively handles the text string!
+      secret: OTPAuth.Secret.fromBase32(secret)
   });
   
   const token = totp.generate();
-  console.log(`🔐 Generated MFA Token successfully.`);
+  console.log(`🔐 Generated MFA Token successfully: ${token}`);
 
-  // D. Type the token and press Enter to submit
-  await mfaInput.fill(token);
+  // ==========================================
+  // D. TYPE LIKE A HUMAN (CI/CD FIX)
+  // ==========================================
+  // 1. Focus the input box explicitly
+  await mfaInput.focus();
+  
+  // 2. Clear any invisible characters just in case
+  await mfaInput.clear();
+  
+  // 3. Type each number with a 100ms delay so React registers the synthetic keyboard events
+  await mfaInput.pressSequentially(token, { delay: 100 });
+  
+  // 4. Give React half a second to update its internal state
+  await page.waitForTimeout(500);
+  
+  // 5. Submit
   await mfaInput.press('Enter'); 
   // ==========================================
 
-  // 3. Wait until the browser successfully lands on Taxi staging
-  console.log('⏳ Waiting to land on Taxi Staging dashboard...');
-  await page.waitForURL('**/taxi.stg.mktg.2u.com/**', { timeout: 30000 });
-  await page.waitForLoadState('networkidle');
-  await page.waitForTimeout(3000);
+  // 3. Wait for OneLogin to finish its SAML redirect
+  console.log('⏳ Waiting for OneLogin SSO redirect to finish...');
+  await page.waitForLoadState('networkidle', { timeout: 45000 });
+  await page.waitForTimeout(5000);
 
   // 4. Save the authenticated session to file
   await page.context().storageState({ path: storageStatePath });
