@@ -2,13 +2,14 @@ import { test as setup } from '@playwright/test';
 import { LoginPage } from '../../pages/login.page';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
+const { authenticator } = require('otplib');
 
 dotenv.config();
 
 const storageStatePath = path.resolve(__dirname, 'storageState.json');
 
 setup('login and save session', async ({ page }) => {
-  setup.setTimeout(60000); 
+  setup.setTimeout(180000);
   console.log('=== SETUP: Automating Login and MFA ===');
 
   const loginPage = new LoginPage(page);
@@ -27,31 +28,35 @@ setup('login and save session', async ({ page }) => {
   const changeFactorBtn = page.getByText(/Change Authentication Factor/i).first();
   
   try {
-    // We wait just 5 seconds to see if the Change Factor button exists
     if (await changeFactorBtn.waitFor({ state: 'visible', timeout: 5000 }).then(() => true).catch(() => false)) {
         console.log('🔄 Push screen detected. Switching to Authenticator App...');
         await changeFactorBtn.click();
+        
+        // Brief pause to allow the OneLogin dropdown/modal to animate open
+        await page.waitForTimeout(1000); 
         
         // Click the Authenticator App option
         const authenticatorOption = page.getByText(/Authenticator/i).first();
         await authenticatorOption.waitFor({ state: 'visible', timeout: 5000 });
         await authenticatorOption.click();
     }
-  } catch (e) {
-     // If the button isn't there, it means we are already on the correct screen
-     console.log('➡️ No "Change Factor" needed, proceeding directly to input...');
+  } catch (e: any) {
+     console.log('⚠️ Error during factor switch (safe to ignore if it proceeds):', e.message);
   }
 
   console.log('⏳ Waiting for the 6-digit input box...');
   
-  // B. Target the exact React data-testid from the OneLogin HTML you found
-  const mfaInput = page.getByTestId('security-code'); 
-  await mfaInput.waitFor({ state: 'visible', timeout: 15000 });
+  // B. STRICT MODE FIX: Added .first() to prevent crashes if OneLogin has hidden mobile inputs!
+  const mfaInput = page
+    .locator('[data-testid="security-code"], input[name="otp_code"], input[autocomplete="one-time-code"], input[type="tel"]')
+    .first();
+  await mfaInput.waitFor({ state: 'visible', timeout: 20000 });
 
-  // C. Generate the 6-digit token (Dynamic Import Fix for TypeScript)
-  const otplib = (await import('otplib')) as any;
-  const authenticator = otplib.authenticator || otplib.default.authenticator;
+  // C. Generate the 6-digit token
   const secret = process.env.MFA_SECRET!;
+  if (!secret) {
+    throw new Error('MFA_SECRET is missing. Set MFA_SECRET in .env (and ENV_FILE_CONTENT for CI).');
+  }
   const token = authenticator.generate(secret);
   console.log(`🔐 Generated MFA Token successfully.`);
 

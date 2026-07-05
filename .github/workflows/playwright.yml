@@ -50,7 +50,12 @@ jobs:
         working-directory: ./main-repo
         env:
           FULL_ENV_CONTENT: ${{ secrets.ENV_FILE_CONTENT }}
-        run: echo "$FULL_ENV_CONTENT" > .env
+          MFA_SECRET: ${{ secrets.MFA_SECRET }}
+        run: |
+          echo "$FULL_ENV_CONTENT" > .env
+          if [ -n "$MFA_SECRET" ]; then
+            echo "MFA_SECRET=$MFA_SECRET" >> .env
+          fi
 
       - name: 🚀 Run Playwright Tests (3 Forms Only)
         working-directory: ./main-repo
