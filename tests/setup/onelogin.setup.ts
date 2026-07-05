@@ -143,13 +143,34 @@ setup('login and save session', async ({ page }) => {
   console.log('⏳ Waiting to land on Taxi Staging dashboard...');
   await page.waitForTimeout(1500);
 
-  if (/2u\.onelogin\.com\/trust\/saml2\/http-post\/sso/i.test(page.url())) {
-    try {
-      await page.waitForURL(/taxi\.stg\.mktg\.2u\.com/i, { timeout: 60000, waitUntil: 'domcontentloaded' });
-    } catch {
-      await page.reload({ waitUntil: 'domcontentloaded' });
-      await page.waitForURL(/taxi\.stg\.mktg\.2u\.com/i, { timeout: 60000, waitUntil: 'domcontentloaded' });
+  const isTaxiUrl = () => /taxi\.stg\.mktg\.2u\.com/i.test(page.url());
+  const samlHandoffUrl = /2u\.onelogin\.com\/trust\/saml2\/http-post\/sso/i;
+
+  for (let attempt = 1; attempt <= 3 && !isTaxiUrl(); attempt++) {
+    console.log(`⏳ SAML handoff attempt ${attempt}... current URL: ${page.url()}`);
+
+    if (samlHandoffUrl.test(page.url())) {
+      const samlForm = page.locator('form[action*="taxi.stg.mktg.2u.com"], form[action*="mktg.2u.com"]').first();
+      if (await samlForm.isVisible().catch(() => false)) {
+        await samlForm.evaluate((form: HTMLFormElement) => form.submit());
+      }
     }
+
+    try {
+      await page.waitForURL(/taxi\.stg\.mktg\.2u\.com/i, { timeout: 30000 });
+      break;
+    } catch {
+      try {
+        await page.goto(process.env.Taxi_Staging_URL!, { waitUntil: 'commit' });
+      } catch {
+        // Navigation can be interrupted by ongoing OneLogin redirects.
+      }
+      await page.waitForTimeout(2000);
+    }
+  }
+
+  if (!isTaxiUrl()) {
+    throw new Error(`Unable to complete OneLogin SAML handoff. Current URL: ${page.url()}`);
   }
 
   await page.waitForLoadState('domcontentloaded');
