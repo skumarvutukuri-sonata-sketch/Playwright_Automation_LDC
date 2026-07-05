@@ -9,13 +9,13 @@ dotenv.config();
 const storageStatePath = path.resolve(__dirname, 'storageState.json');
 
 setup('login and save session', async ({ page }) => {
-  setup.setTimeout(60000); 
+  setup.setTimeout(90000); // Increased timeout to give SSO plenty of time
   console.log('=== SETUP: Automating Login and MFA ===');
 
   const loginPage = new LoginPage(page);
   await page.goto(process.env.Taxi_Staging_URL!);
   
-  // 1. Perform standard login (Email, Username, Password)
+  // 1. Perform standard login
   await loginPage.valid_login(process.env.EMAIL!, process.env.USERNAME!, process.env.PASSWORD!);
 
   console.log('⏳ Checking current MFA screen state...');
@@ -23,15 +23,12 @@ setup('login and save session', async ({ page }) => {
   // ==========================================
   // 2. SMART MFA LOGIC
   // ==========================================
-  
-  // A. Check if OneLogin defaulted to a Push Notification screen
   const changeFactorBtn = page.getByText(/Change Authentication Factor/i).first();
   
   try {
     if (await changeFactorBtn.waitFor({ state: 'visible', timeout: 5000 }).then(() => true).catch(() => false)) {
         console.log('🔄 Push screen detected. Switching to Authenticator App...');
         await changeFactorBtn.click();
-        
         await page.waitForTimeout(1000); 
         
         const authenticatorOption = page.getByText(/Authenticator/i).first();
@@ -43,12 +40,10 @@ setup('login and save session', async ({ page }) => {
   }
 
   console.log('⏳ Waiting for the 6-digit input box...');
-  
-  // B. Target the exact React data-testid from the OneLogin HTML
   const mfaInput = page.getByTestId('security-code').first(); 
   await mfaInput.waitFor({ state: 'visible', timeout: 15000 });
 
-  // C. Generate the 6-digit token using OTPAuth
+  // Generate Token
   const secret = process.env.MFA_SECRET!;
   const totp = new OTPAuth.TOTP({
       issuer: "OneLogin",
@@ -58,33 +53,34 @@ setup('login and save session', async ({ page }) => {
       period: 30,
       secret: OTPAuth.Secret.fromBase32(secret)
   });
-  
   const token = totp.generate();
   console.log(`🔐 Generated MFA Token successfully: ${token}`);
 
   // ==========================================
-  // D. TYPE LIKE A HUMAN (CI/CD FIX)
+  // D. TYPE AND HARD CLICK (CI/CD FIX)
   // ==========================================
-  // 1. Focus the input box explicitly
   await mfaInput.focus();
-  
-  // 2. Clear any invisible characters just in case
   await mfaInput.clear();
+  await mfaInput.pressSequentially(token, { delay: 100 }); // Type like a human
+  await page.waitForTimeout(500); // Let React register the input
   
-  // 3. Type each number with a 100ms delay so React registers the synthetic keyboard events
-  await mfaInput.pressSequentially(token, { delay: 100 });
+  // Find the giant pink Continue button explicitly by its text and physical button role
+  console.log('🖱️ Clicking the Continue button...');
+  const continueBtn = page.getByRole('button', { name: 'Continue' }).first();
   
-  // 4. Give React half a second to update its internal state
-  await page.waitForTimeout(500);
-  
-  // 5. Submit
-  await mfaInput.press('Enter'); 
+  // Wait for it to be clickable just in case React is still processing the text
+  await continueBtn.waitFor({ state: 'visible', timeout: 5000 });
+  await continueBtn.click({ force: true }); 
   // ==========================================
 
-  // 3. Wait for OneLogin to finish its SAML redirect
-  console.log('⏳ Waiting for OneLogin SSO redirect to finish...');
-  await page.waitForLoadState('networkidle', { timeout: 45000 });
-  await page.waitForTimeout(5000);
+  // 3. STRICT VALIDATION: Wait for the actual Taxi URL
+  // We use a regex match here so it catches any variation of the staging URL
+  console.log('⏳ Waiting for OneLogin SSO redirect to finish and land on Taxi...');
+  await page.waitForURL(/taxi\.stg\.mktg\.2u\.com/, { timeout: 45000 });
+  
+  // Let the dashboard settle before ripping the cookies
+  await page.waitForLoadState('networkidle');
+  await page.waitForTimeout(3000);
 
   // 4. Save the authenticated session to file
   await page.context().storageState({ path: storageStatePath });

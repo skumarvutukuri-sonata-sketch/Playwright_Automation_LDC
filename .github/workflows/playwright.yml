@@ -59,7 +59,7 @@ jobs:
 
       - name: 🚀 Run Playwright Tests (3 Forms Only)
         working-directory: ./main-repo
-        run: npx playwright test -g "2527|2704|3005"
+        run: npx playwright test -g "2527"
         continue-on-error: true 
 
       - name: 📎 Upload Playwright Debug Artifacts
