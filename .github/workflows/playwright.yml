@@ -62,6 +62,18 @@ jobs:
         run: npx playwright test -g "2527|2704|3005"
         continue-on-error: true 
 
+      - name: 📎 Upload Playwright Debug Artifacts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: playwright-debug-artifacts-${{ github.run_id }}
+          path: |
+            main-repo/test-results/**
+            main-repo/playwright-report/**
+            main-repo/allure-results/**
+          if-no-files-found: warn
+          retention-days: 14
+
       - name: 📊 Generate Custom HTML Dashboard
         working-directory: ./main-repo
         run: npx ts-node utils/DashboardGenerator.ts

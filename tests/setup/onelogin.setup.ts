@@ -8,6 +8,9 @@ dotenv.config();
 
 const storageStatePath = path.resolve(__dirname, 'storageState.json');
 
+// ==========================================
+// CUSTOM TOTP GENERATOR (No otplib required!)
+// ==========================================
 const base32ToBuffer = (value: string): Buffer => {
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
   const normalized = value.toUpperCase().replace(/[^A-Z2-7]/g, '');
@@ -15,9 +18,7 @@ const base32ToBuffer = (value: string): Buffer => {
   let bits = '';
   for (const ch of normalized) {
     const idx = alphabet.indexOf(ch);
-    if (idx === -1) {
-      continue;
-    }
+    if (idx === -1) continue;
     bits += idx.toString(2).padStart(5, '0');
   }
 
@@ -25,15 +26,12 @@ const base32ToBuffer = (value: string): Buffer => {
   for (let i = 0; i + 8 <= bits.length; i += 8) {
     bytes.push(parseInt(bits.slice(i, i + 8), 2));
   }
-
   return Buffer.from(bytes);
 };
 
 const generateTotp = (secret: string, digits = 6, period = 30, counterOffset = 0): string => {
   const key = base32ToBuffer(secret);
-  if (key.length < 16) {
-    throw new Error('MFA_SECRET appears invalid. It should be a base32 secret of at least 16 bytes.');
-  }
+  if (key.length < 16) throw new Error('MFA_SECRET appears invalid.');
 
   const counter = Math.floor(Date.now() / 1000 / period) + counterOffset;
   const buffer = Buffer.alloc(8);
@@ -48,162 +46,81 @@ const generateTotp = (secret: string, digits = 6, period = 30, counterOffset = 0
     ((digest[offset + 2] & 0xff) << 8) |
     (digest[offset + 3] & 0xff);
 
-  const otp = (binary % 10 ** digits).toString().padStart(digits, '0');
-  return otp;
+  return (binary % 10 ** digits).toString().padStart(digits, '0');
 };
 
+// ==========================================
+// PLAYWRIGHT SETUP
+// ==========================================
 setup('login and save session', async ({ page }) => {
-  setup.setTimeout(240000);
+  setup.setTimeout(120000);
   console.log('=== SETUP: Automating Login and MFA ===');
 
   const loginPage = new LoginPage(page);
   await page.goto(process.env.Taxi_Staging_URL!);
   
-  // 1. Perform standard login (Email, Username, Password)
+  // 1. Perform standard login
   await loginPage.valid_login(process.env.EMAIL!, process.env.USERNAME!, process.env.PASSWORD!);
 
   console.log('⏳ Checking current MFA screen state...');
   
-  // ==========================================
-  // 2. SMART MFA LOGIC
-  // ==========================================
-  
-  // A. Check if OneLogin defaulted to a Push Notification screen
+  // 2. Check if OneLogin defaulted to a Push Notification screen
   const changeFactorBtn = page.getByText(/Change Authentication Factor/i).first();
-  
   try {
     if (await changeFactorBtn.waitFor({ state: 'visible', timeout: 5000 }).then(() => true).catch(() => false)) {
         console.log('🔄 Push screen detected. Switching to Authenticator App...');
         await changeFactorBtn.click();
-        
-        // Brief pause to allow the OneLogin dropdown/modal to animate open
         await page.waitForTimeout(1000); 
         
-        // Click the Authenticator App option
         const authenticatorOption = page.getByText(/Authenticator/i).first();
         await authenticatorOption.waitFor({ state: 'visible', timeout: 5000 });
         await authenticatorOption.click();
     }
   } catch (e: any) {
-     console.log('⚠️ Error during factor switch (safe to ignore if it proceeds):', e.message);
+     console.log('➡️ Proceeding directly to input...');
   }
 
   console.log('⏳ Waiting for the 6-digit input box...');
   
-  // B. STRICT MODE FIX: Added .first() to prevent crashes if OneLogin has hidden mobile inputs!
-  const mfaInputSelector = '[data-testid="security-code"], input[name="otp_code"], input[autocomplete="one-time-code"], input[type="tel"]';
+  // 3. Find input and type the Custom TOTP
+  const mfaInputSelector = '[data-testid="security-code"], input[name="otp_code"], input[autocomplete="one-time-code"]';
   const mfaInput = page.locator(mfaInputSelector).first();
-  await mfaInput.waitFor({ state: 'visible', timeout: 20000 });
+  await mfaInput.waitFor({ state: 'visible', timeout: 15000 });
 
-  // C. Generate the 6-digit token
   const secret = process.env.MFA_SECRET!;
-  if (!secret) {
-    throw new Error('MFA_SECRET is missing. Set MFA_SECRET in .env (and ENV_FILE_CONTENT for CI).');
-  }
-  // D. Submit MFA token with small time-window retries for clock drift in CI.
-  const continueButton = page.getByRole('button', { name: /continue/i }).first();
-  const tokenOffsets = [0, -1, 1];
-  let mfaAccepted = false;
-  const taxiUrlPattern = /taxi\.stg\.mktg\.2u\.com/i;
-  const samlHandoffPattern = /2u\.onelogin\.com\/trust\/saml2\/http-post\/sso/i;
-  const loginRestartPattern = /2u\.onelogin\.com\/login2\/?/i;
+  if (!secret) throw new Error('MFA_SECRET is missing. Set it in GitHub Secrets / .env');
 
-  for (const offset of tokenOffsets) {
-    const activeMfaInput = page.locator(mfaInputSelector).first();
-    const isInputVisible = await activeMfaInput.isVisible().catch(() => false);
-    if (!isInputVisible) {
-      if (samlHandoffPattern.test(page.url()) || taxiUrlPattern.test(page.url())) {
-        console.log('✅ MFA input no longer visible and redirect flow started. Treating MFA as accepted.');
-        mfaAccepted = true;
-        break;
-      }
-      console.log(`⚠️ MFA input is no longer visible before offset ${offset}; stopping token retries.`);
-      break;
-    }
+  const token = generateTotp(secret);
+  console.log(`🔐 Generated MFA Token successfully.`);
+  await mfaInput.fill(token);
+  await mfaInput.press('Enter'); 
 
-    const token = generateTotp(secret, 6, 30, offset);
-    console.log(`🔐 Generated MFA Token successfully (offset ${offset}).`);
-    await activeMfaInput.fill(token);
-
-    if (await continueButton.isVisible().catch(() => false)) {
-      await continueButton.click();
-    } else {
-      await mfaInput.press('Enter');
-    }
-
-    try {
-      // Do not mark success at intermediate SAML URL. Only Taxi URL means auth is complete.
-      await page.waitForURL(taxiUrlPattern, { timeout: 30000, waitUntil: 'domcontentloaded' });
-      mfaAccepted = true;
-      break;
-    } catch {
-      const stillOnMfaInput = await page.locator(mfaInputSelector).first().isVisible().catch(() => false);
-
-      if (loginRestartPattern.test(page.url())) {
-        console.log(`⚠️ OneLogin returned to login page after offset ${offset}. Trying next token window...`);
-      } else if (samlHandoffPattern.test(page.url()) && !stillOnMfaInput) {
-        console.log(`✅ Reached SAML handoff and MFA input is gone after offset ${offset}. Proceeding to handoff stage.`);
-        mfaAccepted = true;
-        break;
-      } else if (samlHandoffPattern.test(page.url())) {
-        console.log(`⚠️ Still on SAML handoff after offset ${offset}. Trying next token window...`);
-      }
-
-      const invalidCode = page.getByText(/invalid|incorrect|expired|try again/i).first();
-      if (await invalidCode.isVisible().catch(() => false)) {
-        console.log(`⚠️ MFA token rejected for offset ${offset}. Retrying...`);
-      }
-
-      if (stillOnMfaInput) {
-        await page.locator(mfaInputSelector).first().fill('');
-      }
-      await page.waitForTimeout(1200);
-    }
-  }
-
-  if (!mfaAccepted) {
-    throw new Error('Unable to complete MFA with generated tokens. Verify MFA_SECRET in GitHub secret and OneLogin factor setup.');
-  }
   // ==========================================
-
-  // 3. Complete OneLogin SAML handoff and land on Taxi staging
+  // 4. Handle SAML Redirects safely
+  // ==========================================
   console.log('⏳ Waiting to land on Taxi Staging dashboard...');
-  await page.waitForTimeout(1500);
-
-  const isTaxiUrl = () => taxiUrlPattern.test(page.url());
-  const samlHandoffUrl = samlHandoffPattern;
-
-  for (let attempt = 1; attempt <= 3 && !isTaxiUrl(); attempt++) {
-    console.log(`⏳ SAML handoff attempt ${attempt}... current URL: ${page.url()}`);
-
-    if (samlHandoffUrl.test(page.url())) {
+  
+  try {
+      // Wait to see if we naturally hit the Taxi Staging URL
+      await page.waitForURL(/taxi\.stg\.mktg\.2u\.com/i, { timeout: 25000 });
+  } catch {
+      // If we time out, we might be stuck on the OneLogin SAML handoff page that requires a button click
+      console.log('⚠️ Still not on Taxi URL. Checking if stuck on SAML handoff page...');
+      
       const samlForm = page.locator('form[action*="taxi.stg.mktg.2u.com"], form[action*="mktg.2u.com"]').first();
       if (await samlForm.isVisible().catch(() => false)) {
-        await samlForm.evaluate((form: HTMLFormElement) => form.submit());
+         console.log('🔄 Found hidden SAML form, submitting manually...');
+         await samlForm.evaluate((form: HTMLFormElement) => form.submit());
+         await page.waitForURL(/taxi\.stg\.mktg\.2u\.com/i, { timeout: 20000 });
+      } else {
+         throw new Error(`Failed to reach Taxi URL. Stuck on: ${page.url()}`);
       }
-    }
-
-    try {
-      await page.waitForURL(/taxi\.stg\.mktg\.2u\.com/i, { timeout: 30000 });
-      break;
-    } catch {
-      try {
-        await page.goto(process.env.Taxi_Staging_URL!, { waitUntil: 'commit' });
-      } catch {
-        // Navigation can be interrupted by ongoing OneLogin redirects.
-      }
-      await page.waitForTimeout(2000);
-    }
-  }
-
-  if (!isTaxiUrl()) {
-    throw new Error(`Unable to complete OneLogin SAML handoff. Current URL: ${page.url()}`);
   }
 
   await page.waitForLoadState('domcontentloaded');
   await page.waitForTimeout(3000);
 
-  // 4. Save the authenticated session to file
+  // 5. Save the authenticated session to file
   await page.context().storageState({ path: storageStatePath });
   console.log('✅ SETUP: Session saved to storageState.json — tests will reuse this login!');
 });
