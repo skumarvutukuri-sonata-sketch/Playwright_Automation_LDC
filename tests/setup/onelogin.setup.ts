@@ -29,13 +29,13 @@ const base32ToBuffer = (value: string): Buffer => {
   return Buffer.from(bytes);
 };
 
-const generateTotp = (secret: string, digits = 6, period = 30): string => {
+const generateTotp = (secret: string, digits = 6, period = 30, counterOffset = 0): string => {
   const key = base32ToBuffer(secret);
   if (key.length < 16) {
     throw new Error('MFA_SECRET appears invalid. It should be a base32 secret of at least 16 bytes.');
   }
 
-  const counter = Math.floor(Date.now() / 1000 / period);
+  const counter = Math.floor(Date.now() / 1000 / period) + counterOffset;
   const buffer = Buffer.alloc(8);
   buffer.writeUInt32BE(Math.floor(counter / 0x100000000), 0);
   buffer.writeUInt32BE(counter & 0xffffffff, 4);
@@ -53,7 +53,7 @@ const generateTotp = (secret: string, digits = 6, period = 30): string => {
 };
 
 setup('login and save session', async ({ page }) => {
-  setup.setTimeout(180000);
+  setup.setTimeout(240000);
   console.log('=== SETUP: Automating Login and MFA ===');
 
   const loginPage = new LoginPage(page);
@@ -101,33 +101,54 @@ setup('login and save session', async ({ page }) => {
   if (!secret) {
     throw new Error('MFA_SECRET is missing. Set MFA_SECRET in .env (and ENV_FILE_CONTENT for CI).');
   }
-  const token = generateTotp(secret);
-  console.log(`🔐 Generated MFA Token successfully.`);
-
-  // D. Type the token and submit MFA
-  await mfaInput.fill(token);
+  // D. Submit MFA token with small time-window retries for clock drift in CI.
   const continueButton = page.getByRole('button', { name: /continue/i }).first();
-  if (await continueButton.isVisible().catch(() => false)) {
-    await continueButton.click();
-  } else {
-    await mfaInput.press('Enter');
+  const tokenOffsets = [0, -1, 1];
+  let mfaAccepted = false;
+
+  for (const offset of tokenOffsets) {
+    const token = generateTotp(secret, 6, 30, offset);
+    console.log(`🔐 Generated MFA Token successfully (offset ${offset}).`);
+    await mfaInput.fill(token);
+
+    if (await continueButton.isVisible().catch(() => false)) {
+      await continueButton.click();
+    } else {
+      await mfaInput.press('Enter');
+    }
+
+    try {
+      await page.waitForURL(
+        /taxi\.stg\.mktg\.2u\.com|2u\.onelogin\.com\/trust\/saml2\/http-post\/sso/i,
+        { timeout: 25000, waitUntil: 'domcontentloaded' }
+      );
+      mfaAccepted = true;
+      break;
+    } catch {
+      const invalidCode = page.getByText(/invalid|incorrect|expired|try again/i).first();
+      if (await invalidCode.isVisible().catch(() => false)) {
+        console.log(`⚠️ MFA token rejected for offset ${offset}. Retrying...`);
+      }
+      await mfaInput.fill('');
+      await page.waitForTimeout(1200);
+    }
+  }
+
+  if (!mfaAccepted) {
+    throw new Error('Unable to complete MFA with generated tokens. Verify MFA_SECRET in GitHub secret and OneLogin factor setup.');
   }
   // ==========================================
 
   // 3. Complete OneLogin SAML handoff and land on Taxi staging
   console.log('⏳ Waiting to land on Taxi Staging dashboard...');
   await page.waitForTimeout(1500);
-  await page.waitForURL(
-    /taxi\.stg\.mktg\.2u\.com|2u\.onelogin\.com\/trust\/saml2\/http-post\/sso/i,
-    { timeout: 120000, waitUntil: 'domcontentloaded' }
-  );
 
   if (/2u\.onelogin\.com\/trust\/saml2\/http-post\/sso/i.test(page.url())) {
     try {
-      await page.waitForURL(/taxi\.stg\.mktg\.2u\.com/i, { timeout: 90000, waitUntil: 'domcontentloaded' });
+      await page.waitForURL(/taxi\.stg\.mktg\.2u\.com/i, { timeout: 60000, waitUntil: 'domcontentloaded' });
     } catch {
       await page.reload({ waitUntil: 'domcontentloaded' });
-      await page.waitForURL(/taxi\.stg\.mktg\.2u\.com/i, { timeout: 90000, waitUntil: 'domcontentloaded' });
+      await page.waitForURL(/taxi\.stg\.mktg\.2u\.com/i, { timeout: 60000, waitUntil: 'domcontentloaded' });
     }
   }
 
