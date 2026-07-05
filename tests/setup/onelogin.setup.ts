@@ -91,9 +91,8 @@ setup('login and save session', async ({ page }) => {
   console.log('⏳ Waiting for the 6-digit input box...');
   
   // B. STRICT MODE FIX: Added .first() to prevent crashes if OneLogin has hidden mobile inputs!
-  const mfaInput = page
-    .locator('[data-testid="security-code"], input[name="otp_code"], input[autocomplete="one-time-code"], input[type="tel"]')
-    .first();
+  const mfaInputSelector = '[data-testid="security-code"], input[name="otp_code"], input[autocomplete="one-time-code"], input[type="tel"]';
+  const mfaInput = page.locator(mfaInputSelector).first();
   await mfaInput.waitFor({ state: 'visible', timeout: 20000 });
 
   // C. Generate the 6-digit token
@@ -110,9 +109,21 @@ setup('login and save session', async ({ page }) => {
   const loginRestartPattern = /2u\.onelogin\.com\/login2\/?/i;
 
   for (const offset of tokenOffsets) {
+    const activeMfaInput = page.locator(mfaInputSelector).first();
+    const isInputVisible = await activeMfaInput.isVisible().catch(() => false);
+    if (!isInputVisible) {
+      if (samlHandoffPattern.test(page.url()) || taxiUrlPattern.test(page.url())) {
+        console.log('✅ MFA input no longer visible and redirect flow started. Treating MFA as accepted.');
+        mfaAccepted = true;
+        break;
+      }
+      console.log(`⚠️ MFA input is no longer visible before offset ${offset}; stopping token retries.`);
+      break;
+    }
+
     const token = generateTotp(secret, 6, 30, offset);
     console.log(`🔐 Generated MFA Token successfully (offset ${offset}).`);
-    await mfaInput.fill(token);
+    await activeMfaInput.fill(token);
 
     if (await continueButton.isVisible().catch(() => false)) {
       await continueButton.click();
@@ -126,8 +137,14 @@ setup('login and save session', async ({ page }) => {
       mfaAccepted = true;
       break;
     } catch {
+      const stillOnMfaInput = await page.locator(mfaInputSelector).first().isVisible().catch(() => false);
+
       if (loginRestartPattern.test(page.url())) {
         console.log(`⚠️ OneLogin returned to login page after offset ${offset}. Trying next token window...`);
+      } else if (samlHandoffPattern.test(page.url()) && !stillOnMfaInput) {
+        console.log(`✅ Reached SAML handoff and MFA input is gone after offset ${offset}. Proceeding to handoff stage.`);
+        mfaAccepted = true;
+        break;
       } else if (samlHandoffPattern.test(page.url())) {
         console.log(`⚠️ Still on SAML handoff after offset ${offset}. Trying next token window...`);
       }
@@ -137,8 +154,8 @@ setup('login and save session', async ({ page }) => {
         console.log(`⚠️ MFA token rejected for offset ${offset}. Retrying...`);
       }
 
-      if (await mfaInput.isVisible().catch(() => false)) {
-        await mfaInput.fill('');
+      if (stillOnMfaInput) {
+        await page.locator(mfaInputSelector).first().fill('');
       }
       await page.waitForTimeout(1200);
     }
