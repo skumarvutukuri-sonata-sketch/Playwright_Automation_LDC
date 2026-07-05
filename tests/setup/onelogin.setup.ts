@@ -2,11 +2,55 @@ import { test as setup } from '@playwright/test';
 import { LoginPage } from '../../pages/login.page';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
-const { generate } = require('otplib');
+import * as crypto from 'crypto';
 
 dotenv.config();
 
 const storageStatePath = path.resolve(__dirname, 'storageState.json');
+
+const base32ToBuffer = (value: string): Buffer => {
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+  const normalized = value.toUpperCase().replace(/[^A-Z2-7]/g, '');
+
+  let bits = '';
+  for (const ch of normalized) {
+    const idx = alphabet.indexOf(ch);
+    if (idx === -1) {
+      continue;
+    }
+    bits += idx.toString(2).padStart(5, '0');
+  }
+
+  const bytes: number[] = [];
+  for (let i = 0; i + 8 <= bits.length; i += 8) {
+    bytes.push(parseInt(bits.slice(i, i + 8), 2));
+  }
+
+  return Buffer.from(bytes);
+};
+
+const generateTotp = (secret: string, digits = 6, period = 30): string => {
+  const key = base32ToBuffer(secret);
+  if (key.length < 16) {
+    throw new Error('MFA_SECRET appears invalid. It should be a base32 secret of at least 16 bytes.');
+  }
+
+  const counter = Math.floor(Date.now() / 1000 / period);
+  const buffer = Buffer.alloc(8);
+  buffer.writeUInt32BE(Math.floor(counter / 0x100000000), 0);
+  buffer.writeUInt32BE(counter & 0xffffffff, 4);
+
+  const digest = crypto.createHmac('sha1', key).update(buffer).digest();
+  const offset = digest[digest.length - 1] & 0x0f;
+  const binary =
+    ((digest[offset] & 0x7f) << 24) |
+    ((digest[offset + 1] & 0xff) << 16) |
+    ((digest[offset + 2] & 0xff) << 8) |
+    (digest[offset + 3] & 0xff);
+
+  const otp = (binary % 10 ** digits).toString().padStart(digits, '0');
+  return otp;
+};
 
 setup('login and save session', async ({ page }) => {
   setup.setTimeout(180000);
@@ -57,8 +101,7 @@ setup('login and save session', async ({ page }) => {
   if (!secret) {
     throw new Error('MFA_SECRET is missing. Set MFA_SECRET in .env (and ENV_FILE_CONTENT for CI).');
   }
-  const normalizedSecret = secret.replace(/\s+/g, '').replace(/-/g, '').toUpperCase();
-  const token = String(await generate({ secret: normalizedSecret }));
+  const token = generateTotp(secret);
   console.log(`🔐 Generated MFA Token successfully.`);
 
   // D. Type the token and press Enter to submit
