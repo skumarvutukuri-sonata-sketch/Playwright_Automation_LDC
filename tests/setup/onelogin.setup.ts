@@ -104,15 +104,34 @@ setup('login and save session', async ({ page }) => {
   const token = generateTotp(secret);
   console.log(`🔐 Generated MFA Token successfully.`);
 
-  // D. Type the token and press Enter to submit
+  // D. Type the token and submit MFA
   await mfaInput.fill(token);
-  await mfaInput.press('Enter'); 
+  const continueButton = page.getByRole('button', { name: /continue/i }).first();
+  if (await continueButton.isVisible().catch(() => false)) {
+    await continueButton.click();
+  } else {
+    await mfaInput.press('Enter');
+  }
   // ==========================================
 
-  // 3. Wait until the browser successfully lands on Taxi staging
+  // 3. Complete OneLogin SAML handoff and land on Taxi staging
   console.log('⏳ Waiting to land on Taxi Staging dashboard...');
-  await page.waitForURL('**/taxi.stg.mktg.2u.com/**', { timeout: 30000 });
-  await page.waitForLoadState('networkidle');
+  await page.waitForTimeout(1500);
+  await page.waitForURL(
+    /taxi\.stg\.mktg\.2u\.com|2u\.onelogin\.com\/trust\/saml2\/http-post\/sso/i,
+    { timeout: 120000, waitUntil: 'domcontentloaded' }
+  );
+
+  if (/2u\.onelogin\.com\/trust\/saml2\/http-post\/sso/i.test(page.url())) {
+    try {
+      await page.waitForURL(/taxi\.stg\.mktg\.2u\.com/i, { timeout: 90000, waitUntil: 'domcontentloaded' });
+    } catch {
+      await page.reload({ waitUntil: 'domcontentloaded' });
+      await page.waitForURL(/taxi\.stg\.mktg\.2u\.com/i, { timeout: 90000, waitUntil: 'domcontentloaded' });
+    }
+  }
+
+  await page.waitForLoadState('domcontentloaded');
   await page.waitForTimeout(3000);
 
   // 4. Save the authenticated session to file
