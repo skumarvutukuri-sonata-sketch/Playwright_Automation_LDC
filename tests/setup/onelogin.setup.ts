@@ -2,7 +2,7 @@ import { test as setup } from '@playwright/test';
 import { LoginPage } from '../../pages/login.page';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
-const { authenticator } = require('otplib');
+const { generate } = require('otplib');
 
 dotenv.config();
 
@@ -57,7 +57,8 @@ setup('login and save session', async ({ page }) => {
   if (!secret) {
     throw new Error('MFA_SECRET is missing. Set MFA_SECRET in .env (and ENV_FILE_CONTENT for CI).');
   }
-  const token = authenticator.generate(secret);
+  const normalizedSecret = secret.replace(/\s+/g, '').replace(/-/g, '').toUpperCase();
+  const token = String(await generate({ secret: normalizedSecret }));
   console.log(`🔐 Generated MFA Token successfully.`);
 
   // D. Type the token and press Enter to submit
