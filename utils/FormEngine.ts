@@ -184,11 +184,11 @@ export class FormEngine {
     try {
       const isSuccess = await this.checkIfSuccessPage();
       if (isSuccess) {
-        Logger.warn(`⚠️  Form already submitted - Stopping field processing for: ${label}`);
+        Logger.action(`⚠️  Form already submitted - Stopping field processing for: ${label}`);
         return;
       }
     } catch (e) {
-      Logger.warn(`⚠️  Cannot verify form state - Continuing cautiously`);
+      Logger.action(`⚠️  Cannot verify form state - Continuing cautiously`);
     }
     
     try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {}
@@ -217,7 +217,7 @@ export class FormEngine {
           // Check if we've reached thank you page before testing invalid data
           const isSuccess = await this.checkIfSuccessPage();
           if (isSuccess) {
-            Logger.warn(`⚠️  Form submitted during email validation - Stopping`);
+            Logger.action(`⚠️  Form submitted during email validation - Stopping`);
             break;
           }
 
@@ -231,7 +231,7 @@ export class FormEngine {
           await new Promise(res => setTimeout(res, 800)); // Give error time to render
           this.recordTestCase(true);
         } catch (e) {
-          Logger.warn(`⚠️  Error testing invalid email "${val}": ${e}`);
+          Logger.action(`⚠️  Error testing invalid email "${val}": ${e}`);
           // Continue to next invalid value
         }
       }
@@ -246,7 +246,7 @@ export class FormEngine {
         this.recordTestCase(true);
         Logger.success('Valid email entered (Skipped Next click to prevent navigation)');
       } catch (e) {
-        Logger.warn(`⚠️  Failed to enter valid email: ${e}`);
+        Logger.action(`⚠️  Failed to enter valid email: ${e}`);
         this.recordTestCase(false);
       }
     }
@@ -259,7 +259,7 @@ export class FormEngine {
           // Check if we've reached thank you page before testing invalid data
           const isSuccess = await this.checkIfSuccessPage();
           if (isSuccess) {
-            Logger.warn(`⚠️  Form submitted during phone validation - Stopping`);
+            Logger.action(`⚠️  Form submitted during phone validation - Stopping`);
             break;
           }
 
@@ -272,7 +272,7 @@ export class FormEngine {
           await new Promise(res => setTimeout(res, 800)); // Give error time to render
           this.recordTestCase(true);
         } catch (e) {
-          Logger.warn(`⚠️  Error testing invalid phone "${val}": ${e}`);
+          Logger.action(`⚠️  Error testing invalid phone "${val}": ${e}`);
           // Continue to next invalid value
         }
       }
@@ -286,7 +286,7 @@ export class FormEngine {
         this.recordTestCase(true);
         Logger.success('Valid phone entered (Skipped Next click to prevent navigation)');
       } catch (e) {
-        Logger.warn(`⚠️  Failed to enter valid phone: ${e}`);
+        Logger.action(`⚠️  Failed to enter valid phone: ${e}`);
         this.recordTestCase(false);
       }
     }
@@ -296,12 +296,12 @@ export class FormEngine {
       try {
         const isSuccess = await this.checkIfSuccessPage();
         if (isSuccess) {
-          Logger.warn(`⚠️  Form already submitted (Thank You page detected) - Skipping field: ${label}`);
+          Logger.action(`⚠️  Form already submitted (Thank You page detected) - Skipping field: ${label}`);
           this.recordTestCase(true); // Count as passed since form completed successfully
           return;
         }
       } catch (e) {
-        Logger.warn(`⚠️  Cannot check page state for field: ${label} - Page may have closed`);
+        Logger.action(`⚠️  Cannot check page state for field: ${label} - Page may have closed`);
         this.recordTestCase(false);
         return;
       }
@@ -313,7 +313,7 @@ export class FormEngine {
         this.recordTestCase(true);
         Logger.success(`Filled: ${value}`);
       } catch (e) {
-        Logger.warn(`⚠️  Failed to fill field: ${label} - ${e}`);
+        Logger.action(`⚠️  Failed to fill field: ${label} - ${e}`);
         this.recordTestCase(false);
         return;
       }
