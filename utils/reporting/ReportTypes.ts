@@ -9,6 +9,15 @@ export type ExecutionStatus = 'PASSED' | 'FAILED';
 export type ExecutionMode = 'happy' | 'validation';
 
 /**
+ * Field-level testcase metrics
+ */
+export interface TestCaseMetrics {
+  total: number;
+  passed: number;
+  failed: number;
+}
+
+/**
  * One executed form
  */
 export interface FormExecutionResult {
@@ -20,6 +29,7 @@ export interface FormExecutionResult {
   startTime: Date;
   endTime: Date;
   error?: string;
+  testCases?: TestCaseMetrics;
 }
 
 /**

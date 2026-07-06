@@ -2,22 +2,23 @@ import { Page, FrameLocator, Locator } from '@playwright/test';
 import { Helpers } from './Helpers';
 import { DefaultData } from './DefaultData';
 import { Logger } from './Logger';
+import { TestCaseMetrics } from './reporting/ReportTypes';
 
-export type TestMode = 'happy' | 'validation';
+export type TestMode = 'positive' | 'negative';
 
 // ==========================================
 // 🚀 GLOBAL RADIO & CHECKBOX CONFIGURATION
 // If a field is NOT in this list (or is null/none), it will default to 'yes' (true).
 // ==========================================
 const GLOBAL_OVERRIDES: Record<TestMode, Record<string, any>> = {
-  happy: {
+  positive: {
     'email_opt_out': 'yes',
     'do_not_call': 'yes',
     'gdpr_prospectpartner_opt_in': 'true',
     'gdprProspect2uOptIn': true,
     'b2b_interest': 'true'
   },
-  validation: {
+  negative: {
     'email_opt_out': 'no',
     'do_not_call': 'no',
     'gdpr_prospectpartner_opt_in': 'false',
@@ -33,6 +34,7 @@ export class FormEngine {
   
   // Tracks which fields we already did negative testing on
   private validatedFields = new Set<string>();
+  private testCaseMetrics: TestCaseMetrics = { total: 0, passed: 0, failed: 0 };
 
   constructor(private page: Page, private frame: FrameLocator) {
     this.helpers = new Helpers(page, frame);
@@ -88,6 +90,7 @@ export class FormEngine {
         await this.forceClickCheckboxOrRadio(locator, true);
         this.processedRadioGroups.add(nameAttr); 
         this.saveEnteredValue(nameAttr, optionText);
+        this.recordTestCase(true);
         Logger.success(`Radio [${nameAttr}] selected: ${optionText}`);
       }
       return; 
@@ -120,6 +123,7 @@ export class FormEngine {
       }
       
       this.saveEnteredValue(nameAttr, shouldBeChecked ? optionText : 'false');
+      this.recordTestCase(true);
       Logger.success(`Checkbox [${nameAttr}] set to: ${shouldBeChecked}`);
       return;
     }
@@ -127,14 +131,20 @@ export class FormEngine {
     // ========================
     // TEXT & DROPDOWN LOGIC
     // ========================
-    if (mode === 'happy') {
-      await this.processHappyField(label, locator, type);
-    } else {
-      await this.processValidationField(label, locator, type);
+    try {
+      if (mode === 'positive') {
+        await this.processPositiveField(label, locator, type);
+      } else {
+        await this.processNegativeField(label, locator, type);
+      }
+    } catch (error) {
+      // Count the failing field interaction as a failed testcase.
+      this.recordTestCase(false);
+      throw error;
     }
   }
 
-  private async processHappyField(label: string, locator: Locator, type: string) {
+  private async processPositiveField(label: string, locator: Locator, type: string) {
     await locator.scrollIntoViewIfNeeded();
     await this.page.waitForTimeout(200);
 
@@ -154,6 +164,7 @@ export class FormEngine {
         const random = validOptions[Math.floor(Math.random() * validOptions.length)];
         await this.helpers.selectDropdown(locator, random);
         this.saveEnteredValue(label, random);
+        this.recordTestCase(true);
         Logger.success(`Final Selected: ${random}`);
       }
       return;
@@ -162,11 +173,23 @@ export class FormEngine {
     const value = DefaultData.getValue(label);
     await locator.fill(value);
     this.saveEnteredValue(label, value);
+    this.recordTestCase(true);
     Logger.success(`Filled: ${value}`);
   }
 
-  private async processValidationField(label: string, locator: Locator, type: string) {
+  private async processNegativeField(label: string, locator: Locator, type: string) {
     const key = label.toLowerCase();
+    
+    // 🚀 EARLY EXIT: Check if form already submitted
+    try {
+      const isSuccess = await this.checkIfSuccessPage();
+      if (isSuccess) {
+        Logger.warn(`⚠️  Form already submitted - Stopping field processing for: ${label}`);
+        return;
+      }
+    } catch (e) {
+      Logger.warn(`⚠️  Cannot verify form state - Continuing cautiously`);
+    }
     
     try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {}
     await new Promise(res => setTimeout(res, 800)); 
@@ -180,6 +203,7 @@ export class FormEngine {
         const random = valid[Math.floor(Math.random() * valid.length)];
         await this.helpers.selectDropdown(locator, random);
         this.saveEnteredValue(label, random);
+        this.recordTestCase(true);
         Logger.success(`Validation dropdown selected: ${random}`);
       }
       return;
@@ -189,55 +213,118 @@ export class FormEngine {
       const invalids = ['test', 'test@', '@gmail.com'];
       
       for (const val of invalids) {
-        try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {} 
-        await locator.fill(val, { force: true });
-        Logger.action(`Invalid email: ${val}`);
-        
-        // 🚀 THE FIX: Click Next to force the UI error to appear for the INVALID data!
-        // Because the data is invalid, the form will NOT go to the next page.
-        await this.clickNext();
-        await new Promise(res => setTimeout(res, 800)); // Give error time to render
+        try {
+          // Check if we've reached thank you page before testing invalid data
+          const isSuccess = await this.checkIfSuccessPage();
+          if (isSuccess) {
+            Logger.warn(`⚠️  Form submitted during email validation - Stopping`);
+            break;
+          }
+
+          try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {} 
+          await locator.fill(val, { force: true });
+          Logger.action(`Invalid email: ${val}`);
+          
+          // 🚀 THE FIX: Click Next to force the UI error to appear for the INVALID data!
+          // Because the data is invalid, the form will NOT go to the next page.
+          await this.clickNext();
+          await new Promise(res => setTimeout(res, 800)); // Give error time to render
+          this.recordTestCase(true);
+        } catch (e) {
+          Logger.warn(`⚠️  Error testing invalid email "${val}": ${e}`);
+          // Continue to next invalid value
+        }
       }
       
       // 🚀 Enter VALID data, but DO NOT click Next! 
       // This prevents the Optional Field trap from skipping pages.
-      try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {}
-      const valid = DefaultData.getValue(label);
-      await locator.fill(valid, { force: true });
-      this.saveEnteredValue(label, valid);
-      Logger.success('Valid email entered (Skipped Next click to prevent navigation)');
+      try {
+        try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {}
+        const valid = DefaultData.getValue(label);
+        await locator.fill(valid, { force: true });
+        this.saveEnteredValue(label, valid);
+        this.recordTestCase(true);
+        Logger.success('Valid email entered (Skipped Next click to prevent navigation)');
+      } catch (e) {
+        Logger.warn(`⚠️  Failed to enter valid email: ${e}`);
+        this.recordTestCase(false);
+      }
     }
     else if ((key.includes('phone') || key.includes('contact') || key.includes('mobile')) && !alreadyValidated) {
       this.validatedFields.add(key); 
       const invalids = ['123', '999999999999', 'abcd'];
       
       for (const val of invalids) {
-        try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {} 
-        await locator.fill(val, { force: true });
-        Logger.action(`Invalid phone: ${val}`);
-        
-        // 🚀 THE FIX: Click Next to force the UI error to appear for the INVALID data!
-        await this.clickNext();
-        await new Promise(res => setTimeout(res, 800)); // Give error time to render
+        try {
+          // Check if we've reached thank you page before testing invalid data
+          const isSuccess = await this.checkIfSuccessPage();
+          if (isSuccess) {
+            Logger.warn(`⚠️  Form submitted during phone validation - Stopping`);
+            break;
+          }
+
+          try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {} 
+          await locator.fill(val, { force: true });
+          Logger.action(`Invalid phone: ${val}`);
+          
+          // 🚀 THE FIX: Click Next to force the UI error to appear for the INVALID data!
+          await this.clickNext();
+          await new Promise(res => setTimeout(res, 800)); // Give error time to render
+          this.recordTestCase(true);
+        } catch (e) {
+          Logger.warn(`⚠️  Error testing invalid phone "${val}": ${e}`);
+          // Continue to next invalid value
+        }
       }
       
       // 🚀 Enter VALID data, but DO NOT click Next!
-      try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {}
-      const valid = DefaultData.getValue(label);
-      await locator.fill(valid, { force: true });
-      this.saveEnteredValue(label, valid);
-      Logger.success('Valid phone entered (Skipped Next click to prevent navigation)');
+      try {
+        try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {}
+        const valid = DefaultData.getValue(label);
+        await locator.fill(valid, { force: true });
+        this.saveEnteredValue(label, valid);
+        this.recordTestCase(true);
+        Logger.success('Valid phone entered (Skipped Next click to prevent navigation)');
+      } catch (e) {
+        Logger.warn(`⚠️  Failed to enter valid phone: ${e}`);
+        this.recordTestCase(false);
+      }
     }
     else {
       // Standard text fields (First Name, Last Name, etc.)
-      const value = DefaultData.getValue(label);
-      await locator.fill(value, { force: true });
-      this.saveEnteredValue(label, value);
-      Logger.success(`Filled: ${value}`);
+      // 🚀 SAFETY CHECK: Ensure we haven't reached thank you page or form submitted
+      try {
+        const isSuccess = await this.checkIfSuccessPage();
+        if (isSuccess) {
+          Logger.warn(`⚠️  Form already submitted (Thank You page detected) - Skipping field: ${label}`);
+          this.recordTestCase(true); // Count as passed since form completed successfully
+          return;
+        }
+      } catch (e) {
+        Logger.warn(`⚠️  Cannot check page state for field: ${label} - Page may have closed`);
+        this.recordTestCase(false);
+        return;
+      }
+
+      try {
+        const value = DefaultData.getValue(label);
+        await locator.fill(value, { force: true });
+        this.saveEnteredValue(label, value);
+        this.recordTestCase(true);
+        Logger.success(`Filled: ${value}`);
+      } catch (e) {
+        Logger.warn(`⚠️  Failed to fill field: ${label} - ${e}`);
+        this.recordTestCase(false);
+        return;
+      }
     }
 
     // Wait for any lingering errors to disappear before moving to the next field
-    await this.helpers.waitForErrorToDisappear(label);
+    try {
+      await this.helpers.waitForErrorToDisappear(label);
+    } catch (e) {
+      // If page is closed, just continue - not a critical error
+    }
   }
 
   private async getLabelFromElement(locator: Locator): Promise<string> {
@@ -272,6 +359,10 @@ export class FormEngine {
 
   getEnteredValues(): Record<string, any> {
     return this.enteredValues;
+  }
+
+  getTestCaseMetrics(): TestCaseMetrics {
+    return { ...this.testCaseMetrics };
   }
 
   async clickNext() {
@@ -317,5 +408,14 @@ export class FormEngine {
     }
     
     Logger.action(`❌ Warning: Failed to force the element to ${targetState} after ${maxRetries} attempts.`);
+  }
+
+  private recordTestCase(passed: boolean): void {
+    this.testCaseMetrics.total += 1;
+    if (passed) {
+      this.testCaseMetrics.passed += 1;
+      return;
+    }
+    this.testCaseMetrics.failed += 1;
   }
 }

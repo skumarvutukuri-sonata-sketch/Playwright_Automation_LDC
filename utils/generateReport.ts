@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import Papa from 'papaparse';
 
 interface TestResult {
   name: string;
@@ -9,6 +10,8 @@ interface TestResult {
 
 export function generateFormattedReport(): { html: string; summary: any } {
   const testResultsPath = path.resolve('test-results.json');
+  const resultMatrixPath = path.resolve('reports', 'result-matrix.csv');
+  
   if (!fs.existsSync(testResultsPath)) {
     return { html: '<p>No test results found</p>', summary: {} };
   }
@@ -22,6 +25,70 @@ export function generateFormattedReport(): { html: string; summary: any } {
   const testDetails: TestResult[] = [];
   if (Array.isArray(rawResults.suites)) {
     collectTests(rawResults.suites, testDetails);
+  }
+
+  // 🚀 READ POSITIVE/NEGATIVE DATA FROM RESULT-MATRIX.CSV
+  let matrixData: any[] = [];
+  let positiveTotal = 0;
+  let positivePassed = 0;
+  let positiveFailed = 0;
+  let positiveFormsCount = 0;
+  let positiveTestCasesPassed = 0;
+  let positiveTestCasesTotal = 0;
+  
+  let negativeTotal = 0;
+  let negativePassed = 0;
+  let negativeFailed = 0;
+  let negativeTestCasesPassed = 0;
+  let negativeTestCasesTotal = 0;
+  let totalUniqueFormsTested = 0;
+  
+  if (fs.existsSync(resultMatrixPath)) {
+    try {
+      const csvContent = fs.readFileSync(resultMatrixPath, 'utf-8');
+      const parsed = Papa.parse(csvContent, { header: true, skipEmptyLines: true });
+      matrixData = parsed.data || [];
+      
+      // Count positive and negative results
+      const uniquePositiveForms = new Set<string>();
+      const uniqueNegativeForms = new Set<string>();
+      
+      matrixData.forEach((row: any) => {
+        if (row.Positive_Status && row.Positive_Status !== '—') {
+          positiveTotal++;
+          uniquePositiveForms.add(row.Form);
+          if (row.Positive_Status === 'PASSED') {
+            positivePassed++;
+          } else {
+            positiveFailed++;
+          }
+          // Count test cases
+          positiveTestCasesTotal += parseInt(row.Positive_TC_Total || 0);
+          positiveTestCasesPassed += parseInt(row.Positive_TC_Passed || 0);
+        }
+        if (row.Negative_Status && row.Negative_Status !== '—') {
+          negativeTotal++;
+          uniqueNegativeForms.add(row.Form);
+          if (row.Negative_Status === 'PASSED') {
+            negativePassed++;
+          } else {
+            negativeFailed++;
+          }
+          // Count test cases
+          negativeTestCasesTotal += parseInt(row.Negative_TC_Total || 0);
+          negativeTestCasesPassed += parseInt(row.Negative_TC_Passed || 0);
+        }
+      });
+      
+      positiveFormsCount = uniquePositiveForms.size;
+      negativeTotal = matrixData.length; // Total forms with negative tests
+      
+      // Count total unique forms tested (both positive and negative paths)
+      const allUniqueForms = new Set([...uniquePositiveForms, ...uniqueNegativeForms]);
+      totalUniqueFormsTested = allUniqueForms.size;
+    } catch (err) {
+      console.error('Failed to parse result-matrix.csv:', err);
+    }
   }
 
   const statusBadgeColor = (status: string) => {
@@ -42,43 +109,57 @@ export function generateFormattedReport(): { html: string; summary: any } {
     <div style="font-family: Arial, sans-serif; color: #333; line-height: 1.5;">
       <h2 style="color: #2c3e50;">Automated Test Execution Report</h2>
       <p><strong>Execution Date:</strong> ${executionDate}</p>
-      <p><strong>Source:</strong> allure-report/widgets/duration.json</p>
+      <p><strong>Source:</strong> Playwright + Custom Form Testing Framework</p>
 
       <h3>Summary</h3>
       <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-        <tr>
-          <td style="padding: 6px 8px; border: 1px solid #ccc; font-weight: bold;">Count Status</td>
-          <td style="padding: 6px 8px; border: 1px solid #ccc; font-weight: bold;">Badge</td>
-          <td style="padding: 6px 8px; border: 1px solid #ccc; font-weight: bold;">Total</td>
+        <tr style="background: #34495e; color: white;">
+          <th style="padding: 12px; border: 1px solid #ccc; text-align: center; font-size: 12px;">Forms Tested</th>
+          <th style="padding: 12px; border: 1px solid #ccc; text-align: center; font-size: 12px;">Success Rate</th>
+          <th style="padding: 12px; border: 1px solid #ccc; text-align: center; font-size: 12px;">Total Paths</th>
+          <th style="padding: 12px; border: 1px solid #ccc; text-align: center; font-size: 12px;">Passed</th>
+          <th style="padding: 12px; border: 1px solid #ccc; text-align: center; font-size: 12px;">Failed</th>
+          <th style="padding: 12px; border: 1px solid #ccc; text-align: center; font-size: 12px;">TC Covered</th>
         </tr>
-        <tr>
-          <td style="padding: 6px 8px; border: 1px solid #ccc;">Total Tests</td>
-          <td style="padding: 6px 8px; border: 1px solid #ccc;">UNKNOWN</td>
-          <td style="padding: 6px 8px; border: 1px solid #ccc;"><strong>${totalTests}</strong></td>
-        </tr>
-        <tr>
-          <td style="padding: 6px 8px; border: 1px solid #ccc;">Duration</td>
-          <td style="padding: 6px 8px; border: 1px solid #ccc;">-</td>
-          <td style="padding: 6px 8px; border: 1px solid #ccc;"><strong>${duration}</strong></td>
-        </tr>
-        <tr>
-          <td style="padding: 6px 8px; border: 1px solid #ccc;">Passed</td>
-          <td style="padding: 6px 8px; border: 1px solid #ccc;">${statusBadge('PASS')}</td>
-          <td style="padding: 6px 8px; border: 1px solid #ccc;"><strong>${stats.expected || 0}</strong></td>
-        </tr>
-        <tr>
-          <td style="padding: 6px 8px; border: 1px solid #ccc;">Failed</td>
-          <td style="padding: 6px 8px; border: 1px solid #ccc;">${statusBadge('FAIL')}</td>
-          <td style="padding: 6px 8px; border: 1px solid #ccc;"><strong>${stats.unexpected || 0}</strong></td>
-        </tr>
-        <tr>
-          <td style="padding: 6px 8px; border: 1px solid #ccc;">Skipped</td>
-          <td style="padding: 6px 8px; border: 1px solid #ccc;">${statusBadge('SKIP')}</td>
-          <td style="padding: 6px 8px; border: 1px solid #ccc;"><strong>${stats.skipped || 0}</strong></td>
+        <tr style="background: #ecf0f1;">
+          <td style="padding: 12px; border: 1px solid #ccc; text-align: center;"><strong style="font-size: 18px; color: #2980b9;">${totalUniqueFormsTested || 0}</strong></td>
+          <td style="padding: 12px; border: 1px solid #ccc; text-align: center;"><strong style="font-size: 18px; color: ${(positivePassed + negativePassed + positiveFailed + negativeFailed > 0 ? ((positivePassed + negativePassed) / (positivePassed + negativePassed + positiveFailed + negativeFailed) * 100 >= 50 ? '#27ae60' : '#e74c3c') : '#95a5a6');};">${(positivePassed + negativePassed + positiveFailed + negativeFailed > 0 ? Math.round((positivePassed + negativePassed) / (positivePassed + negativePassed + positiveFailed + negativeFailed) * 100) : 0)}%</strong></td>
+          <td style="padding: 12px; border: 1px solid #ccc; text-align: center;"><strong style="font-size: 18px; color: #8e44ad;">${positivePassed + negativePassed + positiveFailed + negativeFailed}</strong></td>
+          <td style="padding: 12px; border: 1px solid #ccc; text-align: center;"><strong style="font-size: 18px; color: #27ae60;">${positivePassed + negativePassed}</strong></td>
+          <td style="padding: 12px; border: 1px solid #ccc; text-align: center;"><strong style="font-size: 18px; color: #e74c3c;">${positiveFailed + negativeFailed}</strong></td>
+          <td style="padding: 12px; border: 1px solid #ccc; text-align: center;"><strong style="font-size: 18px; color: #f39c12;">${positiveTestCasesTotal + negativeTestCasesTotal}</strong></td>
         </tr>
       </table>
 
-      <h3>Test Results</h3>
+      <h3>Form Testing Summary</h3>
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+        <tr style="background: #2c3e50; color: white;">
+          <th style="padding: 10px; border: 1px solid #ccc; text-align: left;">Test Path</th>
+          <th style="padding: 10px; border: 1px solid #ccc; text-align: center;">Total Scenarios</th>
+          <th style="padding: 10px; border: 1px solid #ccc; text-align: center;">Pass / Fail</th>
+          <th style="padding: 10px; border: 1px solid #ccc; text-align: center;">Test Cases</th>
+        </tr>
+        <tr style="background: #e8f5e9;">
+          <td style="padding: 10px; border: 1px solid #ccc;"><strong>✅ Positive Path</strong></td>
+          <td style="padding: 10px; border: 1px solid #ccc; text-align: center;"><strong>${positiveFormsCount}</strong></td>
+          <td style="padding: 10px; border: 1px solid #ccc; text-align: center;">${statusBadge('PASS')} <strong>${positivePassed}</strong> / ${statusBadge('FAIL')} <strong>${positiveFailed}</strong></td>
+          <td style="padding: 10px; border: 1px solid #ccc; text-align: center;"><strong>${positiveTestCasesPassed}/${positiveTestCasesTotal}</strong></td>
+        </tr>
+        <tr style="background: #fff3e0;">
+          <td style="padding: 10px; border: 1px solid #ccc;"><strong>🔍 Negative Path</strong></td>
+          <td style="padding: 10px; border: 1px solid #ccc; text-align: center;"><strong>${matrixData.length}</strong></td>
+          <td style="padding: 10px; border: 1px solid #ccc; text-align: center;">${statusBadge('PASS')} <strong>${negativePassed}</strong> / ${statusBadge('FAIL')} <strong>${negativeFailed}</strong></td>
+          <td style="padding: 10px; border: 1px solid #ccc; text-align: center;"><strong>${negativeTestCasesPassed}/${negativeTestCasesTotal}</strong></td>
+        </tr>
+        <tr style="background: #f7f7f7; border-top: 2px solid #ccc;">
+          <td style="padding: 10px; border: 1px solid #ccc;"><strong>Total</strong></td>
+          <td style="padding: 10px; border: 1px solid #ccc; text-align: center;"><strong>${matrixData.length}</strong></td>
+          <td style="padding: 10px; border: 1px solid #ccc; text-align: center;">${statusBadge('PASS')} <strong>${positivePassed + negativePassed}</strong> / ${statusBadge('FAIL')} <strong>${positiveFailed + negativeFailed}</strong></td>
+          <td style="padding: 10px; border: 1px solid #ccc; text-align: center;"><strong>${positiveTestCasesPassed + negativeTestCasesPassed}/${positiveTestCasesTotal + negativeTestCasesTotal}</strong></td>
+        </tr>
+      </table>
+
+      <h3>Test Results Details</h3>
       <table style="width: 100%; border-collapse: collapse;">
         <tr style="background: #34495e; color: white;">
           <th style="padding: 8px; border: 1px solid #ccc; text-align: left;">S.No</th>

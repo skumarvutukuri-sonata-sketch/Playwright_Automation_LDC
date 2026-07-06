@@ -13,6 +13,7 @@ import {
   Severity,
   Status
 } from 'allure-js-commons';
+import { TestCaseMetrics } from './ReportTypes';
 
 
 export class AllureHelper {
@@ -242,6 +243,23 @@ export class AllureHelper {
       ContentType.JSON
     );
 
+  }
+
+  /**
+   * Attach Field-level testcase metrics
+   */
+  static async attachTestCaseMetrics(
+    metrics: TestCaseMetrics
+  ): Promise<void> {
+    await parameter('TestCases_Total', metrics.total);
+    await parameter('TestCases_Passed', metrics.passed);
+    await parameter('TestCases_Failed', metrics.failed);
+
+    await attachment(
+      'Field Test Case Metrics',
+      JSON.stringify(metrics, null, 2),
+      ContentType.JSON
+    );
   }
 
   /**

@@ -37,4 +37,4 @@ export interface CsvRowData {
 /**
  * Defines the execution mode for the current test run.
  */
-export type TestMode = 'happy' | 'validation';
+export type TestMode = 'positive' | 'negative';

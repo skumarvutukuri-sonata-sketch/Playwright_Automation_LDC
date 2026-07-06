@@ -3,213 +3,700 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QA Automation Dashboard</title>
+    <title>LDC Test Coverage Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="dashboard-history.js"></script>
+    <style>
+        body { font-family: 'Manrope', sans-serif; background-color: #f5f7fa; }
+        .bg-report { background: #ffffff; }
+    </style>
 </head>
-<body class="bg-gray-50 p-8 font-sans text-gray-800">
-
-    <div class="max-w-7xl mx-auto">
-        <div class="flex justify-between items-center mb-8">
-            <div>
-                <h1 class="text-3xl font-bold text-indigo-700">Test Execution Dashboard</h1>
-                <p class="text-gray-500 mt-1">High-level metrics and historical trends</p>
-            </div>
-            <a href="allure/index.html" target="_blank" class="bg-gray-800 text-white px-5 py-2 rounded shadow hover:bg-gray-700 font-bold transition">
-                🛠️ View Developer Allure Report
-            </a>
-        </div>
-
-        <div class="flex items-end gap-4 bg-white p-5 rounded-lg shadow mb-8 border-t-4 border-indigo-500">
-            <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-1">Start Date</label>
-                <input type="date" id="startDate" class="block w-full px-4 py-2 border rounded-md border-gray-300 focus:ring-indigo-500 focus:border-indigo-500">
-            </div>
-            <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-1">End Date</label>
-                <input type="date" id="endDate" class="block w-full px-4 py-2 border rounded-md border-gray-300 focus:ring-indigo-500 focus:border-indigo-500">
-            </div>
-            <button onclick="applyFilter()" class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 font-bold shadow transition">
-                Apply Filter
-            </button>
-        </div>
-
-        <div class="grid grid-cols-3 gap-6 mb-8">
-            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-blue-500">
-                <h3 class="font-bold text-gray-500 text-sm uppercase tracking-wide">Total Executed</h3>
-                <p id="totalForms" class="text-4xl font-bold text-gray-800 mt-2">0</p>
-            </div>
-            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-green-500">
-                <h3 class="font-bold text-gray-500 text-sm uppercase tracking-wide">Passed</h3>
-                <p id="totalPassed" class="text-4xl font-bold text-green-600 mt-2">0</p>
-            </div>
-            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-red-500">
-                <h3 class="font-bold text-gray-500 text-sm uppercase tracking-wide">Failed</h3>
-                <p id="totalFailed" class="text-4xl font-bold text-red-600 mt-2">0</p>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-6 mb-8">
-            <div class="bg-white rounded-lg shadow p-6 h-80 flex flex-col">
-                <h2 class="text-lg font-bold mb-4 text-center text-gray-700">Pass / Fail Ratio</h2>
-                <div class="relative flex-grow w-full">
-                    <canvas id="pieChart"></canvas>
+<body class="text-slate-800 p-4 md:p-8">
+    <div class="mx-auto max-w-7xl space-y-6">
+        <header class="rounded-2xl bg-gradient-to-br from-gray-900 via-slate-800 to-blue-900 p-6 md:p-8 text-white shadow-2xl border border-gray-700/50">
+            <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                <div class="flex items-center gap-4">
+                    <div class="h-16 w-24 md:h-20 md:w-28 rounded-xl bg-white/10 border-2 border-white/30 flex items-center justify-center overflow-hidden shadow-lg">
+                        <img id="companyLogo" src="company-logo.png" alt="Company Logo" class="block h-[88%] w-[88%] object-contain object-center mx-auto" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='company-logo.svg';return;}this.style.display='none';document.getElementById('companyLogoFallback').classList.remove('hidden');" />
+                        <span id="companyLogoFallback" class="hidden text-2xl font-extrabold tracking-tight text-white">2U</span>
+                    </div>
+                    <div>
+                    <h1 class="text-3xl md:text-5xl font-extrabold text-white">LDC Forms Automation Dashboard</h1>
+                    <p class="mt-2 text-sm md:text-base text-blue-100">Daily execution quality report for form coverage, field validations, and testcase outcomes.</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <div class="rounded-lg border border-white/20 bg-white/10 px-4 py-2 backdrop-blur">
+                        <p class="text-xs uppercase tracking-wide text-blue-200">📊 DATA RETENTION</p>
+                        <p class="text-lg font-bold text-cyan-300">30 days</p>
+                    </div>
+                    <button id="downloadPDF" class="rounded-lg bg-gradient-to-r from-orange-400 to-red-500 px-6 py-2 text-sm font-bold text-white hover:from-orange-500 hover:to-red-600 transition shadow-lg">📥 Download PDF</button>
+                    <a id="allureLink" href="allure/index.html" target="_blank" class="rounded-lg bg-white px-6 py-2 text-sm font-bold text-blue-900 hover:bg-gray-100 transition shadow-lg">Open Allure</a>
                 </div>
             </div>
-            <div class="bg-white rounded-lg shadow p-6 h-80 flex flex-col">
-                <h2 class="text-lg font-bold mb-4 text-center text-gray-700">Results by Mode</h2>
-                <div class="relative flex-grow w-full">
-                    <canvas id="barChart"></canvas>
+
+            <div class="mt-6 pt-6 border-t border-white/10 flex flex-col md:flex-row md:items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <label for="selectedDate" class="text-sm font-semibold text-blue-100">SELECT DATE</label>
+                    <input id="selectedDate" type="date" class="rounded-lg border border-white/30 bg-white/10 px-4 py-2 text-white outline-none focus:bg-white/20 focus:border-cyan-400 transition" />
                 </div>
+                <button id="refreshDate" class="rounded-lg bg-gradient-to-r from-cyan-400 to-green-400 px-6 py-2 font-bold text-gray-900 hover:from-cyan-300 hover:to-green-300 transition shadow-lg">Load Date Report</button>
+                <p id="selectedDateLabel" class="text-blue-100 text-sm font-semibold ml-auto"></p>
             </div>
-        </div>
 
-        <div class="bg-white rounded-lg shadow overflow-hidden">
-            <table class="min-w-full">
-                <thead class="bg-gray-100 border-b">
-                    <tr class="text-left text-gray-600 uppercase text-sm tracking-wider">
-                        <th class="p-4">Run Date</th>
-                        <th class="p-4">Form ID / Name</th>
-                        <th class="p-4">Mode</th>
-                        <th class="p-4">Status</th>
-                        <th class="p-4">Logs / Trace</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody" class="divide-y divide-gray-200">
-                    </tbody>
-            </table>
-        </div>
-    </div>
+        </header>
 
-    <div id="logModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
-        <div class="relative mx-auto p-6 border w-11/12 md:w-3/4 shadow-2xl rounded-lg bg-white">
-            <div class="flex justify-between items-center pb-4 border-b">
-                <h3 class="text-2xl font-bold text-red-600">Failure Details</h3>
-                <button onclick="document.getElementById('logModal').classList.add('hidden')" class="text-3xl font-bold text-gray-400 hover:text-gray-800 transition">&times;</button>
+        <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
+            <article class="rounded-xl bg-gradient-to-br from-amber-50 to-amber-100 shadow-lg border-l-4 border-amber-600 p-5">
+                <p class="text-xs uppercase tracking-wide text-amber-700 font-bold">📋 Forms Count</p>
+                <p id="formsCount" class="mt-2 text-3xl font-extrabold text-amber-900">0</p>
+            </article>
+            <article class="rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 shadow-lg border-l-4 border-blue-600 p-5">
+                <p class="text-xs uppercase tracking-wide text-blue-700 font-bold">🔄 Total Scenarios</p>
+                <p id="pathsTotal" class="mt-2 text-3xl font-extrabold text-blue-900">0</p>
+            </article>
+            <article class="rounded-xl bg-gradient-to-br from-cyan-50 to-cyan-100 shadow-lg border-l-4 border-cyan-600 p-5">
+                <p class="text-xs uppercase tracking-wide text-cyan-700 font-bold">✅ Pass / Fail</p>
+                <p id="pathsPassFail" class="mt-2 text-3xl font-extrabold text-cyan-900">0 / 0</p>
+            </article>
+            <article class="rounded-xl bg-gradient-to-br from-indigo-50 to-indigo-100 shadow-lg border-l-4 border-indigo-600 p-5">
+                <p class="text-xs uppercase tracking-wide text-indigo-700 font-bold">🧪 Test Cases</p>
+                <p id="tcTotal" class="mt-2 text-3xl font-extrabold text-indigo-900">0</p>
+            </article>
+            <article class="rounded-xl bg-gradient-to-br from-emerald-50 to-emerald-100 shadow-lg border-l-4 border-emerald-600 p-5">
+                <p class="text-xs uppercase tracking-wide text-emerald-700 font-bold">📈 Pass %</p>
+                <p id="scenarioPassRate" class="mt-2 text-3xl font-extrabold text-emerald-900">0%</p>
+            </article>
+        </section>
+
+        <section class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+            <div class="rounded-xl bg-white border-2 border-amber-200 shadow-lg p-5">
+                <h2 class="text-sm font-bold uppercase tracking-wide text-amber-700" style="color: #92400e;">📊 Selected Date Distribution</h2>
+                <div class="mt-3 h-72"><canvas id="distributionChart"></canvas></div>
             </div>
-            <div class="mt-4">
-                <h4 class="font-bold text-gray-800 mb-2">API Payload:</h4>
-                <pre id="modalPayload" class="bg-gray-100 p-4 rounded text-sm mb-6 overflow-x-auto border border-gray-200 shadow-inner"></pre>
-                
-                <h4 class="font-bold text-gray-800 mb-2">Error Log:</h4>
-                <pre id="modalError" class="bg-red-50 text-red-700 p-4 rounded text-sm overflow-x-auto border border-red-100 shadow-inner"></pre>
+            <div class="rounded-xl bg-white border-2 border-indigo-200 shadow-lg p-5">
+                <h2 class="text-sm font-bold uppercase tracking-wide text-indigo-700" style="color: #3730a3;">📈 30-Day Test Case Trend</h2>
+                <div class="mt-3 h-72"><canvas id="trendChart"></canvas></div>
             </div>
-        </div>
+        </section>
+
+        <section class="rounded-xl border-2 border-slate-300 bg-white shadow-lg overflow-hidden">
+            <div class="px-5 py-4 border-b-2 border-slate-300 flex items-center justify-between bg-gradient-to-r from-slate-50 to-slate-100">
+                <h2 class="text-base font-bold text-slate-800" style="color: #1e293b;">📋 Form Coverage Details</h2>
+                <span class="text-xs text-slate-600">Positive and Negative path with field-level test cases</span>
+            </div>
+            
+            <!-- Category Filter Buttons -->
+            <div class="px-5 py-4 border-b-2 border-slate-200 bg-gradient-to-r from-slate-50 to-slate-100 flex gap-3 flex-wrap">
+                <button id="filterDegree" class="inline-flex items-center gap-3 px-5 py-2.5 rounded-lg font-semibold text-sm transition bg-gradient-to-r from-blue-50 to-blue-100 text-blue-800 hover:from-blue-100 hover:to-blue-200 border-2 border-blue-400 shadow" onclick="toggleCategoryFilter('degree')">
+                    <span class="inline-block w-3 h-3 rounded-full bg-blue-600"></span>
+                    <span>Degree</span>
+                    <span id="degreeTotalCount" class="px-3 py-1 rounded-full bg-green-600 text-white font-bold text-xs">0</span>
+                    <span class="text-blue-400">·</span>
+                    <span id="degreeFailedCount" class="px-3 py-1 rounded-full bg-red-600 text-white font-bold text-xs">0</span>
+                </button>
+                <button id="filterShortCourses" class="inline-flex items-center gap-3 px-5 py-2.5 rounded-lg font-semibold text-sm transition bg-gradient-to-r from-teal-50 to-teal-100 text-teal-800 hover:from-teal-100 hover:to-teal-200 border-2 border-teal-400 shadow" onclick="toggleCategoryFilter('shortcourses')">
+                    <span class="inline-block w-3 h-3 rounded-full bg-teal-600"></span>
+                    <span>Short Courses</span>
+                    <span id="shortCoursesTotalCount" class="px-3 py-1 rounded-full bg-green-600 text-white font-bold text-xs">0</span>
+                    <span class="text-teal-400">·</span>
+                    <span id="shortCoursesFailedCount" class="px-3 py-1 rounded-full bg-red-600 text-white font-bold text-xs">0</span>
+                </button>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-sm border-collapse">
+                    <thead class="bg-gradient-to-r from-slate-700 to-slate-800 text-white uppercase text-xs tracking-wider font-semibold sticky top-0 z-20">
+                        <tr>
+                            <th class="px-4 py-3 text-left sticky left-0 bg-gradient-to-r from-slate-700 to-slate-800 z-30 w-24">Date</th>
+                            <th class="px-4 py-3 text-left sticky left-24 bg-gradient-to-r from-slate-700 to-slate-800 z-30 w-16">Form</th>
+                            <th class="px-4 py-3 text-left sticky left-40 bg-gradient-to-r from-slate-700 to-slate-800 z-30 w-40">Group</th>
+                            <th class="px-4 py-3 text-center sticky left-80 bg-gradient-to-r from-slate-700 to-slate-800 z-30 w-28">Positive</th>
+                            <th class="px-4 py-3 text-center sticky left-[108px] bg-gradient-to-r from-slate-700 to-slate-800 z-30 w-16">Pos TC</th>
+                            <th class="px-4 py-3 text-right sticky left-[124px] bg-gradient-to-r from-slate-700 to-slate-800 z-30 w-24">Pos Dur</th>
+                            <th class="px-4 py-3 text-center sticky left-[148px] bg-gradient-to-r from-slate-700 to-slate-800 z-30 w-28">Negative</th>
+                            <th class="px-4 py-3 text-center sticky left-[176px] bg-gradient-to-r from-slate-700 to-slate-800 z-30 w-16">Neg TC</th>
+                            <th class="px-4 py-3 text-right sticky left-[192px] bg-gradient-to-r from-slate-700 to-slate-800 z-30 w-24">Neg Dur</th>
+                            <th class="px-4 py-3 text-center sticky left-[216px] bg-gradient-to-r from-slate-700 to-slate-800 z-30 w-20">Error Log</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody" class="divide-y divide-slate-200"></tbody>
+                </table>
+            </div>
+        </section>
     </div>
 
     <script>
-        let pieChartInstance = null;
-        let barChartInstance = null;
+        let distributionChart = null;
+        let trendChart = null;
+        let selectedCategories = new Set(['degree', 'shortcourses']);
+        let currentDay = null;
 
-        function applyFilter() {
-            let start = document.getElementById('startDate').value;
-            let end = document.getElementById('endDate').value;
-            
-            // Smart Single Day feature: if only start is selected, assume it's a single day search
-            if (start && !end) { end = start; document.getElementById('endDate').value = start; }
-            
-            const startDt = start ? new Date(start) : new Date(0);
-            const endDt = end ? new Date(end) : new Date();
-            startDt.setHours(0,0,0,0); 
-            endDt.setHours(23,59,59,999);
-
-            let passed = 0, failed = 0;
-            let happyPass = 0, happyFail = 0;
-            let valPass = 0, valFail = 0;
-            let tableHTML = '';
-            
-            if(typeof dashboardData !== 'undefined' && dashboardData.length > 0) {
-                dashboardData.forEach(run => {
-                    const runDt = new Date(run.date);
-                    // Check if run falls within selected date range
-                    if(runDt >= startDt && runDt <= endDt) {
-                        run.results.forEach(row => {
-                            const status = row.Status ? row.Status.toLowerCase() : '';
-                            const mode = row.Mode ? row.Mode.toLowerCase() : 'happy';
-                            const isPass = status === 'pass';
-                            
-                            // Tally metrics
-                            isPass ? passed++ : failed++;
-                            if (mode === 'happy' && isPass) happyPass++;
-                            if (mode === 'happy' && !isPass) happyFail++;
-                            if (mode === 'validation' && isPass) valPass++;
-                            if (mode === 'validation' && !isPass) valFail++;
-                            
-                            // Build Button for failures
-                            let btn = '';
-                            if(!isPass) {
-                                btn = `<button onclick="openModal(\`${row.Payload || 'No Payload'}\`, \`${row.ErrorLog || 'No Error Log'}\`)" class="bg-red-100 text-red-700 px-3 py-1.5 rounded font-bold text-xs hover:bg-red-200 transition shadow-sm border border-red-200">🔍 View Details</button>`;
-                            }
-                            
-                            // Build Table Row
-                            tableHTML += `
-                                <tr class="hover:bg-gray-50 transition">
-                                    <td class="p-4 text-sm text-gray-600 whitespace-nowrap">${run.date}</td>
-                                    <td class="p-4 font-medium text-gray-800">${row.FormName || 'N/A'}</td>
-                                    <td class="p-4 text-sm text-gray-600 capitalize">${mode}</td>
-                                    <td class="p-4 font-bold ${isPass ? 'text-green-600' : 'text-red-600'} uppercase">${status || 'FAIL'}</td>
-                                    <td class="p-4">${btn}</td>
-                                </tr>`;
-                        });
-                    }
-                });
+        function toggleCategoryFilter(category) {
+            if (selectedCategories.has(category)) {
+                selectedCategories.delete(category);
             } else {
-                tableHTML = '<tr><td colspan="5" class="p-6 text-center text-gray-500">No test data available for the selected dates.</td></tr>';
+                selectedCategories.add(category);
             }
+            updateFilterButtonStates();
+            if (currentDay) renderTableRows(currentDay);
+        }
 
-            // Update UI Metrics
-            document.getElementById('totalForms').innerText = passed + failed;
-            document.getElementById('totalPassed').innerText = passed;
-            document.getElementById('totalFailed').innerText = failed;
-            document.getElementById('tableBody').innerHTML = tableHTML;
+        function updateFilterButtonStates() {
+            const degreeBtn = document.getElementById('filterDegree');
+            const shortCoursesBtn = document.getElementById('filterShortCourses');
+            
+            if (selectedCategories.has('degree')) {
+                degreeBtn.style.opacity = '1';
+                degreeBtn.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.3)';
+            } else {
+                degreeBtn.style.opacity = '0.5';
+                degreeBtn.style.boxShadow = 'none';
+            }
+            
+            if (selectedCategories.has('shortcourses')) {
+                shortCoursesBtn.style.opacity = '1';
+                shortCoursesBtn.style.boxShadow = '0 0 0 3px rgba(20, 184, 166, 0.3)';
+            } else {
+                shortCoursesBtn.style.opacity = '0.5';
+                shortCoursesBtn.style.boxShadow = 'none';
+            }
+        }
 
-            // Destroy existing charts to prevent hover glitches
-            if(pieChartInstance) pieChartInstance.destroy();
-            if(barChartInstance) barChartInstance.destroy();
+        function statusBadge(status) {
+            const value = String(status || '').toUpperCase().trim();
+            if (value === 'PASSED') return '<span class="inline-flex rounded-md bg-emerald-100 px-2 py-1 text-[11px] font-bold text-emerald-700">PASSED</span>';
+            if (value === 'FAILED') return '<span class="inline-flex rounded-md bg-rose-100 px-2 py-1 text-[11px] font-bold text-rose-700">FAILED</span>';
+            return '<span class="text-slate-400">-</span>';
+        }
 
-            // Draw Pie Chart
-            pieChartInstance = new Chart(document.getElementById('pieChart').getContext('2d'), { 
-                type: 'doughnut', 
-                data: { 
-                    labels: ['Passed', 'Failed'], 
-                    datasets: [{ 
-                        data: [passed, failed], 
-                        backgroundColor: ['#22c55e', '#ef4444'], // Tailwind green-500, red-500
-                        borderWidth: 0
-                    }] 
-                }, 
-                options: { responsive: true, maintainAspectRatio: false } 
+        function toNum(value) {
+            const n = Number(value);
+            return Number.isFinite(n) ? n : 0;
+        }
+
+        function normalizeDays() {
+            if (dashboardData && Array.isArray(dashboardData.days)) {
+                return dashboardData.days.map(day => ({
+                    ...day,
+                    rows: Array.isArray(day.rows) ? day.rows : [],
+                    totals: day.totals || {}
+                }));
+            }
+            return [];
+        }
+
+        function toInputDate(isoDate) {
+            return String(isoDate || '').slice(0, 10);
+        }
+
+        function renderTrend(days) {
+            if (trendChart) trendChart.destroy();
+
+            const sortedAsc = [...days].sort((a, b) => a.dateIso.localeCompare(b.dateIso));
+            
+            // Calculate metrics for each day
+            const trendLabels = sortedAsc.map(d => {
+                const date = new Date(d.dateIso);
+                const day = date.getDate();
+                const month = date.toLocaleString('en-US', { month: 'short' });
+                return `${day} ${month}`;
             });
-
-            // Draw Bar Chart
-            barChartInstance = new Chart(document.getElementById('barChart').getContext('2d'), {
-                type: 'bar',
+            
+            const passRateData = sortedAsc.map(d => {
+                const passed = toNum(d.totals?.testCasesPassed);
+                const failed = toNum(d.totals?.testCasesFailed);
+                const total = passed + failed;
+                return total > 0 ? Math.round((passed / total) * 100) : 0;
+            });
+            
+            const totalTCData = sortedAsc.map(d => toNum(d.totals?.testCasesPassed) + toNum(d.totals?.testCasesFailed));
+            
+            trendChart = new Chart(document.getElementById('trendChart').getContext('2d'), {
+                type: 'line',
                 data: {
-                    labels: ['Happy Path', 'Validation Path'],
+                    labels: trendLabels,
                     datasets: [
-                        { label: 'Passed', data: [happyPass, valPass], backgroundColor: '#22c55e' },
-                        { label: 'Failed', data: [happyFail, valFail], backgroundColor: '#ef4444' }
+                        {
+                            label: 'Pass Rate (%)',
+                            data: passRateData,
+                            borderColor: '#059669',
+                            backgroundColor: 'rgba(5, 150, 105, 0.08)',
+                            borderWidth: 3,
+                            fill: true,
+                            pointRadius: 6,
+                            pointHoverRadius: 8,
+                            pointBackgroundColor: '#059669',
+                            pointBorderColor: '#ffffff',
+                            pointBorderWidth: 2,
+                            tension: 0.4,
+                            yAxisID: 'y1'
+                        },
+                        {
+                            label: 'Total Test Cases',
+                            data: totalTCData,
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.06)',
+                            borderWidth: 2,
+                            fill: true,
+                            pointRadius: 5,
+                            pointBackgroundColor: '#3b82f6',
+                            pointBorderColor: '#ffffff',
+                            pointBorderWidth: 2,
+                            tension: 0.4,
+                            yAxisID: 'y',
+                            borderDash: [5, 5]
+                        }
                     ]
                 },
-                options: { responsive: true, maintainAspectRatio: false }
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: { 
+                            position: 'top',
+                            labels: { 
+                                font: { weight: 'bold', size: 12 },
+                                padding: 15,
+                                usePointStyle: true,
+                                boxWidth: 8
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                            titleFont: { weight: 'bold', size: 13 },
+                            bodyFont: { size: 12, weight: 'bold' },
+                            padding: 12,
+                            cornerRadius: 8,
+                            displayColors: true,
+                            callbacks: {
+                                label: function(context) {
+                                    if (context.dataset.yAxisID === 'y1') {
+                                        return context.dataset.label + ': ' + context.parsed.y + '%';
+                                    } else {
+                                        return context.dataset.label + ': ' + Math.round(context.parsed.y) + ' tests';
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: { display: true, text: 'Test Cases', font: { weight: 'bold', size: 11 } },
+                            beginAtZero: true,
+                            grid: { color: 'rgba(100, 116, 139, 0.08)' },
+                            ticks: { font: { size: 11 } }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: { display: true, text: 'Pass Rate %', font: { weight: 'bold', size: 11 } },
+                            min: 0,
+                            max: 100,
+                            grid: { drawOnChartArea: false },
+                            ticks: { font: { size: 11 }, callback: function(value) { return value + '%'; } }
+                        },
+                        x: {
+                            grid: { color: 'rgba(100, 116, 139, 0.08)' },
+                            ticks: { font: { size: 10 } }
+                        }
+                    }
+                }
             });
         }
 
-        function openModal(payload, error) {
-            document.getElementById('modalPayload').innerHTML = payload || 'No Payload recorded';
-            document.getElementById('modalError').innerHTML = error || 'No Error recorded';
-            document.getElementById('logModal').classList.remove('hidden');
+        function renderDistribution(day) {
+            if (distributionChart) distributionChart.destroy();
+
+            distributionChart = new Chart(document.getElementById('distributionChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Positive Path', 'Negative Path'],
+                    datasets: [
+                        {
+                            label: 'Passed',
+                            data: [
+                                day.rows.filter(r => String(r.Positive_Status || '').toUpperCase() === 'PASSED').length,
+                                day.rows.filter(r => String(r.Negative_Status || '').toUpperCase() === 'PASSED').length,
+                            ],
+                            backgroundColor: '#22c55e'
+                        },
+                        {
+                            label: 'Failed',
+                            data: [
+                                day.rows.filter(r => String(r.Positive_Status || '').toUpperCase() === 'FAILED').length,
+                                day.rows.filter(r => String(r.Negative_Status || '').toUpperCase() === 'FAILED').length,
+                            ],
+                            backgroundColor: '#ef4444'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } },
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
         }
 
-        // Initialize dashboard when the page loads
+        function renderDay(day) {
+            currentDay = day;
+            const totals = day.totals || {};
+            const pathsTotal = toNum(totals.pathsTotal);
+            const pathsPassed = toNum(totals.pathsPassed);
+            const pathsFailed = toNum(totals.pathsFailed);
+            const tcTotal = toNum(totals.testCasesTotal);
+            const tcPassed = toNum(totals.testCasesPassed);
+            const tcFailed = toNum(totals.testCasesFailed);
+            const tcRate = tcTotal > 0 ? Math.round((tcPassed / tcTotal) * 100) : 0;
+
+            document.getElementById('pathsTotal').innerText = String(pathsTotal);
+            document.getElementById('pathsPassFail').innerText = `${pathsPassed} / ${pathsFailed}`;
+            document.getElementById('tcTotal').innerText = String(tcTotal);
+            const scenarioRate = pathsTotal > 0 ? Math.round((pathsPassed / pathsTotal) * 100) : 0;
+            document.getElementById('scenarioPassRate').innerText = `${scenarioRate}%`;
+            const rows = [...(day.rows || [])];
+            const uniqueFormsCount = new Set(rows.map(r => r.Form)).size;
+            document.getElementById('formsCount').innerText = String(uniqueFormsCount);
+            
+            // Hide status label
+            document.getElementById('selectedDateLabel').innerText = '';
+
+            // Calculate forms count by category (total forms / failed forms)
+            const degreeForms = rows.filter(r => r.Category === 'Degree');
+            const degreeTotalForms = new Set(degreeForms.map(r => r.Form)).size;
+            const degreeFailedForms = new Set(
+                degreeForms.filter(r => {
+                    const hasFailed = String(r.Positive_Status || '').toUpperCase() === 'FAILED' || 
+                                    String(r.Negative_Status || '').toUpperCase() === 'FAILED';
+                    return hasFailed;
+                }).map(r => r.Form)
+            ).size;
+            
+            const shortCoursesForms = rows.filter(r => r.Category === 'Short_Courses');
+            const shortCoursesTotalForms = new Set(shortCoursesForms.map(r => r.Form)).size;
+            const shortCoursesFailedForms = new Set(
+                shortCoursesForms.filter(r => {
+                    const hasFailed = String(r.Positive_Status || '').toUpperCase() === 'FAILED' || 
+                                    String(r.Negative_Status || '').toUpperCase() === 'FAILED';
+                    return hasFailed;
+                }).map(r => r.Form)
+            ).size;
+            
+            document.getElementById('degreeTotalCount').innerText = String(degreeTotalForms);
+            document.getElementById('degreeFailedCount').innerText = String(degreeFailedForms);
+            document.getElementById('shortCoursesTotalCount').innerText = String(shortCoursesTotalForms);
+            document.getElementById('shortCoursesFailedCount').innerText = String(shortCoursesFailedForms);
+
+            renderTableRows(day);
+            renderDistribution(day);
+        }
+
+        function renderTableRows(day) {
+            const rows = [...(day.rows || [])];
+            
+            if (!rows || rows.length === 0) {
+                const tableBody = document.getElementById('tableBody');
+                tableBody.innerHTML = '<tr><td colspan="10" class="px-4 py-8 text-center text-slate-500">No data available for this date.</td></tr>';
+                renderDistribution({ rows: [] });
+                return;
+            }
+
+            const sortedRows = [...rows].sort((a, b) => {
+                const g = String(a.Group || '').localeCompare(String(b.Group || ''));
+                if (g !== 0) return g;
+                return String(a.Form || '').localeCompare(String(b.Form || ''));
+            });
+
+            // Apply category filter - ensure rows have Category field
+            const filteredRows = sortedRows.filter(row => {
+                // Ensure Category is set - default to 'Degree' if missing
+                const rowCategory = row.Category || 'Degree';
+                const filterCategory = rowCategory === 'Short_Courses' ? 'shortcourses' : 'degree';
+                const isSelected = selectedCategories.has(filterCategory);
+                return isSelected;
+            });
+
+            const tableBody = document.getElementById('tableBody');
+            if (!filteredRows || filteredRows.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="10" class="px-4 py-8 text-center text-slate-500">No results found for selected filter.</td></tr>';
+                renderDistribution({ rows: [] });
+                return;
+            }
+
+            tableBody.innerHTML = filteredRows.map(row => {
+                const positiveDur = row['Positive_Duration(sec)'] && row['Positive_Duration(sec)'] !== '—' ? `${row['Positive_Duration(sec)']}s` : '-';
+                const negativeDur = row['Negative_Duration(sec)'] && row['Negative_Duration(sec)'] !== '—' ? `${row['Negative_Duration(sec)']}s` : '-';
+                const positiveTc = row.Positive_TC_Total && row.Positive_TC_Total !== '—' ? `${row.Positive_TC_Total}` : '-';
+                const negativeTc = row.Negative_TC_Total && row.Negative_TC_Total !== '—' ? `${row.Negative_TC_Total}` : '-';
+                const rowCategory = row.Category || 'Degree';
+                const categoryName = rowCategory === 'Short_Courses' ? 'Short Courses' : 'Degree';
+                const groupDisplay = `${categoryName}/${row.Group || '-'}`;
+                return `
+                    <tr class="hover:bg-slate-50 align-top">
+                        <td class="px-4 py-3 text-slate-500 whitespace-nowrap sticky left-0 bg-white z-10 w-24">${row.Date || '-'}</td>
+                        <td class="px-4 py-3 font-semibold text-slate-800 sticky left-24 bg-white z-10 w-16">${row.Form || '-'}</td>
+                        <td class="px-4 py-3 text-slate-700 sticky left-40 bg-white z-10 w-40">${groupDisplay}</td>
+                        <td class="px-4 py-3 text-center sticky left-80 bg-white z-10 w-28">${statusBadge(row.Positive_Status)}</td>
+                        <td class="px-4 py-3 text-center font-mono text-slate-700 sticky left-[108px] bg-white z-10 w-16">${positiveTc}</td>
+                        <td class="px-4 py-3 text-right font-mono text-slate-600 sticky left-[124px] bg-white z-10 w-24">${positiveDur}</td>
+                        <td class="px-4 py-3 text-center sticky left-[148px] bg-white z-10 w-28">${statusBadge(row.Negative_Status)}</td>
+                        <td class="px-4 py-3 text-center font-mono text-slate-700 sticky left-[176px] bg-white z-10 w-16">${negativeTc}</td>
+                        <td class="px-4 py-3 text-right font-mono text-slate-600 sticky left-[192px] bg-white z-10 w-24">${negativeDur}</td>
+                        <td class="px-4 py-3 text-center sticky left-[216px] bg-white z-10 w-20">${row.Error ? `<button onclick="showErrorModal('${(row.Error || '').replace(/'/g, "\\'").replace(/"/g, '&quot;')}', '${row.Form}')" class="inline-flex items-center justify-center px-3 py-1 rounded-md bg-rose-100 text-rose-700 font-semibold text-xs hover:bg-rose-200 transition">View</button>` : '-'}</td>
+                    </tr>
+                `;
+            }).join('');
+
+            renderDistribution(day);
+        }
+
+        function loadSelectedDate() {
+            const days = normalizeDays();
+            const selected = document.getElementById('selectedDate').value;
+            const day = days.find(d => toInputDate(d.dateIso) === selected);
+
+            if (!day) {
+                document.getElementById('pathsTotal').innerText = '0';
+                document.getElementById('pathsPassFail').innerText = '0 / 0';
+                document.getElementById('tcTotal').innerText = '0';
+                document.getElementById('scenarioPassRate').innerText = '0%';
+                document.getElementById('formsCount').innerText = '0';
+                document.getElementById('degreeTotalCount').innerText = '0';
+                document.getElementById('degreeFailedCount').innerText = '0';
+                document.getElementById('shortCoursesTotalCount').innerText = '0';
+                document.getElementById('shortCoursesFailedCount').innerText = '0';
+                document.getElementById('selectedDateLabel').innerText = 'No data available for selected date.';
+                document.getElementById('tableBody').innerHTML = '<tr><td colspan="10" class="px-4 py-8 text-center text-slate-500">No results found for selected date.</td></tr>';
+                renderDistribution({ rows: [] });
+                return;
+            }
+
+            renderDay(day);
+        }
+
         window.onload = () => {
-            // Set default date range to today to avoid showing 30 days of data immediately
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('startDate').value = today;
-            document.getElementById('endDate').value = today;
-            applyFilter();
+            // Ensure dashboardData is available
+            if (typeof dashboardData === 'undefined') {
+                console.error('Dashboard data not loaded. Please refresh the page.');
+                document.getElementById('tableBody').innerHTML = '<tr><td colspan="10" class="px-4 py-8 text-center text-slate-500">Dashboard data failed to load. Please refresh the page.</td></tr>';
+                return;
+            }
+
+            const days = normalizeDays();
+            const dateInput = document.getElementById('selectedDate');
+            const allureLink = document.getElementById('allureLink');
+
+            // Ensure both filters are enabled by default
+            selectedCategories = new Set(['degree', 'shortcourses']);
+            
+            // Initialize filter button states
+            updateFilterButtonStates();
+
+            // Local report uses ../allure-report/index.html, while published pages use allure/index.html.
+            if (allureLink) {
+                allureLink.href = window.location.protocol === 'file:'
+                    ? '../allure-report/index.html'
+                    : 'allure/index.html';
+            }
+
+            document.getElementById('refreshDate').addEventListener('click', loadSelectedDate);
+            dateInput.addEventListener('change', loadSelectedDate);
+
+            if (!days.length) {
+                document.getElementById('selectedDateLabel').innerText = 'Dashboard history is empty. Run tests and regenerate dashboard.';
+                document.getElementById('tableBody').innerHTML = '<tr><td colspan="10" class="px-4 py-8 text-center text-slate-500">No dashboard history available.</td></tr>';
+                renderDistribution({ rows: [] });
+                renderTrend([]);
+                return;
+            }
+
+            const latest = [...days].sort((a, b) => b.dateIso.localeCompare(a.dateIso))[0];
+            dateInput.value = toInputDate(latest.dateIso);
+            renderTrend(days);
+            // Load the latest date data
+            loadSelectedDate();
         };
+
+        function showErrorModal(errorMessage, formId) {
+            const modal = document.getElementById('errorModal');
+            const modalContent = document.getElementById('modalErrorMessage');
+            const modalFormId = document.getElementById('modalFormId');
+            modalFormId.textContent = formId;
+            modalContent.textContent = errorMessage;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeErrorModal() {
+            const modal = document.getElementById('errorModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function downloadPDFReport() {
+            try {
+                if (!currentDay || !currentDay.rows) {
+                    alert('No data available. Please select a date and click Load Data first.');
+                    return;
+                }
+
+                const opt = {
+                    margin: 10,
+                    filename: `LDC-Forms-Dashboard-${new Date().toISOString().split('T')[0]}.pdf`,
+                    image: { type: 'jpeg', quality: 0.95 },
+                    html2canvas: { scale: 1, useCORS: true, logging: false, allowTaint: true },
+                    jsPDF: { orientation: 'landscape', unit: 'mm', format: 'a4' }
+                };
+
+                if (typeof html2pdf === 'undefined') {
+                    alert('PDF library not available. Attempting to download as image...');
+                    downloadImageFallback();
+                    return;
+                }
+
+                html2pdf().set(opt).from(document.body).save();
+            } catch (err) {
+                console.error('PDF download error:', err);
+                alert('Could not generate PDF. Downloading as image instead...');
+                downloadImageFallback();
+            }
+        }
+
+        function downloadImageFallback() {
+            try {
+                html2canvas(document.documentElement, {
+                    scale: 1,
+                    useCORS: true,
+                    backgroundColor: '#ffffff',
+                    logging: false,
+                    allowTaint: true
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    const date = new Date().toISOString().split('T')[0];
+                    link.href = canvas.toDataURL('image/jpeg', 0.95);
+                    link.download = `LDC-Forms-Dashboard-${date}.jpg`;
+                    link.click();
+                }).catch(err => {
+                    alert('Error generating image. Please try again later.');
+                    console.error('Fallback error:', err);
+                });
+            } catch (err) {
+                alert('Image export not available.');
+                console.error(err);
+            }
+        }
+
+        function downloadJPGReport() {
+            html2canvas(document.documentElement, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#ffffff',
+                logging: false
+            }).then(canvas => {
+                const link = document.createElement('a');
+                const date = new Date().toISOString().split('T')[0];
+                link.href = canvas.toDataURL('image/jpeg', 0.95);
+                link.download = `LDC-Forms-Dashboard-${date}.jpg`;
+                link.click();
+            }).catch(err => {
+                alert('Error generating JPG. Please try again.');
+                console.error(err);
+            });
+        }
+
+        function downloadCSVReport() {
+            if (!currentDay || !currentDay.rows) {
+                alert('No data to download. Please select a date first.');
+                return;
+            }
+            
+            const rows = currentDay.rows;
+            const headers = ['Date', 'Form', 'Group', 'Positive Status', 'Positive TC', 'Positive Duration', 'Negative Status', 'Negative TC', 'Negative Duration', 'Pass %'];
+            const data = rows.map(r => [
+                r.Date,
+                r.Form,
+                r.Group,
+                r.Positive_Status || '-',
+                r.Positive_TC_Total || '0',
+                r['Positive_Duration(sec)'] || '-',
+                r.Negative_Status || '-',
+                r.Negative_TC_Total || '0',
+                r['Negative_Duration(sec)'] || '-',
+                calculatePassPercentage(r) + '%'
+            ]);
+            
+            let csv = headers.join(',') + '\n';
+            data.forEach(row => {
+                csv += row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(',') + '\n';
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            const date = currentDay.dateIso || new Date().toISOString().split('T')[0];
+            link.href = url;
+            link.download = `LDC-Forms-Report-${date}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        function calculatePassPercentage(row) {
+            const posTC = toNum(row.Positive_TC_Total);
+            const negTC = toNum(row.Negative_TC_Total);
+            const posPassed = toNum(row.Positive_TC_Passed);
+            const negPassed = toNum(row.Negative_TC_Passed);
+            const total = posTC + negTC;
+            return total > 0 ? Math.round((posPassed + negPassed) / total * 100) : 0;
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeErrorModal();
+        });
+
+        document.getElementById('downloadPDF')?.addEventListener('click', downloadPDFReport);
     </script>
+
+    <!-- Error Log Modal -->
+    <div id="errorModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-2xl max-w-2xl w-full mx-4 max-h-96 flex flex-col">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-gradient-to-r from-rose-50 to-red-50">
+                <h2 class="text-lg font-bold text-slate-900">Error Log Details</h2>
+                <button onclick="closeErrorModal()" class="text-slate-500 hover:text-slate-700 text-2xl font-light transition">&times;</button>
+            </div>
+            <!-- Modal Body -->
+            <div class="flex-1 overflow-y-auto px-6 py-4">
+                <div class="mb-3">
+                    <p class="text-xs uppercase tracking-wide text-slate-500 font-semibold mb-1">Form ID</p>
+                    <p id="modalFormId" class="text-sm font-mono text-slate-800 bg-slate-50 px-3 py-2 rounded">-</p>
+                </div>
+                <div>
+                    <p class="text-xs uppercase tracking-wide text-slate-500 font-semibold mb-2">Error Message</p>
+                    <div class="bg-rose-50 border border-rose-200 rounded px-4 py-3">
+                        <p id="modalErrorMessage" class="text-sm text-slate-800 font-mono whitespace-pre-wrap break-words leading-relaxed">-</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Footer -->
+            <div class="flex justify-end gap-2 px-6 py-3 border-t border-slate-200 bg-slate-50">
+                <button onclick="closeErrorModal()" class="px-4 py-2 bg-slate-200 text-slate-800 rounded font-semibold text-sm hover:bg-slate-300 transition">Close</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

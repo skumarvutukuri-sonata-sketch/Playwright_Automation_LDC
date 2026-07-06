@@ -8,6 +8,7 @@ import { ApiCapture } from '../utils/api/ApiCapture';
 import { PayloadMapper } from '../utils/api/PayloadMapper';
 import { PayloadValidator } from '../utils/api/PayloadValidator'; 
 import { ResponseValidator } from '../utils/api/ResponseValidator';
+import { TestCaseMetrics } from './reporting/ReportTypes';
 export class FormRunner {
   private engine: FormEngine;
 
@@ -18,7 +19,7 @@ export class FormRunner {
     this.engine = new FormEngine(page, frame);
   }
 
-  async run(formName: string, form: FormDefinition, mode: TestMode) {
+  async run(formName: string, form: FormDefinition, mode: TestMode): Promise<TestCaseMetrics> {
     Logger.startForm(formName, mode);
     const formKey = `${formName}-${mode}-${Date.now()}`;
     ReportManager.startForm(formKey);
@@ -99,9 +100,9 @@ export class FormRunner {
         }
 
         // ==========================================
-        // 🚀 TRIGGER EMPTY-FORM VALIDATION ON EVERY STEP
+        // 🚀 TRIGGER EMPTY-FORM VALIDATION ON EVERY STEP (NEGATIVE MODE ONLY)
         // ==========================================
-        if (mode === 'validation') {
+        if (mode === 'negative') {
           Logger.validationStart();
           Logger.action(`Triggering empty-field validation for Step ${stepCount}...`);
           
@@ -165,13 +166,21 @@ export class FormRunner {
         throw new Error('❌ API Request to /v2/interest-create was not detected. Test failed.');
       }
 
+      const metrics = this.engine.getTestCaseMetrics();
+      await AllureHelper.attachTestCaseMetrics(metrics);
       await AllureHelper.success();
-      ReportManager.pass(formKey, form.group, formName, mode);
+      ReportManager.pass(formKey, form.group, formName, mode, metrics);
+
+      console.log(`[TestCases] form=${formName} mode=${mode} total=${metrics.total} passed=${metrics.passed} failed=${metrics.failed}`);
+      return metrics;
 
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
+      const metrics = this.engine.getTestCaseMetrics();
+      await AllureHelper.attachTestCaseMetrics(metrics);
       await AllureHelper.failure(message);
-      ReportManager.fail(formKey, form.group, formName, mode, message);
+      ReportManager.fail(formKey, form.group, formName, mode, message, metrics);
+      console.log(`[TestCases] form=${formName} mode=${mode} total=${metrics.total} passed=${metrics.passed} failed=${metrics.failed}`);
       throw error;
       
     } finally {

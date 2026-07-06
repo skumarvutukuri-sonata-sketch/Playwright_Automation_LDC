@@ -17,7 +17,12 @@ export class EmailReporter {
     let total = 0;
     let passed = 0;
     let failed = 0;
+    let totalTestCases = 0;
+    let passedTestCases = 0;
+    let failedTestCases = 0;
+    let formsTested = 0;
     let records: any[] = [];
+    const uniqueForms = new Set<string>();
 
     if (fs.existsSync(csvPath)) {
       const fileContent = fs.readFileSync(csvPath, 'utf8');
@@ -25,19 +30,38 @@ export class EmailReporter {
       records = parsed.data;
 
       for (const row of records) {
-        // Evaluate unified Happy Path statuses
-        if (row.Happy_Status && row.Happy_Status !== '—') {
-          total++;
-          if (String(row.Happy_Status).toUpperCase() === 'PASSED') passed++;
-          if (String(row.Happy_Status).toUpperCase() === 'FAILED') failed++;
+        // Track unique forms tested (both positive and negative paths)
+        if ((row.Positive_Status && row.Positive_Status !== '—') || (row.Negative_Status && row.Negative_Status !== '—')) {
+          uniqueForms.add(row.Form);
         }
-        // Evaluate unified Validation Path statuses
-        if (row.Val_Status && row.Val_Status !== '—') {
+
+        // Evaluate unified Positive Path statuses
+        if (row.Positive_Status && row.Positive_Status !== '—') {
           total++;
-          if (String(row.Val_Status).toUpperCase() === 'PASSED') passed++;
-          if (String(row.Val_Status).toUpperCase() === 'FAILED') failed++;
+          if (String(row.Positive_Status).toUpperCase() === 'PASSED') passed++;
+          if (String(row.Positive_Status).toUpperCase() === 'FAILED') failed++;
         }
+        // Evaluate unified Negative Path statuses
+        if (row.Negative_Status && row.Negative_Status !== '—') {
+          total++;
+          if (String(row.Negative_Status).toUpperCase() === 'PASSED') passed++;
+          if (String(row.Negative_Status).toUpperCase() === 'FAILED') failed++;
+        }
+
+        const positiveTcTotal = Number(row.Positive_TC_Total || 0);
+        const positiveTcPassed = Number(row.Positive_TC_Passed || 0);
+        const positiveTcFailed = Number(row.Positive_TC_Failed || 0);
+
+        const negativeTcTotal = Number(row.Negative_TC_Total || 0);
+        const negativeTcPassed = Number(row.Negative_TC_Passed || 0);
+        const negativeTcFailed = Number(row.Negative_TC_Failed || 0);
+
+        totalTestCases += (Number.isFinite(positiveTcTotal) ? positiveTcTotal : 0) + (Number.isFinite(negativeTcTotal) ? negativeTcTotal : 0);
+        passedTestCases += (Number.isFinite(positiveTcPassed) ? positiveTcPassed : 0) + (Number.isFinite(negativeTcPassed) ? negativeTcPassed : 0);
+        failedTestCases += (Number.isFinite(positiveTcFailed) ? positiveTcFailed : 0) + (Number.isFinite(negativeTcFailed) ? negativeTcFailed : 0);
       }
+
+      formsTested = uniqueForms.size;
     }
 
     const startedAt = new Date(fs.readFileSync('reports/start-time.txt', 'utf8'));
@@ -47,6 +71,10 @@ export class EmailReporter {
       total,
       passed,
       failed,
+      totalTestCases,
+      passedTestCases,
+      failedTestCases,
+      formsTested,
       startedAt: startedAt.getTime(),
       finishedAt: finishedAt.getTime(),
       totalDuration: finishedAt.getTime() - startedAt.getTime()

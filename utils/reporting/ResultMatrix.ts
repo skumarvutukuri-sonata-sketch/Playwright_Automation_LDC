@@ -17,7 +17,7 @@ export class ResultMatrix {
 
     if (!fs.existsSync(this.filePath)) {
       // 🚀 UPDATED COLUMNS: Unified tracking keys on a single row layout
-      const header = 'Date,Group,Form,Happy_Status,Happy_Duration(sec),Val_Status,Val_Duration(sec),Error\n';
+      const header = 'Date,Group,Form,Positive_Status,Positive_Duration(sec),Positive_TC_Total,Positive_TC_Passed,Positive_TC_Failed,Negative_Status,Negative_Duration(sec),Negative_TC_Total,Negative_TC_Passed,Negative_TC_Failed,Error\n';
       fs.writeFileSync(this.filePath, header, 'utf8');
     }
   }
@@ -49,10 +49,16 @@ export class ResultMatrix {
         Date: dateStr,
         Group: result.group,
         Form: result.formName,
-        Happy_Status: '—',
-        'Happy_Duration(sec)': '—',
-        Val_Status: '—',
-        'Val_Duration(sec)': '—',
+        Positive_Status: '—',
+        'Positive_Duration(sec)': '—',
+        Positive_TC_Total: '—',
+        Positive_TC_Passed: '—',
+        Positive_TC_Failed: '—',
+        Negative_Status: '—',
+        'Negative_Duration(sec)': '—',
+        Negative_TC_Total: '—',
+        Negative_TC_Passed: '—',
+        Negative_TC_Failed: '—',
         Error: ''
       };
       records.push(row);
@@ -61,12 +67,18 @@ export class ResultMatrix {
     // 🚀 CSV FIX: Strip newlines and sanitize quotes to prevent line splitting/bleeding shells
     const cleanError = result.error ? String(result.error).replace(/\n/g, ' | ').replace(/"/g, "'") : '';
 
-    if (String(result.mode).toLowerCase() === 'happy') {
-      row.Happy_Status = result.status;
-      row['Happy_Duration(sec)'] = durationSec;
+    if (String(result.mode).toLowerCase() === 'positive') {
+      row.Positive_Status = result.status;
+      row['Positive_Duration(sec)'] = durationSec;
+      row.Positive_TC_Total = result.testCases?.total ?? '—';
+      row.Positive_TC_Passed = result.testCases?.passed ?? '—';
+      row.Positive_TC_Failed = result.testCases?.failed ?? '—';
     } else {
-      row.Val_Status = result.status;
-      row['Val_Duration(sec)'] = durationSec;
+      row.Negative_Status = result.status;
+      row['Negative_Duration(sec)'] = durationSec;
+      row.Negative_TC_Total = result.testCases?.total ?? '—';
+      row.Negative_TC_Passed = result.testCases?.passed ?? '—';
+      row.Negative_TC_Failed = result.testCases?.failed ?? '—';
     }
 
     // Append failure traces cleanly inside the cell matrix block space

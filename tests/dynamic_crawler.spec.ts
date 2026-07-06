@@ -1,7 +1,6 @@
 import { test } from '@playwright/test';
 import { FormRunner } from '../utils/FormRunner';
 import { CSVManager } from '../utils/CSVManager'; 
-import { ReportManager } from '../utils/reporting/ReportManager'; 
 
 // 🚀 HELPER: Safely find columns ignoring Excel trailing spaces or casing changes
 const getCleanValue = (row: any, keyword: 'group' | 'form' | 'run' | 'url'): string => {
@@ -51,47 +50,41 @@ for (const sheetName of SHEETS) {
             const testIdentifier = `[Sheet:${sheetName}] [Group:${groupName}] [Form:${formId}]`;
 
             // ==========================================
-            // HAPPY PATH
+            // POSITIVE PATH
             // ==========================================
-            test(`${testIdentifier} - Happy Path`, async ({ page }, testInfo) => {
-                const formKey = `${formId}_happy`;
-                ReportManager.startForm(formKey);
-
+            test(`${testIdentifier} - Positive Path`, async ({ page }, testInfo) => {
                 await page.goto(formConfig.url, { waitUntil: 'domcontentloaded' });
                 const frame = page.frameLocator('iframe');
                 await page.waitForTimeout(1500);
                 const runner = new FormRunner(page, frame);
 
                 try {
-                    await runner.run(formId, formConfig, 'happy');
-                    ReportManager.pass(formKey, groupName, formId, 'happy');
+                    const metrics = await runner.run(formId, formConfig, 'positive');
+                    testInfo.annotations.push({
+                        type: 'test-cases',
+                        description: `total=${metrics.total}, passed=${metrics.passed}, failed=${metrics.failed}`
+                    });
                 } catch (error: any) {
-                    if (testInfo.retry === testInfo.project.retries) {
-                        ReportManager.fail(formKey, groupName, formId, 'happy', error.message);
-                    }
                     throw error;
                 }
             });
 
             // ==========================================
-            // VALIDATION PATH
+            // NEGATIVE PATH
             // ==========================================
-            test(`${testIdentifier} - Validation Path`, async ({ page }, testInfo) => {
-                const formKey = `${formId}_validation`;
-                ReportManager.startForm(formKey);
-
+            test(`${testIdentifier} - Negative Path`, async ({ page }, testInfo) => {
                 await page.goto(formConfig.url, { waitUntil: 'domcontentloaded' });
                 const frame = page.frameLocator('iframe');
                 await page.waitForTimeout(1500);
                 const runner = new FormRunner(page, frame);
 
                 try {
-                    await runner.run(formId, formConfig, 'validation');
-                    ReportManager.pass(formKey, groupName, formId, 'validation');
+                    const metrics = await runner.run(formId, formConfig, 'negative');
+                    testInfo.annotations.push({
+                        type: 'test-cases',
+                        description: `total=${metrics.total}, passed=${metrics.passed}, failed=${metrics.failed}`
+                    });
                 } catch (error: any) {
-                    if (testInfo.retry === testInfo.project.retries) {
-                        ReportManager.fail(formKey, groupName, formId, 'validation', error.message);
-                    }
                     throw error;
                 }
             });

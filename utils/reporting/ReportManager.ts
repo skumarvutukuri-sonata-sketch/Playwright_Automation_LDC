@@ -3,7 +3,8 @@ import { ExecutionSummary } from './ExecutionSummary';
 import {
   FormExecutionResult,
   ExecutionMode,
-  ExecutionStatus
+  ExecutionStatus,
+  TestCaseMetrics
 } from './ReportTypes';
 
 
@@ -38,7 +39,8 @@ export class ReportManager {
     formKey: string,
     group: string,
     formName: string,
-    mode: ExecutionMode
+    mode: ExecutionMode,
+    testCases?: TestCaseMetrics
   ): void {
     console.log('PASS:', formName);
 
@@ -55,7 +57,8 @@ export class ReportManager {
       status: 'PASSED' as ExecutionStatus,
       duration: endTime.getTime() - startTime.getTime(),
       startTime,
-      endTime
+      endTime,
+      testCases
     };
 
     ResultMatrix.add(result);
@@ -71,7 +74,8 @@ export class ReportManager {
     group: string,
     formName: string,
     mode: ExecutionMode,
-    error: string
+    error: string,
+    testCases?: TestCaseMetrics
   ): void {
     console.log('FAIL:', formName);
 
@@ -89,7 +93,8 @@ export class ReportManager {
       duration: endTime.getTime() - startTime.getTime(),
       startTime,
       endTime,
-      error
+      error,
+      testCases
     };
 
     ResultMatrix.add(result);

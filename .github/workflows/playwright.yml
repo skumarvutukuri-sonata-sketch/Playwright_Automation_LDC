@@ -78,6 +78,11 @@ jobs:
         working-directory: ./main-repo
         run: npx ts-node utils/DashboardGenerator.ts
 
+      - name: ♻️ Restore Allure History (30-Day Trend)
+        run: |
+          mkdir -p main-repo/allure-results/history
+          cp -r old-reports/allure/history/. main-repo/allure-results/history/ || echo "No previous Allure history found."
+
       - name: 📦 Install Allure Commandline
         run: npm install -g allure-commandline
 
