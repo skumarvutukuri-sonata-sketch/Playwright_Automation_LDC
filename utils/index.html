@@ -215,6 +215,13 @@
                 const total = passed + failed;
                 return total > 0 ? Math.round((passed / total) * 100) : 0;
             });
+
+            const failureRateData = sortedAsc.map(d => {
+                const passed = toNum(d.totals?.testCasesPassed);
+                const failed = toNum(d.totals?.testCasesFailed);
+                const total = passed + failed;
+                return total > 0 ? Math.round((failed / total) * 100) : 0;
+            });
             
             const totalTCData = sortedAsc.map(d => toNum(d.totals?.testCasesPassed) + toNum(d.totals?.testCasesFailed));
             
@@ -229,10 +236,25 @@
                             borderColor: '#059669',
                             backgroundColor: 'rgba(5, 150, 105, 0.08)',
                             borderWidth: 3,
-                            fill: true,
+                            fill: false,
                             pointRadius: 6,
                             pointHoverRadius: 8,
                             pointBackgroundColor: '#059669',
+                            pointBorderColor: '#ffffff',
+                            pointBorderWidth: 2,
+                            tension: 0.4,
+                            yAxisID: 'y1'
+                        },
+                        {
+                            label: 'Failure Rate (%)',
+                            data: failureRateData,
+                            borderColor: '#dc2626',
+                            backgroundColor: 'rgba(220, 38, 38, 0.08)',
+                            borderWidth: 3,
+                            fill: false,
+                            pointRadius: 6,
+                            pointHoverRadius: 8,
+                            pointBackgroundColor: '#dc2626',
                             pointBorderColor: '#ffffff',
                             pointBorderWidth: 2,
                             tension: 0.4,

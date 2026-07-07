@@ -1,6 +1,34 @@
 [
   {
     "data": {
+      "duration": 3348957
+    }
+  },
+  {
+    "data": {
+      "duration": 302723
+    }
+  },
+  {
+    "data": {
+      "duration": 46013
+    }
+  },
+  {
+    "data": {}
+  },
+  {
+    "data": {
+      "duration": 44
+    }
+  },
+  {
+    "data": {
+      "duration": 105463
+    }
+  },
+  {
+    "data": {
       "duration": 23116996
     }
   },
@@ -67,36 +95,6 @@
   {
     "data": {
       "duration": 7187320
-    }
-  },
-  {
-    "data": {
-      "duration": 5824
-    }
-  },
-  {
-    "data": {
-      "duration": 474990
-    }
-  },
-  {
-    "data": {
-      "duration": 39437302
-    }
-  },
-  {
-    "data": {
-      "duration": 142926
-    }
-  },
-  {
-    "data": {
-      "duration": 252801
-    }
-  },
-  {
-    "data": {
-      "duration": 142018
     }
   }
 ]

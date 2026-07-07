@@ -175,12 +175,33 @@ export class Helpers {
   }
 
   async isThankYouPageVisible(): Promise<boolean> {
-    const patterns = [/thank you/i, /success/i, /submitted/i, /received/i];
+    // 🚀 CRITICAL: First verify we're NOT on a loading state or initial form page
+    // Check if there are still visible form fields (input, select, textarea)
+    const formFields = this.frame.locator('input:not([type="hidden"]):not([type="submit"]):not([type="button"]), select, textarea').filter({ visible: true });
+    const fieldCount = await formFields.count();
+    
+    // If form fields are still visible, we're NOT at thank you page yet
+    if (fieldCount > 0) {
+      return false;
+    }
+
+    // Only check for thank you patterns if NO form fields are visible
+    const patterns = [
+      /thank\s+you/i,           // "Thank You", "Thank you", etc
+      /thank\s+you\s+message/i, // "Thank You Message"
+      /your\s+.*\s+was\s+submitted/i,  // "Your form was submitted"
+      /submission\s+received/i, // "Submission Received"
+      /application\s+received/i // "Application Received"
+    ];
 
     for (const pattern of patterns) {
-      const matches = await this.frame.getByText(pattern).count();
-      if (matches > 0) {
-        return true;
+      try {
+        const matches = await this.frame.getByText(pattern).count();
+        if (matches > 0) {
+          return true;
+        }
+      } catch (e) {
+        // Continue to next pattern if this one fails
       }
     }
 

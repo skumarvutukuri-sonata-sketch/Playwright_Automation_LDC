@@ -1,6 +1,33 @@
 [
   {
     "data": {
+      "Product defects": 2,
+      "Test defects": 15
+    }
+  },
+  {
+    "data": {
+      "Product defects": 1
+    }
+  },
+  {
+    "data": {
+      "Product defects": 2
+    }
+  },
+  {
+    "data": {}
+  },
+  {
+    "data": {}
+  },
+  {
+    "data": {
+      "Product defects": 3
+    }
+  },
+  {
+    "data": {
       "Product defects": 40,
       "Test defects": 32
     }
@@ -64,33 +91,6 @@
     "data": {
       "Product defects": 1,
       "Test defects": 28
-    }
-  },
-  {
-    "data": {
-      "Product defects": 1
-    }
-  },
-  {
-    "data": {
-      "Test defects": 4
-    }
-  },
-  {
-    "data": {
-      "Product defects": 2,
-      "Test defects": 14
-    }
-  },
-  {
-    "data": {}
-  },
-  {
-    "data": {}
-  },
-  {
-    "data": {
-      "Product defects": 1
     }
   }
 ]
