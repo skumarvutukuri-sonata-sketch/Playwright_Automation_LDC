@@ -365,6 +365,16 @@ export class FormEngine {
     return { ...this.testCaseMetrics };
   }
 
+  /**
+   * When test fails, convert all passed test cases to failed
+   */
+  failAllTestCases(): void {
+    if (this.testCaseMetrics.passed > 0) {
+      this.testCaseMetrics.failed += this.testCaseMetrics.passed;
+      this.testCaseMetrics.passed = 0;
+    }
+  }
+
   async clickNext() {
     await this.helpers.clickPrimaryButton();
   }

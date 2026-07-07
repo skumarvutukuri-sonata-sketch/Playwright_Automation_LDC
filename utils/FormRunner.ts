@@ -176,7 +176,12 @@ export class FormRunner {
 
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
-      const metrics = this.engine.getTestCaseMetrics();
+      let metrics = this.engine.getTestCaseMetrics();
+      
+      // When test fails overall, convert passed test cases to failed
+      this.engine.failAllTestCases();
+      metrics = this.engine.getTestCaseMetrics();
+      
       await AllureHelper.attachTestCaseMetrics(metrics);
       await AllureHelper.failure(message);
       ReportManager.fail(formKey, form.group, formName, mode, message, metrics);
