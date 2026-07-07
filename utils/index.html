@@ -697,13 +697,15 @@
 
                 // Capture charts as images and add them to PDF
                 html2canvas(document.getElementById('distributionChart'), {
-                    scale: 2,
+                    scale: 4,
                     useCORS: true,
+                    logging: false,
                     backgroundColor: '#ffffff'
                 }).then(distCanvas => {
                     html2canvas(document.getElementById('trendChart'), {
-                        scale: 2,
+                        scale: 4,
                         useCORS: true,
+                        logging: false,
                         backgroundColor: '#ffffff'
                     }).then(trendCanvas => {
                         // Replace canvas placeholders with images
@@ -731,8 +733,8 @@
                         const opt = {
                             margin: 8,
                             filename: 'LDC-Forms-Dashboard-' + date + '.pdf',
-                            image: { type: 'jpeg', quality: 0.98 },
-                            html2canvas: { scale: 2, useCORS: true, logging: false, allowTaint: true },
+                            image: { type: 'png', quality: 1.0 },
+                            html2canvas: { scale: 3, useCORS: true, logging: false, allowTaint: true },
                             jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
                         };
 
@@ -756,8 +758,8 @@
                     const opt = {
                         margin: 8,
                         filename: 'LDC-Forms-Dashboard-' + date + '.pdf',
-                        image: { type: 'jpeg', quality: 0.98 },
-                        html2canvas: { scale: 2, useCORS: true, logging: false, allowTaint: true },
+                        image: { type: 'png', quality: 1.0 },
+                        html2canvas: { scale: 3, useCORS: true, logging: false, allowTaint: true },
                         jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
                     };
                     html2pdf().set(opt).from(pdfContainer).save();
