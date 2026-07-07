@@ -6,7 +6,7 @@ export type ExecutionStatus = 'PASSED' | 'FAILED';
 /**
  * Test mode
  */
-export type ExecutionMode = 'happy' | 'validation';
+export type ExecutionMode = 'positive' | 'negative';
 
 /**
  * Field-level testcase metrics

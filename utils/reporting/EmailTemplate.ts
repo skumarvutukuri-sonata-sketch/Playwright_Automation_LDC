@@ -18,6 +18,10 @@ export class EmailTemplate {
       const valStatus = String(row.Negative_Status || '').toUpperCase().trim();
       const errorMsg = row.Error || '';
 
+      // Check if this row has any failed status
+      const hasFailure = happyStatus === 'FAILED' || valStatus === 'FAILED';
+      const rowBgColor = hasFailure ? '#FEF2F2' : 'white';
+
       const happyBadge = happyStatus === 'PASSED' 
         ? '<span style="background-color:#D4EDDA;color:#155724;padding:4px 8px;border-radius:4px;font-weight:bold;font-size:11px;">PASSED</span>'
         : happyStatus === 'FAILED'
@@ -40,7 +44,7 @@ export class EmailTemplate {
                 : '—';
 
       tableRowsHtml += `
-        <tr style="border-bottom: 1px solid #E2E8F0;">
+        <tr style="border-bottom: 1px solid #E2E8F0; background-color: ${rowBgColor};">
           <td style="padding: 10px 12px; color: #718096; font-size: 12px; white-space: nowrap;">${row.Date || '—'}</td>
           <td style="padding: 10px 12px; font-weight: 600; color: #2D3748; font-size: 13px;">${row.Form || '—'}</td>
           <td style="padding: 10px 12px; color: #4A5568; font-size: 13px;">${row.Group || '—'}</td>
@@ -50,7 +54,7 @@ export class EmailTemplate {
           <td style="padding: 10px 12px; text-align: center;">${valBadge}</td>
           <td style="padding: 10px 12px; color: #718096; font-size: 12px; text-align: right; font-family: monospace;">${valDur}</td>
                     <td style="padding: 10px 12px; color: #2D3748; font-size: 12px; text-align: center; font-family: monospace;">${valTc}</td>
-          <td style="padding: 10px 12px; color: #E53E3E; font-size: 11px; font-family: monospace; max-width: 250px; min-width: 200px; word-break: break-word; white-space: normal; line-height: 1.4; overflow: hidden; vertical-align: top;">${errorMsg}</td>
+          <td style="padding: 10px 12px; color: ${hasFailure ? '#DC2626' : '#718096'}; font-size: 11px; font-weight: ${hasFailure ? 'bold' : 'normal'}; font-family: monospace; max-width: 250px; min-width: 200px; word-break: break-word; white-space: normal; line-height: 1.4; overflow-wrap: break-word; vertical-align: top;">${errorMsg}</td>
         </tr>
       `;
     }
