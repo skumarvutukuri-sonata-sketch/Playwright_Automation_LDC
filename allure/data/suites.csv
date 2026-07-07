@@ -1,0 +1,4 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","0","[Sheet:Degree] [Group:alb-umt] [Form:2527] - Positive Path","chromium","2026-07-07","skipped","2026-07-07","Suite - Degree","","",""
+"","57111","login and save session","setup","2026-07-07","failed","2026-07-07","","","",""
+"","1","[Sheet:Degree] [Group:alb-umt] [Form:2527] - Negative Path","chromium","2026-07-07","skipped","2026-07-07","Suite - Degree","","",""
