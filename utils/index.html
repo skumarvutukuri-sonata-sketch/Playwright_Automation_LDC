@@ -592,7 +592,7 @@
                 const scenarioRate = pathsTotal > 0 ? Math.round((pathsPassed / pathsTotal) * 100) : 0;
                 const formsCount = new Set(currentDay.rows.map(r => r.Form)).size;
 
-                // Build table rows
+                // Build table rows HTML
                 let tableRowsHtml = '';
                 (currentDay.rows || []).forEach((row, idx) => {
                     const posStatus = row.Positive_Status || '—';
@@ -604,9 +604,11 @@
                     const passRate = calculatePassPercentage(row);
                     const bgColor = idx % 2 === 0 ? '#f9fafb' : '#ffffff';
                     const statusBg = (posStatus === 'FAILED' || negStatus === 'FAILED') ? '#fee2e2' : bgColor;
+                    
                     const posStatusColor = posStatus === 'PASSED' ? '#059669' : posStatus === 'FAILED' ? '#dc2626' : '#999';
                     const negStatusColor = negStatus === 'PASSED' ? '#059669' : negStatus === 'FAILED' ? '#dc2626' : '#999';
                     const passRateColor = passRate >= 75 ? '#059669' : passRate >= 50 ? '#f59e0b' : '#dc2626';
+                    
                     const posStatusSymbol = posStatus === 'PASSED' ? '✅' : posStatus === 'FAILED' ? '❌' : '—';
                     const negStatusSymbol = negStatus === 'PASSED' ? '✅' : negStatus === 'FAILED' ? '❌' : '—';
                     
@@ -624,7 +626,6 @@
                     tableRowsHtml += '</tr>';
                 });
 
-                // Create a dedicated PDF container
                 const pdfContainer = document.createElement('div');
                 pdfContainer.style.padding = '16px';
                 pdfContainer.style.fontSize = '10px';
@@ -632,52 +633,53 @@
                 pdfContainer.style.backgroundColor = '#ffffff';
                 pdfContainer.style.color = '#1f2937';
 
-                // Build complete HTML
-                let htmlContent = '<div style="text-align: center; margin-bottom: 16px; border-bottom: 3px solid #1e3a8a; padding-bottom: 12px;">';
-                htmlContent += '<h1 style="margin: 0; color: #1e3a8a; font-size: 18px; font-weight: bold;">LDC Forms Automation Dashboard</h1>';
-                htmlContent += '<p style="margin: 3px 0 0 0; color: #666; font-size: 10px;">Test Coverage Report for ' + date + '</p>';
-                htmlContent += '</div>';
+                let html = '';
+                html += '<div style="text-align: center; margin-bottom: 16px; border-bottom: 3px solid #1e3a8a; padding-bottom: 12px;">';
+                html += '<h1 style="margin: 0; color: #1e3a8a; font-size: 18px; font-weight: bold;">LDC Forms Automation Dashboard</h1>';
+                html += '<p style="margin: 3px 0 0 0; color: #666; font-size: 10px;">Test Coverage Report for ' + date + '</p>';
+                html += '</div>';
+                html += '<table style="width: 100%; margin-bottom: 20px; border-collapse: collapse;">';
+                html += '<tr>';
+                html += '<td style="width: 24%; padding: 10px; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 4px; text-align: center;"><div style="font-size: 8px; color: #92400e; font-weight: bold; margin-bottom: 3px;">📋 FORMS</div><div style="font-size: 16px; color: #b45309; font-weight: bold;">' + formsCount + '</div></td>';
+                html += '<td style="width: 2%;"></td>';
+                html += '<td style="width: 24%; padding: 10px; background: #dbeafe; border: 1px solid #93c5fd; border-radius: 4px; text-align: center;"><div style="font-size: 8px; color: #1e40af; font-weight: bold; margin-bottom: 3px;">🔄 SCENARIOS</div><div style="font-size: 16px; color: #1e40af; font-weight: bold;">' + pathsTotal + '</div></td>';
+                html += '<td style="width: 2%;"></td>';
+                html += '<td style="width: 24%; padding: 10px; background: #cffafe; border: 1px solid #a5f3fc; border-radius: 4px; text-align: center;"><div style="font-size: 8px; color: #0e7490; font-weight: bold; margin-bottom: 3px;">✅ PASS/FAIL</div><div style="font-size: 16px; color: #0e7490; font-weight: bold;">' + pathsPassed + '/' + pathsFailed + '</div></td>';
+                html += '<td style="width: 2%;"></td>';
+                html += '<td style="width: 22%; padding: 10px; background: #e0e7ff; border: 1px solid #c7d2fe; border-radius: 4px; text-align: center;"><div style="font-size: 8px; color: #3730a3; font-weight: bold; margin-bottom: 3px;">📈 RATE</div><div style="font-size: 16px; color: #3730a3; font-weight: bold;">' + scenarioRate + '%</div></td>';
+                html += '</tr>';
+                html += '</table>';
+                html += '<div style="margin-bottom: 15px; padding: 10px; background: #f3f4f6; border-left: 4px solid #6b7280; border-radius: 4px; font-size: 10px;">';
+                html += '<h3 style="margin: 0 0 6px 0; color: #374151; font-size: 11px; font-weight: bold;">📊 EXECUTION SUMMARY</h3>';
+                html += '<div><strong>Scenario:</strong> ' + (pathsPassed > 0 ? '✅ PASSED' : '❌ FAILED') + ' (' + pathsPassed + '/' + pathsFailed + ') | <strong>Success Rate:</strong> ' + scenarioRate + '%</div>';
+                html += '<div><strong>Test Cases:</strong> ' + (tcPassed > 0 ? '✅ PASSED' : '❌ FAILED') + ' (' + tcPassed + '/' + tcFailed + ') | <strong>Date:</strong> ' + date + '</div>';
+                html += '</div>';
+                html += '<h3 style="margin: 18px 0 8px 0; color: #1f2937; font-size: 11px; font-weight: bold;">📋 FORM COVERAGE DETAILS</h3>';
+                html += '<table style="width: 100%; border-collapse: collapse; font-size: 9px;">';
+                html += '<thead>';
+                html += '<tr style="background: #1e293b; color: white;">';
+                html += '<th style="padding: 6px 4px; text-align: left; border: 1px solid #94a3b8;">Date</th>';
+                html += '<th style="padding: 6px 4px; text-align: left; border: 1px solid #94a3b8;">Form</th>';
+                html += '<th style="padding: 6px 4px; text-align: left; border: 1px solid #94a3b8;">Group</th>';
+                html += '<th style="padding: 6px 4px; text-align: center; border: 1px solid #94a3b8;">P.Status</th>';
+                html += '<th style="padding: 6px 4px; text-align: center; border: 1px solid #94a3b8;">P.TC</th>';
+                html += '<th style="padding: 6px 4px; text-align: right; border: 1px solid #94a3b8;">P.Dur</th>';
+                html += '<th style="padding: 6px 4px; text-align: center; border: 1px solid #94a3b8;">N.Status</th>';
+                html += '<th style="padding: 6px 4px; text-align: center; border: 1px solid #94a3b8;">N.TC</th>';
+                html += '<th style="padding: 6px 4px; text-align: right; border: 1px solid #94a3b8;">N.Dur</th>';
+                html += '<th style="padding: 6px 4px; text-align: center; border: 1px solid #94a3b8;">Pass%</th>';
+                html += '</tr>';
+                html += '</thead>';
+                html += '<tbody>';
+                html += tableRowsHtml;
+                html += '</tbody>';
+                html += '</table>';
+                html += '<div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid #e5e7eb; font-size: 8px; color: #6b7280; text-align: center;">';
+                html += '<p style="margin: 3px 0;">Report Generated: ' + new Date().toLocaleString() + '</p>';
+                html += '<p style="margin: 3px 0;">LDC Forms Automation Framework</p>';
+                html += '</div>';
 
-                htmlContent += '<table style="width: 100%; margin-bottom: 20px; border-collapse: collapse;">';
-                htmlContent += '<tr>';
-                htmlContent += '<td style="width: 24%; padding: 10px; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 4px; text-align: center; margin-right: 1%;"><div style="font-size: 8px; color: #92400e; font-weight: bold; margin-bottom: 3px;">📋 FORMS</div><div style="font-size: 16px; color: #b45309; font-weight: bold;">' + formsCount + '</div></td>';
-                htmlContent += '<td style="width: 24%; padding: 10px; background: #dbeafe; border: 1px solid #93c5fd; border-radius: 4px; text-align: center; margin: 0 1%;"><div style="font-size: 8px; color: #1e40af; font-weight: bold; margin-bottom: 3px;">🔄 SCENARIOS</div><div style="font-size: 16px; color: #1e40af; font-weight: bold;">' + pathsTotal + '</div></td>';
-                htmlContent += '<td style="width: 24%; padding: 10px; background: #cffafe; border: 1px solid #a5f3fc; border-radius: 4px; text-align: center; margin: 0 1%;"><div style="font-size: 8px; color: #0e7490; font-weight: bold; margin-bottom: 3px;">✅ PASS/FAIL</div><div style="font-size: 16px; color: #0e7490; font-weight: bold;">' + pathsPassed + '/' + pathsFailed + '</div></td>';
-                htmlContent += '<td style="width: 24%; padding: 10px; background: #e0e7ff; border: 1px solid #c7d2fe; border-radius: 4px; text-align: center; margin-left: 1%;"><div style="font-size: 8px; color: #3730a3; font-weight: bold; margin-bottom: 3px;">📈 RATE</div><div style="font-size: 16px; color: #3730a3; font-weight: bold;">' + scenarioRate + '%</div></td>';
-                htmlContent += '</tr></table>';
-
-                htmlContent += '<div style="margin-bottom: 15px; padding: 10px; background: #f3f4f6; border-left: 4px solid #6b7280; border-radius: 4px; font-size: 10px;">';
-                htmlContent += '<h3 style="margin: 0 0 6px 0; color: #374151; font-size: 11px; font-weight: bold;">📊 EXECUTION SUMMARY</h3>';
-                htmlContent += '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">';
-                htmlContent += '<div><strong>Scenario:</strong> ' + (pathsPassed > 0 ? '✅ PASSED' : '❌ FAILED') + ' (' + pathsPassed + '/' + pathsFailed + ')</div>';
-                htmlContent += '<div><strong>Success Rate:</strong> ' + scenarioRate + '%</div>';
-                htmlContent += '<div><strong>Test Cases:</strong> ' + (tcPassed > 0 ? '✅ PASSED' : '❌ FAILED') + ' (' + tcPassed + '/' + tcFailed + ')</div>';
-                htmlContent += '<div><strong>Date:</strong> ' + date + '</div>';
-                htmlContent += '</div></div>';
-
-                htmlContent += '<h3 style="margin: 18px 0 8px 0; color: #1f2937; font-size: 11px; font-weight: bold;">📋 FORM COVERAGE DETAILS</h3>';
-                htmlContent += '<table style="width: 100%; border-collapse: collapse; font-size: 9px;">';
-                htmlContent += '<thead><tr style="background: #1e293b; color: white;">';
-                htmlContent += '<th style="padding: 6px 4px; text-align: left; border: 1px solid #94a3b8; white-space: nowrap;">Date</th>';
-                htmlContent += '<th style="padding: 6px 4px; text-align: left; border: 1px solid #94a3b8; white-space: nowrap;">Form</th>';
-                htmlContent += '<th style="padding: 6px 4px; text-align: left; border: 1px solid #94a3b8; white-space: nowrap;">Group</th>';
-                htmlContent += '<th style="padding: 6px 4px; text-align: center; border: 1px solid #94a3b8; white-space: nowrap;">P.Status</th>';
-                htmlContent += '<th style="padding: 6px 4px; text-align: center; border: 1px solid #94a3b8; white-space: nowrap;">P.TC</th>';
-                htmlContent += '<th style="padding: 6px 4px; text-align: right; border: 1px solid #94a3b8; white-space: nowrap;">P.Dur</th>';
-                htmlContent += '<th style="padding: 6px 4px; text-align: center; border: 1px solid #94a3b8; white-space: nowrap;">N.Status</th>';
-                htmlContent += '<th style="padding: 6px 4px; text-align: center; border: 1px solid #94a3b8; white-space: nowrap;">N.TC</th>';
-                htmlContent += '<th style="padding: 6px 4px; text-align: right; border: 1px solid #94a3b8; white-space: nowrap;">N.Dur</th>';
-                htmlContent += '<th style="padding: 6px 4px; text-align: center; border: 1px solid #94a3b8; white-space: nowrap;">Pass%</th>';
-                htmlContent += '</tr></thead>';
-                htmlContent += '<tbody>' + tableRowsHtml + '</tbody>';
-                htmlContent += '</table>';
-
-                htmlContent += '<div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid #e5e7eb; font-size: 8px; color: #6b7280; text-align: center;">';
-                htmlContent += '<p style="margin: 3px 0;">Report Generated: ' + new Date().toLocaleString() + '</p>';
-                htmlContent += '<p style="margin: 3px 0;">LDC Forms Automation Framework</p>';
-                htmlContent += '</div>';
-
-                pdfContainer.innerHTML = htmlContent;
+                pdfContainer.innerHTML = html;
 
                 const opt = {
                     margin: 8,
