@@ -2,11 +2,11 @@
   {
     "data": {
       "failed": 0,
-      "broken": 2,
+      "broken": 0,
       "skipped": 0,
-      "passed": 1,
+      "passed": 2,
       "unknown": 0,
-      "total": 3
+      "total": 2
     }
   },
   {
@@ -21,30 +21,10 @@
   },
   {
     "data": {
-      "failed": 2,
-      "broken": 15,
-      "skipped": 0,
-      "passed": 35,
-      "unknown": 0,
-      "total": 52
-    }
-  },
-  {
-    "data": {
-      "failed": 1,
+      "failed": 0,
       "broken": 0,
       "skipped": 0,
-      "passed": 5,
-      "unknown": 0,
-      "total": 6
-    }
-  },
-  {
-    "data": {
-      "failed": 2,
-      "broken": 0,
-      "skipped": 0,
-      "passed": 0,
+      "passed": 2,
       "unknown": 0,
       "total": 2
     }
@@ -54,39 +34,9 @@
       "failed": 0,
       "broken": 0,
       "skipped": 0,
-      "passed": 0,
+      "passed": 2,
       "unknown": 0,
-      "total": 0
-    }
-  },
-  {
-    "data": {
-      "failed": 0,
-      "broken": 0,
-      "skipped": 13,
-      "passed": 0,
-      "unknown": 0,
-      "total": 13
-    }
-  },
-  {
-    "data": {
-      "failed": 3,
-      "broken": 0,
-      "skipped": 0,
-      "passed": 1,
-      "unknown": 0,
-      "total": 4
-    }
-  },
-  {
-    "data": {
-      "failed": 40,
-      "broken": 32,
-      "skipped": 0,
-      "passed": 409,
-      "unknown": 0,
-      "total": 481
+      "total": 2
     }
   },
   {
@@ -94,39 +44,59 @@
       "failed": 0,
       "broken": 0,
       "skipped": 0,
-      "passed": 3,
+      "passed": 2,
       "unknown": 0,
-      "total": 3
+      "total": 2
     }
   },
   {
     "data": {
       "failed": 0,
-      "broken": 2,
+      "broken": 0,
       "skipped": 0,
       "passed": 2,
       "unknown": 0,
-      "total": 4
+      "total": 2
     }
   },
   {
     "data": {
       "failed": 0,
-      "broken": 2,
+      "broken": 0,
       "skipped": 0,
       "passed": 2,
       "unknown": 0,
-      "total": 4
+      "total": 2
     }
   },
   {
     "data": {
       "failed": 0,
-      "broken": 2,
+      "broken": 0,
       "skipped": 0,
       "passed": 2,
       "unknown": 0,
-      "total": 4
+      "total": 2
+    }
+  },
+  {
+    "data": {
+      "failed": 0,
+      "broken": 0,
+      "skipped": 0,
+      "passed": 2,
+      "unknown": 0,
+      "total": 2
+    }
+  },
+  {
+    "data": {
+      "failed": 0,
+      "broken": 0,
+      "skipped": 0,
+      "passed": 2,
+      "unknown": 0,
+      "total": 2
     }
   },
   {
@@ -142,21 +112,11 @@
   {
     "data": {
       "failed": 0,
-      "broken": 0,
+      "broken": 1,
       "skipped": 0,
-      "passed": 3,
+      "passed": 1,
       "unknown": 0,
-      "total": 3
-    }
-  },
-  {
-    "data": {
-      "failed": 0,
-      "broken": 0,
-      "skipped": 0,
-      "passed": 3,
-      "unknown": 0,
-      "total": 3
+      "total": 2
     }
   },
   {
@@ -172,21 +132,61 @@
   {
     "data": {
       "failed": 1,
-      "broken": 1,
+      "broken": 0,
       "skipped": 0,
-      "passed": 1,
+      "passed": 2,
       "unknown": 0,
       "total": 3
     }
   },
   {
     "data": {
-      "failed": 2,
+      "failed": 0,
       "broken": 1,
+      "skipped": 0,
+      "passed": 2,
+      "unknown": 0,
+      "total": 3
+    }
+  },
+  {
+    "data": {
+      "failed": 1,
+      "broken": 0,
       "skipped": 0,
       "passed": 1,
       "unknown": 0,
-      "total": 4
+      "total": 2
+    }
+  },
+  {
+    "data": {
+      "failed": 0,
+      "broken": 0,
+      "skipped": 0,
+      "passed": 2,
+      "unknown": 0,
+      "total": 2
+    }
+  },
+  {
+    "data": {
+      "failed": 0,
+      "broken": 0,
+      "skipped": 0,
+      "passed": 3,
+      "unknown": 0,
+      "total": 3
+    }
+  },
+  {
+    "data": {
+      "failed": 1,
+      "broken": 0,
+      "skipped": 0,
+      "passed": 2,
+      "unknown": 0,
+      "total": 3
     }
   },
   {
@@ -194,9 +194,9 @@
       "failed": 0,
       "broken": 2,
       "skipped": 0,
-      "passed": 1,
+      "passed": 2,
       "unknown": 0,
-      "total": 3
+      "total": 4
     }
   }
 ]

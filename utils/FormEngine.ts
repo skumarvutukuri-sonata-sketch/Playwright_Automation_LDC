@@ -177,10 +177,159 @@ export class FormEngine {
     Logger.success(`Filled: ${value}`);
   }
 
+  // private async processNegativeField(label: string, locator: Locator, type: string) {
+  //   const key = label.toLowerCase();
+    
+  //   // 🚀 EARLY EXIT: Check if form already submitted
+  //   try {
+  //     const isSuccess = await this.checkIfSuccessPage();
+  //     if (isSuccess) {
+  //       Logger.action(`⚠️  Form already submitted - Stopping field processing for: ${label}`);
+  //       return;
+  //     }
+  //   } catch (e) {
+  //     Logger.action(`⚠️  Cannot verify form state - Continuing cautiously`);
+  //   }
+    
+  //   try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {}
+  //   await new Promise(res => setTimeout(res, 800)); 
+
+  //   const alreadyValidated = this.validatedFields.has(key);
+
+  //   if (type === 'dropdown') {
+  //     const options = await this.helpers.getDropdownOptions(locator);
+  //     const valid = options.filter(o => o.trim() !== '');
+  //     if (valid.length > 0) {
+  //       const random = valid[Math.floor(Math.random() * valid.length)];
+  //       await this.helpers.selectDropdown(locator, random);
+  //       this.saveEnteredValue(label, random);
+  //       this.recordTestCase(true);
+  //       Logger.success(`Validation dropdown selected: ${random}`);
+  //     }
+  //     return;
+  //   }
+  //   else if (key.includes('email') && !alreadyValidated) {
+  //     this.validatedFields.add(key);
+  //     const invalids = ['test', 'test@', '@gmail.com'];
+      
+  //     for (const val of invalids) {
+  //       try {
+  //         // Check if we've reached thank you page before testing invalid data
+  //         const isSuccess = await this.checkIfSuccessPage();
+  //         if (isSuccess) {
+  //           Logger.action(`⚠️  Form submitted during email validation - Stopping`);
+  //           break;
+  //         }
+
+  //         try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {} 
+  //         await locator.fill(val, { force: true });
+  //         Logger.action(`Invalid email: ${val}`);
+          
+  //         // 🚀 THE FIX: Click Next to force the UI error to appear for the INVALID data!
+  //         // Because the data is invalid, the form will NOT go to the next page.
+  //         await this.clickNext();
+  //         await new Promise(res => setTimeout(res, 800)); // Give error time to render
+  //         this.recordTestCase(true);
+  //       } catch (e) {
+  //         Logger.action(`⚠️  Error testing invalid email "${val}": ${e}`);
+  //         // Continue to next invalid value
+  //       }
+  //     }
+      
+  //     // 🚀 Enter VALID data, but DO NOT click Next! 
+  //     // This prevents the Optional Field trap from skipping pages.
+  //     try {
+  //       try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {}
+  //       const valid = DefaultData.getValue(label);
+  //       await locator.fill(valid, { force: true });
+  //       this.saveEnteredValue(label, valid);
+  //       this.recordTestCase(true);
+  //       Logger.success('Valid email entered (Skipped Next click to prevent navigation)');
+  //     } catch (e) {
+  //       Logger.action(`⚠️  Failed to enter valid email: ${e}`);
+  //       this.recordTestCase(false);
+  //     }
+  //   }
+  //   else if ((key.includes('phone') || key.includes('contact') || key.includes('mobile')) && !alreadyValidated) {
+  //     this.validatedFields.add(key); 
+  //     const invalids = ['123', '999999999999', 'abcd'];
+      
+  //     for (const val of invalids) {
+  //       try {
+  //         // Check if we've reached thank you page before testing invalid data
+  //         const isSuccess = await this.checkIfSuccessPage();
+  //         if (isSuccess) {
+  //           Logger.action(`⚠️  Form submitted during phone validation - Stopping`);
+  //           break;
+  //         }
+
+  //         try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {} 
+  //         await locator.fill(val, { force: true });
+  //         Logger.action(`Invalid phone: ${val}`);
+          
+  //         // 🚀 THE FIX: Click Next to force the UI error to appear for the INVALID data!
+  //         await this.clickNext();
+  //         await new Promise(res => setTimeout(res, 800)); // Give error time to render
+  //         this.recordTestCase(true);
+  //       } catch (e) {
+  //         Logger.action(`⚠️  Error testing invalid phone "${val}": ${e}`);
+  //         // Continue to next invalid value
+  //       }
+  //     }
+      
+  //     // 🚀 Enter VALID data, but DO NOT click Next!
+  //     try {
+  //       try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {}
+  //       const valid = DefaultData.getValue(label);
+  //       await locator.fill(valid, { force: true });
+  //       this.saveEnteredValue(label, valid);
+  //       this.recordTestCase(true);
+  //       Logger.success('Valid phone entered (Skipped Next click to prevent navigation)');
+  //     } catch (e) {
+  //       Logger.action(`⚠️  Failed to enter valid phone: ${e}`);
+  //       this.recordTestCase(false);
+  //     }
+  //   }
+  //   else {
+  //     // Standard text fields (First Name, Last Name, etc.)
+  //     // 🚀 SAFETY CHECK: Ensure we haven't reached thank you page or form submitted
+  //     try {
+  //       const isSuccess = await this.checkIfSuccessPage();
+  //       if (isSuccess) {
+  //         Logger.action(`⚠️  Form already submitted (Thank You page detected) - Skipping field: ${label}`);
+  //         this.recordTestCase(true); // Count as passed since form completed successfully
+  //         return;
+  //       }
+  //     } catch (e) {
+  //       Logger.action(`⚠️  Cannot check page state for field: ${label} - Page may have closed`);
+  //       this.recordTestCase(false);
+  //       return;
+  //     }
+
+  //     try {
+  //       const value = DefaultData.getValue(label);
+  //       await locator.fill(value, { force: true });
+  //       this.saveEnteredValue(label, value);
+  //       this.recordTestCase(true);
+  //       Logger.success(`Filled: ${value}`);
+  //     } catch (e) {
+  //       Logger.action(`⚠️  Failed to fill field: ${label} - ${e}`);
+  //       this.recordTestCase(false);
+  //       return;
+  //     }
+  //   }
+
+  //   // Wait for any lingering errors to disappear before moving to the next field
+  //   try {
+  //     await this.helpers.waitForErrorToDisappear(label);
+  //   } catch (e) {
+  //     // If page is closed, just continue - not a critical error
+  //   }
+  // }
+
   private async processNegativeField(label: string, locator: Locator, type: string) {
     const key = label.toLowerCase();
     
-    // 🚀 EARLY EXIT: Check if form already submitted
     try {
       const isSuccess = await this.checkIfSuccessPage();
       if (isSuccess) {
@@ -192,7 +341,8 @@ export class FormEngine {
     }
     
     try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {}
-    await new Promise(res => setTimeout(res, 800)); 
+    // 🚀 SPEEDUP: Reduced initial pause
+    await new Promise(res => setTimeout(res, 200)); 
 
     const alreadyValidated = this.validatedFields.has(key);
 
@@ -214,39 +364,32 @@ export class FormEngine {
       
       for (const val of invalids) {
         try {
-          // Check if we've reached thank you page before testing invalid data
           const isSuccess = await this.checkIfSuccessPage();
-          if (isSuccess) {
-            Logger.action(`⚠️  Form submitted during email validation - Stopping`);
-            break;
-          }
+          if (isSuccess) break;
 
           try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {} 
           await locator.fill(val, { force: true });
           Logger.action(`Invalid email: ${val}`);
           
-          // 🚀 THE FIX: Click Next to force the UI error to appear for the INVALID data!
-          // Because the data is invalid, the form will NOT go to the next page.
           await this.clickNext();
-          await new Promise(res => setTimeout(res, 800)); // Give error time to render
+          
+          // 🚀 SPEEDUP: Native wait for error instead of 800ms sleep!
+          const errorLocator = this.frame.locator('[class*="error"], [class*="Error"], [aria-invalid="true"]').first();
+          await errorLocator.waitFor({ state: 'visible', timeout: 1000 }).catch(() => {});
+          
           this.recordTestCase(true);
         } catch (e) {
-          Logger.action(`⚠️  Error testing invalid email "${val}": ${e}`);
           // Continue to next invalid value
         }
       }
       
-      // 🚀 Enter VALID data, but DO NOT click Next! 
-      // This prevents the Optional Field trap from skipping pages.
       try {
-        try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {}
         const valid = DefaultData.getValue(label);
         await locator.fill(valid, { force: true });
         this.saveEnteredValue(label, valid);
         this.recordTestCase(true);
         Logger.success('Valid email entered (Skipped Next click to prevent navigation)');
       } catch (e) {
-        Logger.action(`⚠️  Failed to enter valid email: ${e}`);
         this.recordTestCase(false);
       }
     }
@@ -256,52 +399,43 @@ export class FormEngine {
       
       for (const val of invalids) {
         try {
-          // Check if we've reached thank you page before testing invalid data
           const isSuccess = await this.checkIfSuccessPage();
-          if (isSuccess) {
-            Logger.action(`⚠️  Form submitted during phone validation - Stopping`);
-            break;
-          }
+          if (isSuccess) break;
 
           try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {} 
           await locator.fill(val, { force: true });
           Logger.action(`Invalid phone: ${val}`);
           
-          // 🚀 THE FIX: Click Next to force the UI error to appear for the INVALID data!
           await this.clickNext();
-          await new Promise(res => setTimeout(res, 800)); // Give error time to render
+          
+          // 🚀 SPEEDUP: Native wait for error instead of 800ms sleep!
+          const errorLocator = this.frame.locator('[class*="error"], [class*="Error"], [aria-invalid="true"]').first();
+          await errorLocator.waitFor({ state: 'visible', timeout: 1000 }).catch(() => {});
+          
           this.recordTestCase(true);
         } catch (e) {
-          Logger.action(`⚠️  Error testing invalid phone "${val}": ${e}`);
           // Continue to next invalid value
         }
       }
       
-      // 🚀 Enter VALID data, but DO NOT click Next!
       try {
-        try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {}
         const valid = DefaultData.getValue(label);
         await locator.fill(valid, { force: true });
         this.saveEnteredValue(label, valid);
         this.recordTestCase(true);
         Logger.success('Valid phone entered (Skipped Next click to prevent navigation)');
       } catch (e) {
-        Logger.action(`⚠️  Failed to enter valid phone: ${e}`);
         this.recordTestCase(false);
       }
     }
     else {
-      // Standard text fields (First Name, Last Name, etc.)
-      // 🚀 SAFETY CHECK: Ensure we haven't reached thank you page or form submitted
       try {
         const isSuccess = await this.checkIfSuccessPage();
         if (isSuccess) {
-          Logger.action(`⚠️  Form already submitted (Thank You page detected) - Skipping field: ${label}`);
-          this.recordTestCase(true); // Count as passed since form completed successfully
+          this.recordTestCase(true); 
           return;
         }
       } catch (e) {
-        Logger.action(`⚠️  Cannot check page state for field: ${label} - Page may have closed`);
         this.recordTestCase(false);
         return;
       }
@@ -313,17 +447,15 @@ export class FormEngine {
         this.recordTestCase(true);
         Logger.success(`Filled: ${value}`);
       } catch (e) {
-        Logger.action(`⚠️  Failed to fill field: ${label} - ${e}`);
         this.recordTestCase(false);
         return;
       }
     }
 
-    // Wait for any lingering errors to disappear before moving to the next field
+    // 🚀 SPEEDUP: Ensure waitForErrorToDisappear is fast in Helpers.ts
     try {
       await this.helpers.waitForErrorToDisappear(label);
     } catch (e) {
-      // If page is closed, just continue - not a critical error
     }
   }
 

@@ -1,11 +1,11 @@
 const dashboardData = {
   "version": 2,
-  "generatedAt": "2026-07-07T07:15:45.354Z",
+  "generatedAt": "2026-07-07T09:33:43.404Z",
   "days": [
     {
       "dateLabel": "07-Jul-2026",
       "dateIso": "2026-07-07",
-      "updatedAt": "2026-07-07T07:15:45.345Z",
+      "updatedAt": "2026-07-07T09:33:43.386Z",
       "rows": [
         {
           "Date": "07-Jul-2026",
@@ -4092,9 +4092,9 @@ const dashboardData = {
         "pathsTotal": 480,
         "pathsPassed": 442,
         "pathsFailed": 38,
-        "testCasesTotal": 6169,
-        "testCasesPassed": 6167,
-        "testCasesFailed": 2
+        "testCasesTotal": 6168,
+        "testCasesPassed": 6153,
+        "testCasesFailed": 15
       }
     },
     {

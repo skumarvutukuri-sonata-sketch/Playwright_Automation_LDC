@@ -43,7 +43,7 @@ async function globalSetup(): Promise<void> {
         new Date().toISOString()
     );
 
-    console.log('✓ Start time created');
+  console.log('✓ Start time created\n');
 
 }
 
