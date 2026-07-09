@@ -20,12 +20,16 @@ static async uploadFile(fileName: string, webelemet :Locator) {
     options?: { timeout?: number }
   ) {
     const timeout = options?.timeout ?? 10000;
-    await dropdown.scrollIntoViewIfNeeded();
-    await dropdown.selectOption(value);
-    await expect(dropdown).toHaveValue(value, { timeout });
-    //await expect(dropdown).toHaveClass(/has-value/, { timeout });
-    const selected = await dropdown.inputValue();
-    console.log(`Selected value: ${selected}`);
+    await dropdown.waitFor({ state: 'attached', timeout });
+    try {
+      await dropdown.selectOption({ label: value });
+    } catch {
+      await dropdown.selectOption(value);
+    }
+
+    const selectedOptionText = await dropdown.locator('option:checked').textContent();
+    const selected = selectedOptionText?.trim() ?? '';
+    console.log(`Selected dropdown option: ${selected}`);
   }
 
 
@@ -33,7 +37,7 @@ static async uploadFile(fileName: string, webelemet :Locator) {
     txtBox_locator : Locator,
     inputValue : string,
   ){
-    await txtBox_locator.waitFor();
+    await txtBox_locator.waitFor({ state: 'visible', timeout: 10000 });
     await txtBox_locator.scrollIntoViewIfNeeded();
     await txtBox_locator.click();
     try{
@@ -48,7 +52,7 @@ static async uploadFile(fileName: string, webelemet :Locator) {
   static async clickOnElement(
     element_locator : Locator
   ){
-    await element_locator.waitFor();
+    await element_locator.waitFor({ state: 'visible', timeout: 10000 });
     await element_locator.scrollIntoViewIfNeeded();
     await element_locator.hover();
     await element_locator.click({force : true});
@@ -58,7 +62,7 @@ static async uploadFile(fileName: string, webelemet :Locator) {
   static async hoverAndClickOnElement(
     element_locator : Locator
   ){
-    await element_locator.waitFor();
+    await element_locator.waitFor({ state: 'visible', timeout: 10000 });
     await element_locator.hover();
     await element_locator.scrollIntoViewIfNeeded();
     await element_locator.click();
@@ -77,22 +81,22 @@ static async uploadFile(fileName: string, webelemet :Locator) {
 }
 
 static async getDropdownOptions(dropdownLocator: Locator): Promise<string[]> {
-  // 1. Ensure the element is visible and interactable
-  await dropdownLocator.waitFor();
-  await dropdownLocator.scrollIntoViewIfNeeded();
-  await dropdownLocator.hover();
-  await dropdownLocator.click();
+  await dropdownLocator.waitFor({ state: 'attached', timeout: 10000 });
 
-  // 2. Locate all <option> elements inside this specific dropdown
   const optionLocator = dropdownLocator.locator('option');
+  await expect(optionLocator.first()).toBeAttached({ timeout: 10000 });
   
-  // 3. Extract and return the inner text of each option as an array of strings
-  const optionsTexts = await optionLocator.allInnerTexts();
+  const optionsTexts = (await optionLocator.allInnerTexts()).map((option) => option.trim()).filter(Boolean);
   
   console.log('Extracted Dropdown Options:', optionsTexts);
   return optionsTexts;
 }
 
+
+
+static pickRandomOption(options: readonly string[]): string {
+      return options[Math.floor(Math.random() * options.length)]!;
+  }
 
 }
  

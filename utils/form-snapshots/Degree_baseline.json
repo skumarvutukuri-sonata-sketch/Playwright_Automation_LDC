@@ -1,0 +1,324 @@
+{
+  "category": "Degree",
+  "updatedAt": "2026-07-08T11:26:05.113Z",
+  "forms": {
+    "2581": {
+      "formId": "2581",
+      "capturedAt": "2026-07-08T11:26:05.110Z",
+      "totalSteps": 4,
+      "totalFieldCount": 12,
+      "steps": [
+        {
+          "stepNumber": 1,
+          "fieldCount": 1,
+          "fields": [
+            {
+              "name": "prospect_education_journey",
+              "type": "select",
+              "step": 1
+            }
+          ]
+        },
+        {
+          "stepNumber": 2,
+          "fieldCount": 4,
+          "fields": [
+            {
+              "name": "major_educational_background",
+              "type": "select",
+              "step": 2
+            },
+            {
+              "name": "level_of_education",
+              "type": "select",
+              "step": 2
+            },
+            {
+              "name": "stated_gpa_range",
+              "type": "select",
+              "step": 2
+            },
+            {
+              "name": "relevant_education_obtained",
+              "type": "select",
+              "step": 2
+            }
+          ]
+        },
+        {
+          "stepNumber": 3,
+          "fieldCount": 3,
+          "fields": [
+            {
+              "name": "first_name",
+              "type": "text",
+              "step": 3
+            },
+            {
+              "name": "last_name",
+              "type": "text",
+              "step": 3
+            },
+            {
+              "name": "email",
+              "type": "email",
+              "step": 3
+            }
+          ]
+        },
+        {
+          "stepNumber": 4,
+          "fieldCount": 4,
+          "fields": [
+            {
+              "name": "state",
+              "type": "select",
+              "step": 4
+            },
+            {
+              "name": "zip_code",
+              "type": "text",
+              "step": 4
+            },
+            {
+              "name": "phone",
+              "type": "tel",
+              "step": 4
+            },
+            {
+              "name": "lead_share_opt_in",
+              "type": "checkbox",
+              "step": 4
+            }
+          ]
+        }
+      ],
+      "allFields": [
+        {
+          "name": "prospect_education_journey",
+          "type": "select",
+          "step": 1
+        },
+        {
+          "name": "major_educational_background",
+          "type": "select",
+          "step": 2
+        },
+        {
+          "name": "level_of_education",
+          "type": "select",
+          "step": 2
+        },
+        {
+          "name": "stated_gpa_range",
+          "type": "select",
+          "step": 2
+        },
+        {
+          "name": "relevant_education_obtained",
+          "type": "select",
+          "step": 2
+        },
+        {
+          "name": "first_name",
+          "type": "text",
+          "step": 3
+        },
+        {
+          "name": "last_name",
+          "type": "text",
+          "step": 3
+        },
+        {
+          "name": "email",
+          "type": "email",
+          "step": 3
+        },
+        {
+          "name": "state",
+          "type": "select",
+          "step": 4
+        },
+        {
+          "name": "zip_code",
+          "type": "text",
+          "step": 4
+        },
+        {
+          "name": "phone",
+          "type": "tel",
+          "step": 4
+        },
+        {
+          "name": "lead_share_opt_in",
+          "type": "checkbox",
+          "step": 4
+        }
+      ]
+    },
+    "2742": {
+      "formId": "2742",
+      "capturedAt": "2026-07-08T11:18:11.201Z",
+      "totalSteps": 4,
+      "totalFieldCount": 13,
+      "steps": [
+        {
+          "stepNumber": 1,
+          "fieldCount": 1,
+          "fields": [
+            {
+              "name": "program_track",
+              "type": "select",
+              "step": 1
+            }
+          ]
+        },
+        {
+          "stepNumber": 2,
+          "fieldCount": 5,
+          "fields": [
+            {
+              "name": "prospect_education_journey",
+              "type": "select",
+              "step": 2
+            },
+            {
+              "name": "level_of_education",
+              "type": "select",
+              "step": 2
+            },
+            {
+              "name": "relevant_education_obtained",
+              "type": "select",
+              "step": 2
+            },
+            {
+              "name": "employed_in_relevant_field",
+              "type": "select",
+              "step": 2
+            },
+            {
+              "name": "stated_gpa_range",
+              "type": "select",
+              "step": 2
+            }
+          ]
+        },
+        {
+          "stepNumber": 3,
+          "fieldCount": 3,
+          "fields": [
+            {
+              "name": "first_name",
+              "type": "text",
+              "step": 3
+            },
+            {
+              "name": "last_name",
+              "type": "text",
+              "step": 3
+            },
+            {
+              "name": "email",
+              "type": "email",
+              "step": 3
+            }
+          ]
+        },
+        {
+          "stepNumber": 4,
+          "fieldCount": 4,
+          "fields": [
+            {
+              "name": "state",
+              "type": "select",
+              "step": 4
+            },
+            {
+              "name": "zip_code",
+              "type": "text",
+              "step": 4
+            },
+            {
+              "name": "phone",
+              "type": "tel",
+              "step": 4
+            },
+            {
+              "name": "lead_share_opt_in",
+              "type": "checkbox",
+              "step": 4
+            }
+          ]
+        }
+      ],
+      "allFields": [
+        {
+          "name": "program_track",
+          "type": "select",
+          "step": 1
+        },
+        {
+          "name": "prospect_education_journey",
+          "type": "select",
+          "step": 2
+        },
+        {
+          "name": "level_of_education",
+          "type": "select",
+          "step": 2
+        },
+        {
+          "name": "relevant_education_obtained",
+          "type": "select",
+          "step": 2
+        },
+        {
+          "name": "employed_in_relevant_field",
+          "type": "select",
+          "step": 2
+        },
+        {
+          "name": "stated_gpa_range",
+          "type": "select",
+          "step": 2
+        },
+        {
+          "name": "first_name",
+          "type": "text",
+          "step": 3
+        },
+        {
+          "name": "last_name",
+          "type": "text",
+          "step": 3
+        },
+        {
+          "name": "email",
+          "type": "email",
+          "step": 3
+        },
+        {
+          "name": "state",
+          "type": "select",
+          "step": 4
+        },
+        {
+          "name": "zip_code",
+          "type": "text",
+          "step": 4
+        },
+        {
+          "name": "phone",
+          "type": "tel",
+          "step": 4
+        },
+        {
+          "name": "lead_share_opt_in",
+          "type": "checkbox",
+          "step": 4
+        }
+      ]
+    }
+  }
+}
