@@ -1,7 +1,56 @@
 const dashboardData = {
   "version": 2,
-  "generatedAt": "2026-07-07T09:33:43.404Z",
+  "generatedAt": "2026-07-09T15:10:45.925Z",
   "days": [
+    {
+      "dateLabel": "09-Jul-2026",
+      "dateIso": "2026-07-09",
+      "updatedAt": "2026-07-09T15:10:45.909Z",
+      "rows": [
+        {
+          "Date": "09-Jul-2026",
+          "Group": "yale",
+          "Form": "3691",
+          "Positive_Status": "PASSED",
+          "Positive_Duration(sec)": "22.40",
+          "Positive_TC_Total": "7",
+          "Positive_TC_Passed": "7",
+          "Positive_TC_Failed": "0",
+          "Negative_Status": "PASSED",
+          "Negative_Duration(sec)": "30.32",
+          "Negative_TC_Total": "13",
+          "Negative_TC_Passed": "13",
+          "Negative_TC_Failed": "0",
+          "Error": "",
+          "Category": "Short_Courses"
+        },
+        {
+          "Date": "09-Jul-2026",
+          "Group": "alb-umt",
+          "Form": "2581",
+          "Positive_Status": "PASSED",
+          "Positive_Duration(sec)": "47.03",
+          "Positive_TC_Total": "13",
+          "Positive_TC_Passed": "13",
+          "Positive_TC_Failed": "0",
+          "Negative_Status": "PASSED",
+          "Negative_Duration(sec)": "50.77",
+          "Negative_TC_Total": "20",
+          "Negative_TC_Passed": "20",
+          "Negative_TC_Failed": "0",
+          "Error": "",
+          "Category": "Degree"
+        }
+      ],
+      "totals": {
+        "pathsTotal": 4,
+        "pathsPassed": 4,
+        "pathsFailed": 0,
+        "testCasesTotal": 53,
+        "testCasesPassed": 53,
+        "testCasesFailed": 0
+      }
+    },
     {
       "dateLabel": "07-Jul-2026",
       "dateIso": "2026-07-07",
