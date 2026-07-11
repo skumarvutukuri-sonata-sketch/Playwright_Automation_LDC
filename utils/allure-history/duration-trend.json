@@ -1,5 +1,30 @@
 [
   {
+    "data": {
+      "duration": 5804
+    }
+  },
+  {
+    "data": {
+      "duration": 1357
+    }
+  },
+  {
+    "data": {
+      "duration": 233747
+    }
+  },
+  {
+    "data": {
+      "duration": 133459
+    }
+  },
+  {
+    "data": {
+      "duration": 2577992
+    }
+  },
+  {
     "data": {}
   },
   {
@@ -70,31 +95,6 @@
   {
     "data": {
       "duration": 162478
-    }
-  },
-  {
-    "data": {
-      "duration": 152727
-    }
-  },
-  {
-    "data": {
-      "duration": 212406
-    }
-  },
-  {
-    "data": {
-      "duration": 351779
-    }
-  },
-  {
-    "data": {
-      "duration": 249258
-    }
-  },
-  {
-    "data": {
-      "duration": 311831
     }
   }
 ]
