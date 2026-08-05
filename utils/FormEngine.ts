@@ -153,7 +153,7 @@ export class FormEngine {
       const validOptions = options.filter(o => o.trim() !== '');
       
       if (validOptions.length > 0) {
-        const maxIterations = Math.min(validOptions.length, 3);
+        const maxIterations = Math.min(validOptions.length, 7);
         
         for (let i = 0; i < maxIterations; i++) {
           await this.helpers.selectDropdown(locator, validOptions[i]);

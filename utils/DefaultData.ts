@@ -12,7 +12,7 @@
 //     }
 
 //     if (key.includes('last name') || key.includes('surname')) {
-//       return 'Sagiraju';
+//       return 'Jacob';
 //     }
 
 //     if (key.includes('email')) {
@@ -146,7 +146,7 @@ export class DefaultData {
     'Emma',
     'Ava',
     'Mia',
-    'Arjun',
+    'John',
     'Priya',
     'Aarav',
     'Ananya'
@@ -155,8 +155,8 @@ export class DefaultData {
   private static readonly lastNames = [
     'Sharma',
     'Patel',
-    'Sagiraju',
-    'Reddy',
+    'Alex',
+    'Roy',
     'Smith',
     'Johnson',
     'Brown',

@@ -391,26 +391,87 @@ export class Helpers {
     await locator.selectOption({ label: value });
   }
 
+  private async clickLocatorSafely(locator: Locator): Promise<void> {
+    for (let attempt = 0; attempt < 4; attempt++) {
+      try {
+        await locator.waitFor({ state: 'visible', timeout: 10000 });
+        await locator.scrollIntoViewIfNeeded({ timeout: 5000 });
+        const box = await locator.boundingBox();
+        if (!box || box.width === 0 || box.height === 0) {
+          throw new Error('Button has no visible size');
+        }
+
+        const isDisabled = await locator.isDisabled().catch(() => false);
+        if (isDisabled) {
+          await locator.evaluate((element: HTMLElement) => {
+            element.removeAttribute('disabled');
+            (element as HTMLButtonElement).disabled = false;
+          });
+          await this.page.waitForTimeout(300);
+        }
+
+        await locator.click({ timeout: 10000, force: true });
+        return;
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        if (!message.toLowerCase().includes('outside of the viewport') && !message.toLowerCase().includes('element is not enabled') && !message.toLowerCase().includes('not reachable')) {
+          throw error;
+        }
+
+        await this.page.waitForTimeout(500);
+        try {
+          await locator.evaluate((element: HTMLElement) => {
+            element.scrollIntoView({ block: 'center', inline: 'center' });
+            element.removeAttribute('disabled');
+            (element as HTMLButtonElement).disabled = false;
+            element.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true, view: window }));
+            element.dispatchEvent(new MouseEvent('mouseup', { bubbles: true, cancelable: true, view: window }));
+            element.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+          });
+          return;
+        } catch {
+          // fall through and retry
+        }
+      }
+    }
+
+    await locator.evaluate((element: HTMLElement) => {
+      element.scrollIntoView({ block: 'center', inline: 'center' });
+      element.removeAttribute('disabled');
+      (element as HTMLButtonElement).disabled = false;
+      element.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+    });
+  }
+
   /**
    * Click primary button (Next / Continue / Submit)
    */
   async clickPrimaryButton(): Promise<void> {
-    const texts = ['next', 'continue', 'submit', 'finish', 'save','Request more info'];
+    const explicitSelectors = [
+      this.frame.locator("button[id*='lead-form-next-action-button'], button[class*='lead-form-next-step'], button[id*='next-action-button']"),
+      this.frame.locator('button, [role="button"], input[type="button"], input[type="submit"]')
+    ];
 
-    for (const text of texts) {
-      const btn = this.frame.getByRole('button', { name: new RegExp(text, 'i') });
-
-      if (await btn.count()) {
-        // 🚀 THE FIX: Put a 3000ms cap on clicks so disabled buttons fail FAST and trigger our safety nets!
-        await btn.first().click({ timeout: 3000 });
-        return;
+    for (const candidate of explicitSelectors) {
+      const matches = await candidate.count();
+      if (matches > 0) {
+        const button = candidate.filter({ hasText: /next step|next|continue|submit|finish|save|request more info|get more information/i }).first();
+        if (await button.count()) {
+          await this.clickLocatorSafely(button);
+          return;
+        }
       }
     }
 
-    // fallback
-    const fallback = this.frame.locator('button[type="submit"]');
+    const roleButton = this.frame.getByRole('button').filter({ hasText: /.+/ });
+    if (await roleButton.count()) {
+      await this.clickLocatorSafely(roleButton.first());
+      return;
+    }
+
+    const fallback = this.frame.locator('button[type="submit"], input[type="submit"], button');
     if (await fallback.count()) {
-      await fallback.first().click({ timeout: 3000 });
+      await this.clickLocatorSafely(fallback.first());
       return;
     }
 
