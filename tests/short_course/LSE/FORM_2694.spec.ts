@@ -3,10 +3,10 @@ import { FormLoader } from '../../../utils/FormLoader';
 import { FormRunner } from '../../../utils/FormRunner';
 
 
-const formsData = FormLoader.load('short_course/BOC');
+const formsData = FormLoader.load('short_course/LSE');
 
 
-const FORM_NAME = 'FORM_2704';
+const FORM_NAME = 'FORM_2694';
 
 /**
  * ==================================================

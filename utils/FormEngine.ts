@@ -55,37 +55,83 @@ export class FormEngine {
               key: "edX, and its parent company,",
               name: "gdprProspect2uOptIn",
               value: "true"
+          },
+          {
+              key: "Learn more about the educational programmes that the London School of Economics",
+              name: "gdpr_prospectpartner_opt_in",
+              value: "yes"
           }
-
       ];
 
-      const mapping = radioMappings.find(x =>
-          label.toLowerCase().includes(x.key.toLowerCase())
-      );
+        const normalizedLabel = label.toLowerCase();
+
+        const mapping =
+          radioMappings.find(x => normalizedLabel === x.key.toLowerCase()) ||
+          radioMappings.find(x => normalizedLabel.includes(x.key.toLowerCase()));
 
       console.log("Radio Label :", label);
       console.log("Radio Mapping :", mapping);
 
       if (mapping) {
 
-          const radio = this.frame.locator(
-              `input[name="${mapping.name}"][value="${mapping.value}"]`
-          );
+          const candidateValues = Array.from(new Set([
+            mapping.value,
+            mapping.value === "yes" ? "true" : "yes",
+            mapping.value === "yes" ? "1" : "yes"
+          ]));
 
-          await radio.waitFor({
-              state: "attached"
-          });
+          let radio: any = null;
+
+          for (const value of candidateValues) {
+            const candidate = this.frame.locator(
+              `input[name="${mapping.name}"][value="${value}"]`
+            ).first();
+
+            try {
+              await candidate.waitFor({
+                state: "attached",
+                timeout: 4000
+              });
+              radio = candidate;
+              break;
+            } catch {
+              // Try next value variant.
+            }
+          }
+
+          if (!radio) {
+            const fallback = this.frame.locator(
+              `input[name="${mapping.name}"]`
+            ).first();
+
+            try {
+              await fallback.waitFor({
+                state: "attached",
+                timeout: 4000
+              });
+
+              radio = fallback;
+            } catch {
+              const escapedLabel = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+              const byGroupLabel = this.frame
+                .getByRole("group", { name: new RegExp(escapedLabel, "i") })
+                .getByRole("radio", { name: /^yes$/i })
+                .first();
+
+              await byGroupLabel.waitFor({
+                state: "visible",
+                timeout: 6000
+              });
+
+              radio = byGroupLabel;
+            }
+          }
 
           await radio.scrollIntoViewIfNeeded();
-
           await radio.click({
-              force: true
-          })
-          await radio.click({
-              force: true
-          })
-          
-          ;
+            force: true
+          });
 
           this.saveEnteredValue(label, true);
 

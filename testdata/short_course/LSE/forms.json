@@ -1,0 +1,6108 @@
+{
+  "forms": {
+    "FORM_2328": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2328/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2329": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2329/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2330": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2330/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2331": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2331/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2332": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2332/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2333": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2333/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2334": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2334/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2335": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2335/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2336": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2336/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2337": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2337/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2343": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2343/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2344": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2344/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2345": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2345/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2346": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2346/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2347": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2347/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2348": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2348/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2349": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2349/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2350": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2350/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2351": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2351/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2352": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2352/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2358": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2358/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2359": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2359/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2360": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2360/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2361": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2361/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2362": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2362/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2365": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2365/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2366": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2366/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2367": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2367/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2368": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2368/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2491": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2491/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2543": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2543/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2691": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2691/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2692": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2692/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2694": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2694/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2702": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2702/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2703": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2703/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2743": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2743/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2744": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2744/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2745": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2745/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2746": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2746/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2747": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2747/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2748": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2748/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2749": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2749/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2750": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2750/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2751": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2751/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2752": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2752/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2753": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2753/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2754": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2754/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2755": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2755/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2756": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2756/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2757": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2757/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2758": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2758/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2759": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2759/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2760": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2760/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2761": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2761/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2762": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2762/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2763": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2763/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2764": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2764/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2765": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2765/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2766": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2766/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2767": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2767/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2768": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2768/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2769": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2769/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2770": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2770/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2771": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2771/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2772": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2772/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2921": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2921/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2963": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2963/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2964": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2964/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2970": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2970/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_2971": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/2971/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3037": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3037/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3040": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3040/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3041": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3041/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3052": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3052/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3108": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3108/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3109": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3109/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3134": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3134/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3135": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3135/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3140": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3140/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3160": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3160/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3161": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3161/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3192": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3192/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3193": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3193/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3227": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3227/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3229": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3229/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3230": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3230/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3233": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3233/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3247": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3247/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3248": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3248/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3280": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3280/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3296": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3296/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3300": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3300/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3302": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3302/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3303": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3303/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3304": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3304/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3387": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3387/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3388": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3388/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3389": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3389/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3426": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3426/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3427": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3427/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3428": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3428/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3429": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3429/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3613": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3613/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3614": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3614/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3620": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3620/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3673": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3673/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3674": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3674/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    },
+    "FORM_3675": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/434/forms/3675/preview/",
+      "group": "LSE",
+      "steps": [
+        {
+          "fields": [
+            {
+              "label": "First Name",
+              "required": true
+            },
+            {
+              "label": "Last Name",
+              "required": true
+            },
+            {
+              "label": "Email",
+              "required": true
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "Email",
+              "type": "radio"
+            },
+            {
+              "label": "Phone",
+              "type": "radio"
+            },
+            {
+              "label": "Contact Number",
+              "required": true
+            },
+            {
+              "label": "Highest Level of Education"
+            },
+            {
+              "label": "Years of Work Experience"
+            }
+          ]
+        },
+        {
+          "fields": [
+            {
+              "label": "edX, and its parent company,",
+              "type": "radio"
+            },
+            {
+              "label": "Learn more about the educational programmes that the London School of Economics",
+              "type": "radio"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

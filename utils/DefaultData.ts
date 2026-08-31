@@ -8,11 +8,11 @@ export class DefaultData {
     const key = label.toLowerCase().trim();
 
     if (key.includes('first name') || key.includes('given name')) {
-      return 'Harish';
+      return 'Shushama';
     }
 
     if (key.includes('last name') || key.includes('surname')) {
-      return 'Sagiraju';
+      return 'Shaik';
     }
 
     if (key.includes('email')) {

@@ -2,11 +2,9 @@ import { test } from '@playwright/test';
 import { FormLoader } from '../../../utils/FormLoader';
 import { FormRunner } from '../../../utils/FormRunner';
 
+const formsData = FormLoader.load('short_course/LSE');
 
-const formsData = FormLoader.load('short_course/BOC');
-
-
-const FORM_NAME = 'FORM_2704';
+const FORM_NAME = 'FORM_2970';
 
 /**
  * ==================================================
@@ -14,15 +12,12 @@ const FORM_NAME = 'FORM_2704';
  * ==================================================
  */
 test.describe('Happy Path', () => {
-
   for (const [formName, form] of Object.entries(formsData.forms)) {
-
     if (FORM_NAME && FORM_NAME !== formName) {
       continue;
     }
 
     test(`${formName} - Happy`, async ({ page }) => {
-
       await page.goto(form.url, {
         waitUntil: 'domcontentloaded'
       });
@@ -34,11 +29,8 @@ test.describe('Happy Path', () => {
       const runner = new FormRunner(page, frame);
 
       await runner.run(formName, form, 'happy');
-
     });
-
   }
-
 });
 
 /**
@@ -47,15 +39,12 @@ test.describe('Happy Path', () => {
  * ==================================================
  */
 test.describe('Validation', () => {
-
   for (const [formName, form] of Object.entries(formsData.forms)) {
-
     if (FORM_NAME && FORM_NAME !== formName) {
       continue;
     }
 
     test(`${formName} - Validation`, async ({ page }) => {
-
       await page.goto(form.url, {
         waitUntil: 'domcontentloaded'
       });
@@ -67,9 +56,6 @@ test.describe('Validation', () => {
       const runner = new FormRunner(page, frame);
 
       await runner.run(formName, form, 'validation');
-
     });
-
   }
-
 });

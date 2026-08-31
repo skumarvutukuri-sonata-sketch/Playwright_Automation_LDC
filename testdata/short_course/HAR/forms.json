@@ -1,0 +1,95 @@
+{
+  "forms": {
+    "FORM_3029": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/432/forms/3029/preview/",
+      "group": "HAR",
+      "steps": [
+        {
+          "fields": [
+            { "label": "First Name", "required": true },
+            { "label": "Last Name", "required": true },
+            { "label": "Email", "required": true },
+            { "label": "Email", "type": "radio" },
+            { "label": "edX, and its parent company,", "type": "radio" }
+          ]
+        }
+      ]
+    },
+    "FORM_3049": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/432/forms/3049/preview/",
+      "group": "HAR",
+      "steps": [
+        {
+          "fields": [
+            { "label": "First Name", "required": true },
+            { "label": "Last Name", "required": true },
+            { "label": "Email", "required": true },
+            { "label": "Email", "type": "radio" },
+            { "label": "edX, and its parent company,", "type": "radio" }
+          ]
+        }
+      ]
+    },
+    "FORM_3050": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/432/forms/3050/preview/",
+      "group": "HAR",
+      "steps": [
+        {
+          "fields": [
+            { "label": "First Name", "required": true },
+            { "label": "Last Name", "required": true },
+            { "label": "Email", "required": true },
+            { "label": "Email", "type": "radio" },
+            { "label": "edX, and its parent company,", "type": "radio" }
+          ]
+        }
+      ]
+    },
+    "FORM_3051": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/432/forms/3051/preview/",
+      "group": "HAR",
+      "steps": [
+        {
+          "fields": [
+            { "label": "First Name", "required": true },
+            { "label": "Last Name", "required": true },
+            { "label": "Email", "required": true },
+            { "label": "Email", "type": "radio" },
+            { "label": "edX, and its parent company,", "type": "radio" },
+            { "label": "Are you inquiring for a group/team?,", "type": "radio" }
+          ]
+        }
+      ]
+    },
+    "FORM_3075": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/432/forms/3075/preview/",
+      "group": "HAR",
+      "steps": [
+        {
+          "fields": [
+            { "label": "First Name", "required": true },
+            { "label": "Last Name", "required": true },
+            { "label": "Email", "required": true },
+            { "label": "Email", "type": "radio" },
+            { "label": "edX, and its parent company,", "type": "radio" }
+          ]
+        }
+      ]
+    },
+    "FORM_2266": {
+      "url": "https://taxi.stg.mktg.2u.com/credential-type/7/groupings/432/forms/2266/preview/",
+      "group": "HAR",
+      "steps": [
+        {
+          "fields": [
+            { "label": "First Name", "required": true },
+            { "label": "Last Name", "required": true },
+            { "label": "Email", "required": true },
+            { "label": "Email", "type": "radio" },
+            { "label": "edX, and its parent company,", "type": "radio" }
+          ]
+        }
+      ]
+    }
+  }
+}
