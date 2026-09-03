@@ -39,6 +39,7 @@
     "fs-extra": "^11.3.5",
     "nodemailer": "^9.0.3",
     "otpauth": "^9.5.1",
-    "papaparse": "^5.5.4"
+    "papaparse": "^5.5.4",
+    "tamash-playwright": "^0.8.0-beta.1"
   }
 }

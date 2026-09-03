@@ -73,16 +73,31 @@ setup('login and save session', async ({ page }) => {
   await continueBtn.click({ force: true }); 
   // ==========================================
 
+  // // 3. STRICT VALIDATION: Wait for the actual Taxi URL
+  // // We use a regex match here so it catches any variation of the staging URL
+  // console.log('⏳ Waiting for OneLogin SSO redirect to finish and land on Taxi...');
+  // await page.waitForURL(/taxi\.stg\.mktg\.2u\.com/, { timeout: 45000 });
+  
+  // // Let the dashboard settle before ripping the cookies
+  // await page.waitForLoadState('networkidle');
+  // await page.waitForTimeout(3000);
+
+  // // 4. Save the authenticated session to file
+  // await page.context().storageState({ path: storageStatePath });
+  // console.log('✅ SETUP: Session saved to storageState.json — tests will reuse this login!');
+
   // 3. STRICT VALIDATION: Wait for the actual Taxi URL
-  // We use a regex match here so it catches any variation of the staging URL
   console.log('⏳ Waiting for OneLogin SSO redirect to finish and land on Taxi...');
   await page.waitForURL(/taxi\.stg\.mktg\.2u\.com/, { timeout: 45000 });
+
+  // 🚀 NEW: Authenticate Datadog session into storageState.json
+  console.log('🔐 Establishing Datadog session via OneLogin SSO...');
+  await page.goto('https://app.datadoghq.com/logs', { waitUntil: 'domcontentloaded', timeout: 45000 }).catch(() => {});
   
-  // Let the dashboard settle before ripping the cookies
-  await page.waitForLoadState('networkidle');
+  // If Datadog requires a initial SAML trigger from OneLogin tiles:
   await page.waitForTimeout(3000);
 
-  // 4. Save the authenticated session to file
+  // 4. Save the authenticated session (contains BOTH Taxi and Datadog cookies)
   await page.context().storageState({ path: storageStatePath });
-  console.log('✅ SETUP: Session saved to storageState.json — tests will reuse this login!');
+  console.log('✅ SETUP: Session saved to storageState.json with Datadog cookies included!');
 });

@@ -11,9 +11,9 @@
       "sameSite": "None"
     },
     {
-      "name": "ol_access_service_canary_14",
-      "value": "true",
-      "domain": ".2u.onelogin.com",
+      "name": "ol_branding_service_canary_0",
+      "value": "false",
+      "domain": ".onelogin.com",
       "path": "/",
       "expires": -1,
       "httpOnly": true,
@@ -21,9 +21,9 @@
       "sameSite": "Lax"
     },
     {
-      "name": "ol_branding_service_canary_0",
-      "value": "false",
-      "domain": ".onelogin.com",
+      "name": "ol_access_service_canary_14",
+      "value": "true",
+      "domain": ".2u.onelogin.com",
       "path": "/",
       "expires": -1,
       "httpOnly": true,
@@ -42,10 +42,10 @@
     },
     {
       "name": "__tdli",
-      "value": "d5122c25040d23cc9ba7a70df367a32d7063e091522d6eed0863f5658c4ad55b",
+      "value": "d2362f60151cfa7c12cedf921299264a58bccabe031aba886cfd536c94af02dd",
       "domain": "2u.onelogin.com",
       "path": "/",
-      "expires": 1820386186.387041,
+      "expires": 1822911157.592417,
       "httpOnly": true,
       "secure": true,
       "sameSite": "Lax"
@@ -65,24 +65,24 @@
       "value": "bb6de92f0821b94e944962a535da52348d42d7fc",
       "domain": ".onelogin.com",
       "path": "/",
-      "expires": 1788504595.621674,
+      "expires": 1790943165.708292,
       "httpOnly": true,
       "secure": true,
       "sameSite": "None"
     },
     {
       "name": "_dd_s",
-      "value": "logs=1&id=d57d1ecc-abb7-44df-b50b-8192a63462d5&created=1785826185744&expire=1785827094203",
+      "value": "logs=1&id=1a76ad0a-ab9d-4689-970b-f1916dc40ece&created=1788351155198&expire=1788352064459",
       "domain": "2u.onelogin.com",
       "path": "/",
-      "expires": 1785827095,
+      "expires": 1788352066,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Strict"
     },
     {
       "name": "sub_session_onelogin.com",
-      "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjcmVhdGVkX2F0IjoxNzg1ODI2MTk1LCJzZXNzaW9uX2lkIjoiYmM0NGQ2MzktM2JhMC00MmEwLTgzN2QtOTg5NjE2YWQ5OWI0IiwidXNlcl9pZCI6MjU2OTgwNDg1LCJhY2NvdW50X2lkIjoyMjM0OCwibGFzdF9yZXF1ZXN0IjoxNzg1ODI2MTk1LCJ2ZXJzaW9uIjoxfQ.qx-HCg3PJ5AGEFLiveoyQaC2ZhI-PPlp23jW9Rt5XS8%7C%7CBAh7DyIfYnJvd3Nlcl92ZXJpZmljYXRpb25fdG9rZW4iRWY5ZDllNWZjN2E5ZTUxNjY2ODZiZGQxMTRmMTI5NzAzN2VlY2NhYzNhM2QyZTc4OTc5ZTVmNzI3YmY0YmI4OTU6IHNpZ25pbl9hdXRobl9jbGFzc19zbmFwc2hvdCI5dXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOmFjOmNsYXNzZXM6VGltZVN5bmNUb2tlbjoVc2FtbF9zZXJ2aWNlX2lkc1sGbCsHj5lHkzoPYXV0aF9zdGVwc1sIIg11c2VybmFtZSINcGFzc3dvcmQiDm1mYV9sb2dpbjoPYW1yX2NsYWltc1sIIghwd2QiCG1mYSIIb3RwOhZzaWduaW5fYW1yX2NsYWltc0APOhthcHBfb3RwX2F1dGhfdGltZXN0YW1wbCsHk4txajoUc2FtbF9zZXNzaW9uX2lkIik2ZTViMzM1YS0xY2NmLTQxNGMtODJhOS04M2NlNjg3ZTJjYjc6DmZhY3Rvcl9pZGkCMwo6F3NpZ25pbl9hdXRobl9jbGFzc0AI--9e74569a94db1638c7f8bb69ee39cae96984857b",
+      "value": "eyJhbGciOiJIUzI1NiJ9.eyJjcmVhdGVkX2F0IjoxNzg4MzUxMTY1LCJzZXNzaW9uX2lkIjoiODBlODJiMmQtZDFkMS00NmRiLTlmZWEtMjQxOTI3ZjM0M2MwIiwidXNlcl9pZCI6MjU2OTgwNDg1LCJhY2NvdW50X2lkIjoyMjM0OCwibGFzdF9yZXF1ZXN0IjoxNzg4MzUxMTY1LCJ2ZXJzaW9uIjoxfQ.9qzpV87tYpTMe6xYniveumzjx4d1Vc4Pp6TbkrJZv3I%7C%7CBAh7DzoUc2FtbF9zZXNzaW9uX2lkSSIpNmQzNjE0MTctZWQzZC00ZDM2LWI1MWEtZTg2NzQ1Y2U4NGVmBjoGRUY6D2F1dGhfc3RlcHNbCEkiDXVzZXJuYW1lBjsGVEkiDXBhc3N3b3JkBjsGVEkiDm1mYV9sb2dpbgY7BlQ6D2Ftcl9jbGFpbXNbCEkiCHB3ZAY7BlRJIghtZmEGOwZUSSIIb3RwBjsGVDoOZmFjdG9yX2lkaQIzCjobYXBwX290cF9hdXRoX3RpbWVzdGFtcGwrB70SmGo6F3NpZ25pbl9hdXRobl9jbGFzc0kiOXVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphYzpjbGFzc2VzOlRpbWVTeW5jVG9rZW4GOwZUOh9icm93c2VyX3ZlcmlmaWNhdGlvbl90b2tlbkkiRWY5ZDllNWZjN2E5ZTUxNjY2ODZiZGQxMTRmMTI5NzAzN2VlY2NhYzNhM2QyZTc4OTc5ZTVmNzI3YmY0YmI4OTUGOwZGOhZzaWduaW5fYW1yX2NsYWltc0ALOiBzaWduaW5fYXV0aG5fY2xhc3Nfc25hcHNob3RAEDoVc2FtbF9zZXJ2aWNlX2lkc1sGbCsHj5lHkw%3D%3D--8d734ac755679b6d90cff53110eed4d857f12df7",
       "domain": "2u.onelogin.com",
       "path": "/",
       "expires": -1,
@@ -92,26 +92,83 @@
     },
     {
       "name": "Authorization",
-      "value": "Bearer%20eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJPZiI6IlRheGktU3RhZ2luZyIsImVtYWlsIjoic2t1bWFydnV0dWt1cmktc29uYXRhQDJ1LmNvbSIsImlhdCI6MTc4NTgyNjE5NiwiZXhwIjoxNzg1ODY5Mzk2fQ.oD7zaWvd-O54itj6j6EWxjlv39ibQRw-Fqpy1XtGPD5YQw3oXLe-C2BNIiQZMiEkk5odtOItZo1RkGwRZmbEew",
+      "value": "Bearer%20eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJPZiI6IlRheGktU3RhZ2luZyIsImVtYWlsIjoic2t1bWFydnV0dWt1cmktc29uYXRhQDJ1LmNvbSIsImlhdCI6MTc4ODM1MTE2NiwiZXhwIjoxNzg4Mzk0MzY2fQ.Li-U4w8oW09ukrUV2vKx7sxuBCIxCNMGs7wAKeq_P1NDrmxhJycsHRd-O9f8MHOWUxGq4aWoI5jF-3DIqANmeg",
       "domain": "taxi.stg.mktg.2u.com",
       "path": "/",
-      "expires": 1785869397.060014,
+      "expires": 1788394366.8779,
       "httpOnly": true,
       "secure": true,
       "sameSite": "Lax"
     },
     {
       "name": "_dd_s",
-      "value": "logs=1&id=7f651b06-83aa-4435-a4e9-0f33fb59b394&created=1785826198478&expire=1785827098483&rum=1",
+      "value": "logs=1&id=a304b88e-bf7e-4f3d-b267-cf2590f90f8e&created=1788351168269&expire=1788352068282&rum=1",
       "domain": "taxi.stg.mktg.2u.com",
       "path": "/",
-      "expires": 1785827103,
+      "expires": 1788352069,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Strict"
+    },
+    {
+      "name": "_dd_device_id",
+      "value": "u6fzkxjxvo",
+      "domain": ".datadoghq.com",
+      "path": "/",
+      "expires": 1819887171.97298,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "_dd_did",
+      "value": "511e4e44-cbd3-4d93-b613-bbb73a55bf9d",
+      "domain": "app.datadoghq.com",
+      "path": "/",
+      "expires": 1822911171.975718,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Strict"
+    },
+    {
+      "name": "_dd_s_v2",
+      "value": "aid=18fdab2a-cbc1-458d-ab7f-39dbc14f1fd3&id=5ae7312a-1427-4e2f-bd97-2efa53d1471a&created=1788351173007&expire=1788352073007&c=0",
+      "domain": "app.datadoghq.com",
+      "path": "/",
+      "expires": 1819887173.007,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Strict"
+    },
+    {
+      "name": "dogwebu",
+      "value": "84583743c0c2cbc31eef3ca36599a523632593a4",
+      "domain": ".datadoghq.com",
+      "path": "/",
+      "expires": 1788610373.6341,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
     }
   ],
   "origins": [
+    {
+      "origin": "https://app.datadoghq.com",
+      "localStorage": [
+        {
+          "name": "dd-csrf-token",
+          "value": "{\"token\":\"84583743c0c2cbc31eef3ca36599a523632593a4\",\"timestamp\":1788351173685}"
+        },
+        {
+          "name": "dd.config.overrides",
+          "value": "{}"
+        },
+        {
+          "name": "is-emoji-supported-cache",
+          "value": "{\"version\":\"2\",\"expiry\":1788955971958,\"supportMap\":{}}"
+        }
+      ]
+    },
     {
       "origin": "https://taxi.stg.mktg.2u.com",
       "localStorage": [

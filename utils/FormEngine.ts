@@ -6,10 +6,6 @@ import { TestCaseMetrics } from './reporting/ReportTypes';
 
 export type TestMode = 'positive' | 'negative';
 
-// ==========================================
-// 🚀 GLOBAL RADIO & CHECKBOX CONFIGURATION
-// If a field is NOT in this list (or is null/none), it will default to 'yes' (true).
-// ==========================================
 const GLOBAL_OVERRIDES: Record<TestMode, Record<string, any>> = {
   positive: {
     'email_opt_out': 'yes',
@@ -31,13 +27,16 @@ export class FormEngine {
   private helpers: Helpers;
   private enteredValues: Record<string, any> = {};
   private processedRadioGroups = new Set<string>();
-  
-  // Tracks which fields we already did negative testing on
   private validatedFields = new Set<string>();
   private testCaseMetrics: TestCaseMetrics = { total: 0, passed: 0, failed: 0 };
+  private currentGroupId: string = 'UNKNOWN';
 
   constructor(private page: Page, private frame: FrameLocator) {
     this.helpers = new Helpers(page, frame);
+  }
+
+  setGroupId(groupId: string) {
+    this.currentGroupId = groupId;
   }
 
   async checkIfSuccessPage(): Promise<boolean> {
@@ -56,7 +55,7 @@ export class FormEngine {
     Logger.field(`${label} (${type})`);
 
     // ========================
-    // 🚀 BULLETPROOF RADIO BUTTON LOGIC
+    // RADIO BUTTON LOGIC
     // ========================
     if (type === 'radio') {
       const nameAttr = await locator.getAttribute('name') || `radio_group_${key}`;
@@ -68,22 +67,18 @@ export class FormEngine {
       const activeOverrides = GLOBAL_OVERRIDES[mode];
       let isMatch = false;
 
-      // 1. Is this explicitly mapped?
       if (activeOverrides && activeOverrides[nameAttr] !== undefined && activeOverrides[nameAttr] !== null && activeOverrides[nameAttr] !== 'none') {
         const targetValue = String(activeOverrides[nameAttr]).toLowerCase();
         if (optionText.includes(targetValue) || targetValue.includes(optionText)) {
           isMatch = true;
         }
-      } 
-      // 2. SMART FALLBACK: If NOT mapped, automatically find the positive/default option!
-      else {
+      } else {
         const positiveKeywords = ['yes', 'true', 'agree', 'opt in', 'accept', '1'];
         if (positiveKeywords.some(keyword => optionText.includes(keyword))) {
           isMatch = true;
         }
       }
 
-      // 3. Click it and Verify!
       if (isMatch) {
         try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {}
         
@@ -97,7 +92,7 @@ export class FormEngine {
     }
 
     // ========================
-    // 🚀 BULLETPROOF CHECKBOX LOGIC
+    // CHECKBOX LOGIC
     // ========================
     if (type === 'checkbox') {
       const nameAttr = await locator.getAttribute('name') || label;
@@ -117,7 +112,6 @@ export class FormEngine {
       try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {}
       
       const isCurrentlyChecked = await locator.isChecked();
-      
       if ((shouldBeChecked && !isCurrentlyChecked) || (!shouldBeChecked && isCurrentlyChecked)) {
          await this.forceClickCheckboxOrRadio(locator, shouldBeChecked);
       }
@@ -138,7 +132,6 @@ export class FormEngine {
         await this.processNegativeField(label, locator, type);
       }
     } catch (error) {
-      // Count the failing field interaction as a failed testcase.
       this.recordTestCase(false);
       throw error;
     }
@@ -147,316 +140,136 @@ export class FormEngine {
   private async processPositiveField(label: string, locator: Locator, type: string) {
     await locator.scrollIntoViewIfNeeded();
     await this.page.waitForTimeout(200);
-
+    
     if (type === 'dropdown') {
       const options = await this.helpers.getDropdownOptions(locator);
       const validOptions = options.filter(o => o.trim() !== '');
       
       if (validOptions.length > 0) {
-        const maxIterations = Math.min(validOptions.length, 7);
-        
-        for (let i = 0; i < maxIterations; i++) {
-          await this.helpers.selectDropdown(locator, validOptions[i]);
-          Logger.action(`Iterated option: ${validOptions[i]}`);
-          await this.page.waitForTimeout(200); 
-        }
-        
         const random = validOptions[Math.floor(Math.random() * validOptions.length)];
         await this.helpers.selectDropdown(locator, random);
         this.saveEnteredValue(label, random);
         this.recordTestCase(true);
-        Logger.success(`Final Selected: ${random}`);
+        Logger.success(`Selected [${label}]: ${random}`);
       }
       return;
     }
 
-    const value = DefaultData.getValue(label);
+    const value = DefaultData.getValue(label, 'positive', this.currentGroupId);
     await locator.fill(value);
     this.saveEnteredValue(label, value);
     this.recordTestCase(true);
-    Logger.success(`Filled: ${value}`);
+    Logger.success(`Filled [${label}]: ${value}`);
   }
 
-  // private async processNegativeField(label: string, locator: Locator, type: string) {
-  //   const key = label.toLowerCase();
-    
-  //   // 🚀 EARLY EXIT: Check if form already submitted
-  //   try {
-  //     const isSuccess = await this.checkIfSuccessPage();
-  //     if (isSuccess) {
-  //       Logger.action(`⚠️  Form already submitted - Stopping field processing for: ${label}`);
-  //       return;
-  //     }
-  //   } catch (e) {
-  //     Logger.action(`⚠️  Cannot verify form state - Continuing cautiously`);
-  //   }
-    
-  //   try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {}
-  //   await new Promise(res => setTimeout(res, 800)); 
-
-  //   const alreadyValidated = this.validatedFields.has(key);
-
-  //   if (type === 'dropdown') {
-  //     const options = await this.helpers.getDropdownOptions(locator);
-  //     const valid = options.filter(o => o.trim() !== '');
-  //     if (valid.length > 0) {
-  //       const random = valid[Math.floor(Math.random() * valid.length)];
-  //       await this.helpers.selectDropdown(locator, random);
-  //       this.saveEnteredValue(label, random);
-  //       this.recordTestCase(true);
-  //       Logger.success(`Validation dropdown selected: ${random}`);
-  //     }
-  //     return;
-  //   }
-  //   else if (key.includes('email') && !alreadyValidated) {
-  //     this.validatedFields.add(key);
-  //     const invalids = ['test', 'test@', '@gmail.com'];
-      
-  //     for (const val of invalids) {
-  //       try {
-  //         // Check if we've reached thank you page before testing invalid data
-  //         const isSuccess = await this.checkIfSuccessPage();
-  //         if (isSuccess) {
-  //           Logger.action(`⚠️  Form submitted during email validation - Stopping`);
-  //           break;
-  //         }
-
-  //         try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {} 
-  //         await locator.fill(val, { force: true });
-  //         Logger.action(`Invalid email: ${val}`);
-          
-  //         // 🚀 THE FIX: Click Next to force the UI error to appear for the INVALID data!
-  //         // Because the data is invalid, the form will NOT go to the next page.
-  //         await this.clickNext();
-  //         await new Promise(res => setTimeout(res, 800)); // Give error time to render
-  //         this.recordTestCase(true);
-  //       } catch (e) {
-  //         Logger.action(`⚠️  Error testing invalid email "${val}": ${e}`);
-  //         // Continue to next invalid value
-  //       }
-  //     }
-      
-  //     // 🚀 Enter VALID data, but DO NOT click Next! 
-  //     // This prevents the Optional Field trap from skipping pages.
-  //     try {
-  //       try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {}
-  //       const valid = DefaultData.getValue(label);
-  //       await locator.fill(valid, { force: true });
-  //       this.saveEnteredValue(label, valid);
-  //       this.recordTestCase(true);
-  //       Logger.success('Valid email entered (Skipped Next click to prevent navigation)');
-  //     } catch (e) {
-  //       Logger.action(`⚠️  Failed to enter valid email: ${e}`);
-  //       this.recordTestCase(false);
-  //     }
-  //   }
-  //   else if ((key.includes('phone') || key.includes('contact') || key.includes('mobile')) && !alreadyValidated) {
-  //     this.validatedFields.add(key); 
-  //     const invalids = ['123', '999999999999', 'abcd'];
-      
-  //     for (const val of invalids) {
-  //       try {
-  //         // Check if we've reached thank you page before testing invalid data
-  //         const isSuccess = await this.checkIfSuccessPage();
-  //         if (isSuccess) {
-  //           Logger.action(`⚠️  Form submitted during phone validation - Stopping`);
-  //           break;
-  //         }
-
-  //         try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {} 
-  //         await locator.fill(val, { force: true });
-  //         Logger.action(`Invalid phone: ${val}`);
-          
-  //         // 🚀 THE FIX: Click Next to force the UI error to appear for the INVALID data!
-  //         await this.clickNext();
-  //         await new Promise(res => setTimeout(res, 800)); // Give error time to render
-  //         this.recordTestCase(true);
-  //       } catch (e) {
-  //         Logger.action(`⚠️  Error testing invalid phone "${val}": ${e}`);
-  //         // Continue to next invalid value
-  //       }
-  //     }
-      
-  //     // 🚀 Enter VALID data, but DO NOT click Next!
-  //     try {
-  //       try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {}
-  //       const valid = DefaultData.getValue(label);
-  //       await locator.fill(valid, { force: true });
-  //       this.saveEnteredValue(label, valid);
-  //       this.recordTestCase(true);
-  //       Logger.success('Valid phone entered (Skipped Next click to prevent navigation)');
-  //     } catch (e) {
-  //       Logger.action(`⚠️  Failed to enter valid phone: ${e}`);
-  //       this.recordTestCase(false);
-  //     }
-  //   }
-  //   else {
-  //     // Standard text fields (First Name, Last Name, etc.)
-  //     // 🚀 SAFETY CHECK: Ensure we haven't reached thank you page or form submitted
-  //     try {
-  //       const isSuccess = await this.checkIfSuccessPage();
-  //       if (isSuccess) {
-  //         Logger.action(`⚠️  Form already submitted (Thank You page detected) - Skipping field: ${label}`);
-  //         this.recordTestCase(true); // Count as passed since form completed successfully
-  //         return;
-  //       }
-  //     } catch (e) {
-  //       Logger.action(`⚠️  Cannot check page state for field: ${label} - Page may have closed`);
-  //       this.recordTestCase(false);
-  //       return;
-  //     }
-
-  //     try {
-  //       const value = DefaultData.getValue(label);
-  //       await locator.fill(value, { force: true });
-  //       this.saveEnteredValue(label, value);
-  //       this.recordTestCase(true);
-  //       Logger.success(`Filled: ${value}`);
-  //     } catch (e) {
-  //       Logger.action(`⚠️  Failed to fill field: ${label} - ${e}`);
-  //       this.recordTestCase(false);
-  //       return;
-  //     }
-  //   }
-
-  //   // Wait for any lingering errors to disappear before moving to the next field
-  //   try {
-  //     await this.helpers.waitForErrorToDisappear(label);
-  //   } catch (e) {
-  //     // If page is closed, just continue - not a critical error
-  //   }
-  // }
-
+  /**
+   * Processes Negative Mode inputs.
+   */
   private async processNegativeField(label: string, locator: Locator, type: string) {
     const key = label.toLowerCase();
     
     try {
-      const isSuccess = await this.checkIfSuccessPage();
-      if (isSuccess) {
-        Logger.action(`⚠️  Form already submitted - Stopping field processing for: ${label}`);
-        return;
-      }
-    } catch (e) {
-      Logger.action(`⚠️  Cannot verify form state - Continuing cautiously`);
-    }
+      if (await this.checkIfSuccessPage()) return;
+    } catch (e) {}
     
     try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {}
-    // 🚀 SPEEDUP: Reduced initial pause
     await new Promise(res => setTimeout(res, 200)); 
 
     const alreadyValidated = this.validatedFields.has(key);
 
+    // 1. DROPDOWNS
     if (type === 'dropdown') {
       const options = await this.helpers.getDropdownOptions(locator);
-      const valid = options.filter(o => o.trim() !== '');
+      const valid = options.filter(o => o.trim() !== '' && !o.includes('Select'));
       if (valid.length > 0) {
-        const random = valid[Math.floor(Math.random() * valid.length)];
-        await this.helpers.selectDropdown(locator, random);
-        this.saveEnteredValue(label, random);
+        const selectedOption = valid[Math.floor(Math.random() * valid.length)];
+        await this.helpers.selectDropdown(locator, selectedOption);
+        this.saveEnteredValue(label, selectedOption);
         this.recordTestCase(true);
-        Logger.success(`Validation dropdown selected: ${random}`);
+        Logger.success(`Selected dropdown option [${label}]: ${selectedOption}`);
       }
       return;
     }
+
+    // 2. EMAIL FIELDS
     else if (key.includes('email') && !alreadyValidated) {
       this.validatedFields.add(key);
       const invalids = ['test', 'test@', '@gmail.com'];
       
       for (const val of invalids) {
         try {
-          const isSuccess = await this.checkIfSuccessPage();
-          if (isSuccess) break;
-
-          try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {} 
+          if (await this.checkIfSuccessPage()) break;
           await locator.fill(val, { force: true });
-          Logger.action(`Invalid email: ${val}`);
-          
+          Logger.action(`Invalid email check: ${val}`);
           await this.clickNext();
           
-          // 🚀 SPEEDUP: Native wait for error instead of 800ms sleep!
           const errorLocator = this.frame.locator('[class*="error"], [class*="Error"], [aria-invalid="true"]').first();
-          await errorLocator.waitFor({ state: 'visible', timeout: 1000 }).catch(() => {});
-          
+          await errorLocator.waitFor({ state: 'visible', timeout: 800 }).catch(() => {});
           this.recordTestCase(true);
-        } catch (e) {
-          // Continue to next invalid value
-        }
+        } catch (e) {}
       }
       
       try {
-        const valid = DefaultData.getValue(label);
+        const valid = DefaultData.getValue(label, 'negative', this.currentGroupId);
         await locator.fill(valid, { force: true });
         this.saveEnteredValue(label, valid);
         this.recordTestCase(true);
-        Logger.success('Valid email entered (Skipped Next click to prevent navigation)');
+        Logger.success(`Valid email entered [${label}]: ${valid}`);
       } catch (e) {
         this.recordTestCase(false);
       }
     }
+
+    // 3. PHONE / CONTACT NUMBER (OPTIONAL OR MANDATORY)
     else if ((key.includes('phone') || key.includes('contact') || key.includes('mobile')) && !alreadyValidated) {
       this.validatedFields.add(key); 
-      const invalids = ['123', '999999999999', 'abcd'];
+      const isOptional = key.includes('optional');
+      const invalids = ['123', 'abcd'];
       
       for (const val of invalids) {
         try {
-          const isSuccess = await this.checkIfSuccessPage();
-          if (isSuccess) break;
-
-          try { await locator.scrollIntoViewIfNeeded({ timeout: 2000 }); } catch (e) {} 
+          if (await this.checkIfSuccessPage()) break;
           await locator.fill(val, { force: true });
-          Logger.action(`Invalid phone: ${val}`);
+          Logger.action(`Invalid phone check: ${val}`);
           
-          await this.clickNext();
-          
-          // 🚀 SPEEDUP: Native wait for error instead of 800ms sleep!
-          const errorLocator = this.frame.locator('[class*="error"], [class*="Error"], [aria-invalid="true"]').first();
-          await errorLocator.waitFor({ state: 'visible', timeout: 1000 }).catch(() => {});
+          // 🚀 FIX: Skip clickNext if the phone field is optional to prevent premature form submission!
+          if (!isOptional) {
+            await this.clickNext();
+            const errorLocator = this.frame.locator('[class*="error"], [class*="Error"], [aria-invalid="true"]').first();
+            await errorLocator.waitFor({ state: 'visible', timeout: 800 }).catch(() => {});
+          }
           
           this.recordTestCase(true);
-        } catch (e) {
-          // Continue to next invalid value
-        }
+        } catch (e) {}
       }
       
       try {
-        const valid = DefaultData.getValue(label);
+        const valid = DefaultData.getValue(label, 'negative', this.currentGroupId);
         await locator.fill(valid, { force: true });
         this.saveEnteredValue(label, valid);
         this.recordTestCase(true);
-        Logger.success('Valid phone entered (Skipped Next click to prevent navigation)');
+        Logger.success(`Valid phone entered [${label}]: ${valid}`);
       } catch (e) {
         this.recordTestCase(false);
       }
     }
+
+    // 4. ALL OTHER TEXT INPUTS
     else {
       try {
-        const isSuccess = await this.checkIfSuccessPage();
-        if (isSuccess) {
-          this.recordTestCase(true); 
-          return;
-        }
-      } catch (e) {
-        this.recordTestCase(false);
-        return;
-      }
-
-      try {
-        const value = DefaultData.getValue(label);
+        const value = DefaultData.getValue(label, 'negative', this.currentGroupId);
         await locator.fill(value, { force: true });
         this.saveEnteredValue(label, value);
         this.recordTestCase(true);
-        Logger.success(`Filled: ${value}`);
+        Logger.success(`Filled field [${label}]: ${value}`);
       } catch (e) {
         this.recordTestCase(false);
-        return;
       }
     }
 
-    // 🚀 SPEEDUP: Ensure waitForErrorToDisappear is fast in Helpers.ts
     try {
       await this.helpers.waitForErrorToDisappear(label);
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   private async getLabelFromElement(locator: Locator): Promise<string> {
@@ -479,27 +292,41 @@ export class FormEngine {
       const name = await locator.getAttribute('name');
       if (name) return name.replace(/_/g, ' ').trim();
       
-    } catch (e) {
-      // Ignore errors, return fallback
-    }
+    } catch (e) {}
     return 'Unknown Field';
   }
 
   private saveEnteredValue(label: string, value: any): void {
     this.enteredValues[label] = value;
   }
-
+  
   getEnteredValues(): Record<string, any> {
     return this.enteredValues;
+  }
+
+  async getMergedFormValues(): Promise<Record<string, any>> {
+    try {
+      const hiddenFields = await this.frame.locator('input[type="hidden"]').evaluateAll((inputs) => {
+        const data: Record<string, string> = {};
+        inputs.forEach(input => {
+          const el = input as HTMLInputElement;
+          if (el.name && el.value) {
+            data[el.name] = el.value;
+          }
+        });
+        return data;
+      });
+      
+      return { ...hiddenFields, ...this.enteredValues };
+    } catch (error) {
+      return this.enteredValues;
+    }
   }
 
   getTestCaseMetrics(): TestCaseMetrics {
     return { ...this.testCaseMetrics };
   }
 
-  /**
-   * When test fails, convert all passed test cases to failed
-   */
   failAllTestCases(): void {
     if (this.testCaseMetrics.passed > 0) {
       this.testCaseMetrics.failed += this.testCaseMetrics.passed;
@@ -511,10 +338,6 @@ export class FormEngine {
     await this.helpers.clickPrimaryButton();
   }
 
-  /**
-   * 🚀 VERIFICATION & RETRY CLICK LOOP
-   * Tries normal Playwright click, verifies the state, falls back to JS, and retries up to 3 times!
-   */
   private async forceClickCheckboxOrRadio(locator: Locator, targetState: boolean) {
     const maxRetries = 3;
 
@@ -526,30 +349,25 @@ export class FormEngine {
           await locator.uncheck({ force: true, timeout: 2000 });
         }
       } catch (error) {
-        // Fallback to Raw JS event dispatch if blocked by hidden overlays
         await locator.evaluate((node: HTMLInputElement, state) => {
           node.click();
-          if (node.checked !== state) {
-            node.checked = state;
-            node.dispatchEvent(new Event('change', { bubbles: true }));
-          }
+          if (node.checked !== state) node.checked = state;
         }, targetState);
       }
 
-      // 🔍 VERIFICATION STEP
-      await this.page.waitForTimeout(300); // Give the UI a tiny moment to update
-      const currentState = await locator.isChecked();
+      await locator.dispatchEvent('change').catch(() => {});
+      await locator.dispatchEvent('input').catch(() => {});
+
+      await this.page.waitForTimeout(300);
+      const currentState = await locator.isChecked().catch(() => targetState);
       
-      // If the UI state matches what we want, break out of the loop and move on!
       if (currentState === targetState) {
+        await this.page.waitForTimeout(500);
         return; 
       }
       
-      Logger.action(`⚠️ Retry ${attempt}/${maxRetries}: Element state mismatch. Retrying click...`);
-      await this.page.waitForTimeout(500); // Wait before the next aggressive attempt
+      await this.page.waitForTimeout(500);
     }
-    
-    Logger.action(`❌ Warning: Failed to force the element to ${targetState} after ${maxRetries} attempts.`);
   }
 
   private recordTestCase(passed: boolean): void {

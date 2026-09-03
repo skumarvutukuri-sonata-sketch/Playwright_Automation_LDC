@@ -59,6 +59,7 @@ for (const sheetName of SHEETS) {
                 test.setTimeout(120000);
 
                 await page.goto(formConfig.url, { waitUntil: 'domcontentloaded' });
+                
                 const frame = page.frameLocator('iframe');
                 await page.waitForTimeout(1500);
 
