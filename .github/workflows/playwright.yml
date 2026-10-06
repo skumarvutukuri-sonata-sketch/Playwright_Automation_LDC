@@ -1,14 +1,294 @@
+name: Weekly QA Dashboard & Deployment Tests
+
 name: Playwright Tests
 on:
+  # Every Monday at 8 AM UTC (start of business day)
+  # Day of week: 0=Sunday, 1=Monday
+  schedule:
+    - cron: "0 8 * * 1"
+
+  # Trigger on push to specific branches (including deployments)
   push:
+    branches:
+      - santhosh_LDC
+      - main
+      - develop
+      - production
+
+  # Manual trigger from GitHub Actions UI
+  workflow_dispatch:
+
+  # Trigger on pull request creation/updates
+  pull_request:
+    branches:
+      - santhosh_LDC
+      - main
+      - develop
+      - production
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+env:
+  NODE_VERSION: 18
+  PLAYWRIGHT_VERSION: latest
+
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
 jobs:
+  # Job to determine if we should run tests
+  check-trigger:
+    runs-on: ubuntu-latest
+    outputs:
+      should_run: ${{ steps.check.outputs.should_run }}
+      trigger_reason: ${{ steps.check.outputs.trigger_reason }}
+    steps:
+      - name: 🔍 Determine Trigger Reason
+        id: check
+        run: |
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then
+            TRIGGER="Weekly Scheduled (Monday)"
+          elif [[ "${{ github.event_name }}" == "push" ]]; then
+            TRIGGER="Push/Deployment"
+          elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            TRIGGER="Pull Request"
+          elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            TRIGGER="Manual Trigger"
+          else
+            TRIGGER="Unknown"
+          fi
+          echo "should_run=true" >> $GITHUB_OUTPUT
+          echo "trigger_reason=$TRIGGER" >> $GITHUB_OUTPUT
+          echo "Workflow triggered by: $TRIGGER"
+
+  test-and-publish:
+    needs: check-trigger
+    if: needs.check-trigger.outputs.should_run == 'true'
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [18]
+
     steps:
+      - name: Print Trigger Information
+        run: |
+          echo "═══════════════════════════════════════"
+          echo "Trigger Reason: ${{ needs.check-trigger.outputs.trigger_reason }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
+          echo "Repository: ${{ github.repository }}"
+          echo "═══════════════════════════════════════"
+
+      - name:  Checkout gh-pages (Get Historical Data)
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7 SHA
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: old-reports
+
+      - name:  Checkout Main Code
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7 SHA
+        with:
+          path: main-repo
+
+      - name:  Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+
+      - name:  Restore 30-Day History
+        run: |
+          if [ -d "old-reports" ]; then
+            cp old-reports/dashboard-history.js main-repo/utils/dashboard-history.js || echo "No previous history found, starting fresh!"
+          else
+            echo "No previous reports found, starting fresh!"
+          fi
+
+      - name:  Install Dependencies
+        working-directory: ./main-repo
+        run: |
+          npm install
+          npm ci --prefer-offline --no-audit
+
+      - name:  Install Playwright Browsers
+        working-directory: ./main-repo
+        run: npx playwright install --with-deps
+
+      - name:  Generate .env file
+        working-directory: ./main-repo
+        env:
+          FULL_ENV_CONTENT: ${{ secrets.ENV_FILE_CONTENT }}
+          MFA_SECRET: ${{ secrets.MFA_SECRET || '' }}
+        run: |
+          if [ -z "$FULL_ENV_CONTENT" ]; then
+            echo "⚠️  Warning: ENV_FILE_CONTENT secret is not set"
+            exit 1
+          fi
+          echo "$FULL_ENV_CONTENT" > .env
+          if [ -n "$MFA_SECRET" ]; then
+            echo "MFA_SECRET=$MFA_SECRET" >> .env
+          fi
+          echo "✅ .env file generated successfully"
+
+      - name: 🧪 Validate Test Environment
+        working-directory: ./main-repo
+        run: |
+          echo "Node version: $(node -v)"
+          echo "NPM version: $(npm -v)"
+          npx playwright --version
+
+      - name: 🚀 Run Playwright Tests (3 Forms Only)
+        working-directory: ./main-repo
+        run: npx playwright test -g "2527"
+        continue-on-error: true
+
+      - name: 📊 Generate Custom HTML Dashboard
+        working-directory: ./main-repo
+        if: always()
+        run: |
+          if [ -f "utils/DashboardGenerator.ts" ]; then
+            npx ts-node utils/DashboardGenerator.ts
+            echo "✅ Dashboard generated successfully"
+          else
+            echo "⚠️  DashboardGenerator.ts not found"
+          fi
+        continue-on-error: true
+
+      - name: ♻️ Restore Allure History (30-Day Trend)
+        if: always()
+        run: |
+          mkdir -p main-repo/allure-results/history
+          if [ -d "old-reports/allure/history" ]; then
+            cp -r old-reports/allure/history/. main-repo/allure-results/history/ || echo "No previous Allure history found."
+          else
+            echo "No previous Allure history found, starting fresh."
+          fi
+
+      - name:  Install Allure Commandline
+        if: always()
+        run: npm install -g allure-commandline
+
+      - name:  Generate Allure Report
+        working-directory: ./main-repo
+        if: always()
+        run: |
+          if [ -d "allure-results" ]; then
+            allure generate allure-results --clean -o reports/allure
+            echo "✅ Allure report generated successfully"
+          else
+            echo "⚠️  No allure-results directory found"
+          fi
+        continue-on-error: true
+
+      - name: 📎 Upload Playwright Debug Artifacts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: playwright-debug-artifacts-${{ github.run_id }}-${{ matrix.node-version }}
+          path: |
+            main-repo/test-results/**
+            main-repo/playwright-report/**
+            main-repo/allure-results/**
+            main-repo/reports/**
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name:  Test Summary
+        if: always()
+        working-directory: ./main-repo
+        run: |
+          echo "════════════════════════════════════════"
+          echo "Test Execution Summary"
+          echo "════════════════════════════════════════"
+          echo "Job Status: ${{ job.status }}"
+          echo "Trigger: ${{ needs.check-trigger.outputs.trigger_reason }}"
+          echo "Test Results Path: main-repo/test-results"
+          echo "Report Path: main-repo/reports"
+          echo "════════════════════════════════════════"
+
+  # Publish reports to GitHub Pages (only on successful tests)
+  publish-reports:
+    needs: test-and-publish
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: 📥 Checkout Main Code
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7 SHA
+        with:
+          path: main-repo
+
+      - name:  Checkout gh-pages
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7 SHA
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name:  Download Artifacts
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4
+        with:
+          path: artifacts
+
+      - name:  Prepare and Publish to GitHub Pages
+        working-directory: ./gh-pages
+        run: |
+          # Create necessary directories
+          mkdir -p allure/history
+
+          # Copy new reports
+          if [ -d "../artifacts" ]; then
+            find ../artifacts -name "allure" -type d -exec cp -r {}/. ./allure/ \; || echo "No allure reports found"
+          fi
+
+          # Initialize git if needed
+          if [ ! -d ".git" ]; then
+            git init
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git checkout -b gh-pages
+          fi
+
+          # Add all files
+          git add .
+
+          # Commit only if there are changes
+          if ! git diff --cached --quiet; then
+            git commit -m "Automated test report deployment - $(date +'%Y-%m-%d %H:%M:%S UTC')"
+            git push --force "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" gh-pages
+            echo "✅ Reports published to GitHub Pages"
+          else
+            echo "ℹ️  No report changes to publish"
+          fi
+        continue-on-error: true
+
+  # Notification job (Optional - sends summary)
+  notify:
+    needs: [check-trigger, test-and-publish]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: 📢 Workflow Summary
+        run: |
+          echo "╔════════════════════════════════════════╗"
+          echo "║   Playwright QA Dashboard Workflow     ║"
+          echo "╚════════════════════════════════════════╝"
+          echo ""
+          echo "Trigger Reason: ${{ needs.check-trigger.outputs.trigger_reason }}"
+          echo "Test Job Status: ${{ needs.test-and-publish.result }}"
+          echo "Workflow Status: ${{ job.status }}"
+          echo ""
+          echo "📊 View Reports: https://github.com/${{ github.repository }}/pages"
+          echo "📝 View Workflow Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          echo ""
+
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
       with:

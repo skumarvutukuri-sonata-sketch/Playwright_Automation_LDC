@@ -1,0 +1,5 @@
+Date,Group,Form,Positive_Status,Positive_Duration(sec),Positive_TC_Total,Positive_TC_Passed,Positive_TC_Failed,Negative_Status,Negative_Duration(sec),Negative_TC_Total,Negative_TC_Passed,Negative_TC_Failed,Error
+06-Oct-2026,gwu-mha,3092,—,—,—,—,—,PASSED,48.86,17,17,0,
+06-Oct-2026,gwu-mha,1760,—,—,—,—,—,PASSED,45.98,16,16,0,
+06-Oct-2026,gwu-mha,3655,—,—,—,—,—,PASSED,46.44,17,17,0,
+06-Oct-2026,gwu-mha,107,—,—,—,—,—,PASSED,47.29,17,17,0,
