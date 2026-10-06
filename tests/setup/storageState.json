@@ -11,36 +11,6 @@
       "sameSite": "None"
     },
     {
-      "name": "sub_session_onelogin.com",
-      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkX2F0IjoxNzc5NDYxOTk1LCJzZXNzaW9uX2lkIjoiZDUzZWExMzgtYWUxYi00ZjVhLWIyMTAtZGVjNzA3ZDBkODA2IiwidmVyc2lvbiI6MX0.Umc8SB1VyIQS_Ahv5KtQCGxdYlmFooWfSFpG7L5BRCE%7C%7CBAh7ByIfYnJvd3Nlcl92ZXJpZmljYXRpb25fdG9rZW4iRTk4ODQ4OTY1ODBiYmQ5Mjg1YjhhMDc4MmVhN2FlNjNkZTAxZWQ1ZjQ3MWQxYmFiNjIwMmRlMDYzMGMwMzk5YTM6DnJldHVybl90byIBtWh0dHBzOi8vMnUub25lbG9naW4uY29tL3RydXN0L3NhbWwyL2h0dHAtcG9zdC9zc28vNzk4NTA5P3NhbWxfcmVxdWVzdF9wYXJhbXNfdG9rZW49ZjZjOTRjYjc4Zi5mNzU4YjE2NjlkZGZlMTdmZmYyMWY5MTM5OGVlMzM4YzEwMWE3ZTU5LmdhNC1DeTBDWEdCblFBU0t4RXYxTUk5ZHpyNWViOV9qS1dPTm01d1RNS1UlM0Q%3D--5b756018a9179b7798b7becd0021fe73320798f4",
-      "domain": "2u.onelogin.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "ol_web_login_proxy_15",
-      "value": "true",
-      "domain": ".2u.onelogin.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "Lax"
-    },
-    {
-      "name": "ol_web_login_canary_0",
-      "value": "false",
-      "domain": ".2u.onelogin.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "Lax"
-    },
-    {
       "name": "ol_access_service_canary_14",
       "value": "true",
       "domain": ".2u.onelogin.com",
@@ -72,10 +42,10 @@
     },
     {
       "name": "__tdli",
-      "value": "bcd55b1cd36461ba349e299dfd746f831a36b7fc1978328a59d40cbbe8e4a4a4",
+      "value": "2444e73098030551685209f55bacabcccdadd1c5aaf5906ffce3859f7914bdeb",
       "domain": "2u.onelogin.com",
       "path": "/",
-      "expires": 1814021999.15577,
+      "expires": 1825861175.237131,
       "httpOnly": true,
       "secure": true,
       "sameSite": "Lax"
@@ -92,13 +62,43 @@
     },
     {
       "name": "_dd_s",
-      "value": "logs=1&id=777022eb-1c54-4d9f-aca2-575212999f2d&created=1779461998665&expire=1779462910761",
+      "value": "logs=1&id=28df1ec6-710f-495b-a0d1-8ebdb0923519&created=1791301174363&expire=1791302084913",
       "domain": "2u.onelogin.com",
       "path": "/",
-      "expires": 1779462920,
+      "expires": 1791302085,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Strict"
+    },
+    {
+      "name": "onelogin.com_user",
+      "value": "bb6de92f0821b94e944962a535da52348d42d7fc",
+      "domain": ".onelogin.com",
+      "path": "/",
+      "expires": 1793983185.830658,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "sub_session_onelogin.com",
+      "value": "eyJhbGciOiJIUzI1NiJ9.eyJjcmVhdGVkX2F0IjoxNzkxMzAxMTg1LCJzZXNzaW9uX2lkIjoiMDQ0M2Y2NTMtODMyNy00ODgxLTg1NGQtYzg3MjI1NjkyYWIxIiwidXNlcl9pZCI6MjU2OTgwNDg1LCJhY2NvdW50X2lkIjoyMjM0OCwibGFzdF9yZXF1ZXN0IjoxNzkxMzAxMTg2LCJ2ZXJzaW9uIjoxfQ.Z7bPRABqtnhFGBCPDCpXIOGGmwVFxR3By6SY7EHo7Ww%7C%7CBAh7DzoUc2FtbF9zZXNzaW9uX2lkSSIpNDZkZWY2ZWUtOWY0Ni00YjViLTkxNTUtYWVlMDBiZTA3ZjAzBjoGRUY6D2F1dGhfc3RlcHNbCEkiDXVzZXJuYW1lBjsGVEkiDXBhc3N3b3JkBjsGVEkiDm1mYV9sb2dpbgY7BlQ6D2Ftcl9jbGFpbXNbCEkiCHB3ZAY7BlRJIghtZmEGOwZUSSIIb3RwBjsGVDoOZmFjdG9yX2lkaQIzCjobYXBwX290cF9hdXRoX3RpbWVzdGFtcGwrB0EWxWo6F3NpZ25pbl9hdXRobl9jbGFzc0kiOXVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphYzpjbGFzc2VzOlRpbWVTeW5jVG9rZW4GOwZUOh9icm93c2VyX3ZlcmlmaWNhdGlvbl90b2tlbkkiRWY5ZDllNWZjN2E5ZTUxNjY2ODZiZGQxMTRmMTI5NzAzN2VlY2NhYzNhM2QyZTc4OTc5ZTVmNzI3YmY0YmI4OTUGOwZGOhZzaWduaW5fYW1yX2NsYWltc0ALOiBzaWduaW5fYXV0aG5fY2xhc3Nfc25hcHNob3RAEDoVc2FtbF9zZXJ2aWNlX2lkc1sGbCsHj5lHkw%3D%3D--fe6eb0cae91c46b929ba4c371424c3a7e0a0fa35",
+      "domain": "2u.onelogin.com",
+      "path": "/",
+      "expires": -1,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "Authorization",
+      "value": "Bearer%20eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJtZW1iZXJPZiI6IlRheGktU3RhZ2luZyIsImVtYWlsIjoic2t1bWFydnV0dWt1cmktc29uYXRhQDJ1LmNvbSIsImlhdCI6MTc5MTMwMTE4NiwiZXhwIjoxNzkxMzQ0Mzg2fQ.OEk_LrKWv3-rWkhCgxS8Fp6iA5jZ-heMeocft9CQXV5tgjwRU7PfPTULMcThx411vYCLxClfTtU0VLUcGKcXwQ",
+      "domain": "taxi.stg.mktg.2u.com",
+      "path": "/",
+      "expires": 1791344388.03399,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
     }
   ],
   "origins": [

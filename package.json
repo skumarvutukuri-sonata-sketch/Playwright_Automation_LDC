@@ -5,9 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
-    "test:allure": "playwright test && allure generate allure-results --clean -o allure-report && allure open allure-report",
-    "allure:report": "allure generate allure-results --clean -o allure-report",
-    "allure:open": "allure open allure-report"
+    "report": "playwright test",
+    "allure:generate": "allure generate allure-results --clean -o allure-report",
+    "allure:open": "allure open allure-report",
+    "allure:serve": "allure serve allure-results",
+    "test:allure": "playwright test && npm run allure:generate && npm run allure:open",
+    "clean:reports": "rimraf allure-results allure-report playwright-report test-results reports",
+    "test:3003:full": "playwright test tests/dynamic_crawler.spec.ts -g \"Sheet:Degree.*Form:3003.\" --headed --workers=1",
+    "test:degree:full": "playwright test tests/dynamic_crawler.spec.ts -g \"Sheet:Degree.*(Form:3003.|Form:2581.)\" --headed --workers=1",
+    "test:3003:smoke": "playwright test tests/dynamic_crawler.spec.ts -g \"Sheet:Degree.*Form:3003.*Positive Path\" --headed --workers=1 --no-deps"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +33,9 @@
   "dependencies": {
     "archiver": "^8.0.0",
     "fs-extra": "^11.3.5",
-    "nodemailer": "^8.0.10"
+    "nodemailer": "^9.0.3",
+    "otpauth": "^9.5.1",
+    "papaparse": "^5.5.4",
+    "tamash-playwright": "^0.8.0"
   }
 }
